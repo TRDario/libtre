@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['generatestatetype_0',['generateStateType',['../state__manager_8hpp.html#afb2b556cf93aa8a8a4b9f4f29c1479c8',1,'tre']]]
+  ['errors_0',['errors',['../classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f',1,'tre::LocFileParseWithErrors']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['state_0',['State',['../structtre_1_1State.html',1,'tre']]],
-  ['statemanager_1',['StateManager',['../classtre_1_1StateManager.html',1,'tre']]]
+  ['localizationmanager_0',['LocalizationManager',['../classtre_1_1LocalizationManager.html',1,'tre']]],
+  ['locfileparsewitherrors_1',['LocFileParseWithErrors',['../classtre_1_1LocFileParseWithErrors.html',1,'tre']]]
 ];
