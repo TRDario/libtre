@@ -62,6 +62,10 @@ tre::LocalizationManager::LocalizationManager(const std::filesystem::path& file)
 			errors.emplace_back(std::format("line {}: Key string '{}' is too long.", lineNumber, rawKeyView));
 			continue;
 		}
+		else if (_map.contains(rawKeyView)) {
+			errors.emplace_back(std::format("line {}: Duplicate key '{}'.", lineNumber, rawKeyView));
+			continue;
+		}
 
 		std::string_view rawValueView { line.begin() + delimColon + 1, line.end() };
 		std::string value;
