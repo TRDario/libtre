@@ -13,13 +13,13 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(tre PRIVATE -march=x86-64-v2)
 endif()
 target_sources(tre PRIVATE
-    src/state_manager.cpp
+    src/localization_manager.cpp src/state_manager.cpp
 )
 target_sources(tre PUBLIC
     FILE_SET HEADERS
     BASE_DIRS include
     FILES
-        include/tre/state_manager.hpp
+        include/tre/localization_manager.hpp include/tre/state_manager.hpp
 )
 set_target_properties(tre PROPERTIES DEBUG_POSTFIX d)
 

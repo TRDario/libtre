@@ -404,4 +404,5 @@ build/*
 
 # doxygen files except Doxyfile
 doxygen/*
+!doxygen/manual
 !doxygen/Doxyfile

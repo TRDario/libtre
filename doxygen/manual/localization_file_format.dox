@@ -1,0 +1,24 @@
+/**********************************************************************************************************************
+ * @page locformat Localization File Format
+ * 
+ * localization_manager.hpp uses a custom localization file format.
+ * The file consists of a series of lines in the format:
+ *
+ * <code>\<KEY\>:\<VALUE\></code>
+ *
+ * Comments are denoted with // at the beginning of a line.
+ *
+ * Empty lines, comments, duplicate key definitions and lines with syntactical errors (missing key, delimiter or value)
+ * are ignored.
+ *
+ * @section KEY
+ * @em KEY may contain any characters except ':', although sticking to ASCII alphanumeric characters is recommended.
+ *
+ * @em KEY may not contain more than 30 bytes worth of characters.
+ *
+ * @section VALUE
+ * @em VALUE may contain any characters, and does not have an upper limit on its size.
+ *
+ * @em VALUE has support for escape sequences. Currently, \\n and \\\\ are recognised, while any others are discarded
+ * as errors.
+ **********************************************************************************************************************/
