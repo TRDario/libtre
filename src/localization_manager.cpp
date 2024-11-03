@@ -1,5 +1,80 @@
 #include "../include/tre/localization_manager.hpp"
 
+namespace tre {
+	bool skipLine(const std::string& line) noexcept;
+	bool validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int lineNumber);
+	bool validateKey(std::string_view key, const LocalizationManager::Map& map, std::vector<std::string>& errors, int lineNumber);
+	std::string processValue(std::string_view rawValue, std::vector<std::string>& errors, int lineNumber);
+}
+
+
+bool tre::skipLine(const std::string& line) noexcept {
+	return line.empty()
+		|| line.starts_with("//")
+		|| std::ranges::all_of(line, [] (auto chr) { return chr == ' ' || chr == '\t'; });
+}
+
+bool tre::validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int lineNumber) {
+	if (delimiter == std::string::npos) {
+		errors.emplace_back(std::format("line {}: Expected a delimiting colon.", lineNumber));
+		return false;
+	}
+	else if (delimiter == 0) {
+		errors.emplace_back(std::format("line {}: Expected a key string before the delimiting colon.", lineNumber));
+		return false;
+	}
+	else if (delimiter == lineSize - 1) {
+		errors.emplace_back(std::format("line {}: Expected a value string after the delimiting colon.", lineNumber));
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+bool tre::validateKey(std::string_view key, const LocalizationManager::Map& map, std::vector<std::string>& errors, int lineNumber)
+{
+	if (key.size() > 30) {
+		errors.emplace_back(std::format("line {}: Key string '{}' is too long.", lineNumber, key));
+		return false;
+	}
+	else if (map.contains(key)) {
+		errors.emplace_back(std::format("line {}: Duplicate key '{}'.", lineNumber, key));
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
+std::string tre::processValue(std::string_view rawValue, std::vector<std::string>& errors, int lineNumber)
+{
+	std::string value;
+	value.reserve(rawValue.size());
+	for (auto it = rawValue.begin(); it != rawValue.end(); ++it) {
+		if (*it == '\\') {
+			if (++it == rawValue.end()) {
+				errors.emplace_back(std::format("line {}: Unterminated escape sequence in value string.", lineNumber));
+				break;
+			}
+
+			if (*it == 'n') {
+				value.push_back('\n');
+			}
+			else if (*it == '\\') {
+				value.push_back('\\');
+			}
+			else {
+				errors.emplace_back(std::format("line {}: Unknown escape sequence \\{} in value string.", lineNumber, *it));
+			}
+		}
+		else {
+			value.push_back(*it);
+		}
+	}
+	value.shrink_to_fit();
+	return value;
+}
 
 tre::LocFileParseWithErrors::LocFileParseWithErrors(std::string path, std::vector<std::string> errors, LocalizationManager manager) noexcept
 	: FileError { path }
@@ -34,67 +109,24 @@ tre::LocalizationManager::LocalizationManager(Map map) noexcept
 tre::LocalizationManager::LocalizationManager(const std::filesystem::path& file)
 {
 	auto is { tr::openFileR(file) };
-
 	std::vector<std::string> errors;
+	
     std::string line;
 	for (int lineNumber = 1; !is.eof(); ++lineNumber) {
 		std::getline(is, line);
-		if (line.empty() || line.starts_with("//") || std::ranges::all_of(line, [] (auto chr) { return chr == ' ' || chr == '\t'; })) {
+		if (skipLine(line)) {
 			continue;
 		}
-
-		auto delimColon { line.find(':') };
-		if (delimColon == line.npos) {
-			errors.emplace_back(std::format("line {}: Expected a delimiting colon.", lineNumber));
+		std::size_t delimiter { line.find(':') };
+		if (!validateDelimiter(delimiter, line.size(), errors, lineNumber)) {
 			continue;
 		}
-		else if (delimColon == 0) {
-			errors.emplace_back(std::format("line {}: Expected a key string before the delimiting colon.", lineNumber));
+		std::string_view key { line.begin(), line.begin() + delimiter };
+		if (!validateKey(key, _map, errors, lineNumber)) {
 			continue;
 		}
-		else if (delimColon == line.size() - 1) {
-			errors.emplace_back(std::format("line {}: Expected a value string after the delimiting colon.", lineNumber));
-			continue;
-		}
-
-		std::string_view rawKeyView { line.begin(), line.begin() + delimColon };
-		if (rawKeyView.size() > 30) {
-			errors.emplace_back(std::format("line {}: Key string '{}' is too long.", lineNumber, rawKeyView));
-			continue;
-		}
-		else if (_map.contains(rawKeyView)) {
-			errors.emplace_back(std::format("line {}: Duplicate key '{}'.", lineNumber, rawKeyView));
-			continue;
-		}
-
-		std::string_view rawValueView { line.begin() + delimColon + 1, line.end() };
-		std::string value;
-		value.reserve(rawValueView.size());
-		for (auto it = rawValueView.begin(); it != rawValueView.end(); ++it) {
-			if (*it == '\\') {
-				++it;
-				if (it == rawValueView.end()) {
-					errors.emplace_back(std::format("line {}: Unterminated escape sequence in value string.", lineNumber, rawKeyView));
-					break;
-				}
-
-				if (*it == 'n') {
-					value.push_back('\n');
-				}
-				else if (*it == '\\') {
-					value.push_back(*it);
-				}
-				else {
-					errors.emplace_back(std::format("line {}: Unknown escape sequence \\{} in value string.", lineNumber, *it));
-				}
-			}
-			else {
-				value.push_back(*it);
-			}
-		}
-		value.shrink_to_fit();
-
-		_map.emplace(rawKeyView, std::move(value));
+		std::string_view value { line.begin() + delimiter + 1, line.end() };
+		_map.emplace(key, processValue(value, errors, lineNumber));
 	}
 
 	if (!errors.empty()) {
@@ -105,10 +137,7 @@ tre::LocalizationManager::LocalizationManager(const std::filesystem::path& file)
 std::string_view tre::LocalizationManager::operator[](std::string_view key) const noexcept
 {
 	auto it { _map.find(key) };
-	if (it == _map.end()) {
-		return key;
-	}
-	return it->second;
+	return it != _map.end() ? it->second : key;
 }
 
 const tre::LocalizationManager::Map& tre::LocalizationManager::map() const noexcept
