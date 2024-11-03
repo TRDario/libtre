@@ -28,7 +28,7 @@ namespace tre {
         /**************************************************************************************************************
          * Handles an event.
          *
-         * @param event The event to handle.
+         * @param[in] event The event to handle.
          *
          * @return
          * @parblock
@@ -45,7 +45,7 @@ namespace tre {
         /**************************************************************************************************************
          * Updates the state.
          *
-         * @param delta The time step since the last update.
+         * @param[in] delta The time step since the last update.
          *
          * @return
          * @parblock
@@ -79,7 +79,7 @@ namespace tre {
         /**************************************************************************************************************
          * Constructs a manager with initial held state.
          *
-         * @param state An owning polymorphic pointer to a state.
+         * @param[in] state An owning polymorphic pointer to a state.
          **************************************************************************************************************/
         StateManager(std::unique_ptr<State> state) noexcept;
 
@@ -132,7 +132,7 @@ namespace tre {
          *
          * Any exceptions that occur in the state's @em handleEvent method will bubble up.
          *
-         * @param event The event to the state.
+         * @param[in] event The event to the state.
          **************************************************************************************************************/
         void handleEvent(const tr::Event& event);
 
@@ -143,7 +143,7 @@ namespace tre {
          *
          * Any exceptions that occur in the state's @em update method will bubble up.
          *
-         * @param delta The time step since the last update.
+         * @param[in] delta The time step since the last update.
          **************************************************************************************************************/
         void update(tr::Duration delta);
 

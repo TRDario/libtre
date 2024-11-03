@@ -25,7 +25,7 @@ namespace tre {
           /************************************************************************************************************
            * Constructs an localization manager.
            *
-           * @param map A localization map.
+           * @param[in] map A localization map.
            ************************************************************************************************************/
 		LocalizationManager(Map map) noexcept;
 
@@ -47,7 +47,7 @@ namespace tre {
            * You may extract the manager and the error information from the thrown exception.
            * @endparblock
            *
-           * @param file The path to the localization file.
+           * @param[in] file The path to the localization file.
            ************************************************************************************************************/
 		LocalizationManager(const std::filesystem::path& file);
 
@@ -57,7 +57,7 @@ namespace tre {
            *
            * @warning Passing string temporaries to this function could result in a dangling string view being returned!
            *
-           * @param key A localization key.
+           * @param[in] key A localization key.
            *
            * @return The value associated with the passed key, or the key itself if no associated value exists.
            ************************************************************************************************************/
@@ -81,9 +81,9 @@ namespace tre {
           /************************************************************************************************************
            * Constructs an error.
            *
-           * @param path The localization file path string.
-           * @param errors A list of error strings.
-           * @param manager The recovered localization manager.
+           * @param[in] path The localization file path string.
+           * @param[in] errors A list of error strings.
+           * @param[in] manager The recovered localization manager.
 	      ************************************************************************************************************/
 		LocFileParseWithErrors(std::string path, std::vector<std::string> errors, LocalizationManager manager) noexcept;
 
