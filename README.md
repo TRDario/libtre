@@ -1,5 +1,5 @@
 # libtre
-Personal C++ library for game engine fundamentals
+libtre is a personal C++ library for game engine fundamentals.
 
 ## Important notice ##
 
@@ -8,8 +8,6 @@ If you plan to use this library for any reason, it is important to stress that i
 ## Documentation ##
 
 Documentation can be built with Doxygen, or can be viewed [here](https://trdario.github.io/libtre/).
-
-Currently work-in-progress.
 
 ## Examples ##
 
@@ -20,4 +18,4 @@ libtre depends on the following external libraries:
 - [libtr](https://github.com/TRDario/libtr)
 
 ## Building ##
-libtr requires a C++20-compatible compiler. Files for building with CMake are provided.
+libtre requires a C++20-compatible compiler. Files for building with CMake are provided.
