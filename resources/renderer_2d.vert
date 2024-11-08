@@ -8,7 +8,7 @@ layout (location = 0) out     vec2 vf_uv;
 layout (location = 1) out     vec4 vf_color;
 
 void main() {
-    vf_uv = v_uv;
-    vf_color = v_color;
-    gl_Position = u_camera * vec4(v_pos, 0.0, 1.0);
+	vf_uv = v_uv;
+	vf_color = v_color;
+	gl_Position = u_camera * vec4(v_pos, 0.0, 1.0);
 }
