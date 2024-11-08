@@ -115,11 +115,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno"><a class="line" href="classtre_1_1LocalizationManager.html#a47def6f05bfbf0dc18d0dccad8a7830e">   52</a></span>        <a class="code hl_class" href="classtre_1_1LocalizationManager.html">LocalizationManager</a>(const std::filesystem::path&amp; file);</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="classtre_1_1LocalizationManager.html#a33925a65cb04ad960ecc8313871c98f4">   64</a></span>        std::string_view operator[](std::string_view key) const noexcept;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classtre_1_1LocalizationManager.html#a33925a65cb04ad960ecc8313871c98f4">   63</a></span>        std::string_view operator[](std::string_view key) const noexcept;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95">   71</a></span>        const <a class="code hl_typedef" href="classtre_1_1LocalizationManager.html#ac15434883516ee5d4da6668db6614bec">Map</a>&amp; <a class="code hl_function" href="classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95">map</a>() const noexcept;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95">   70</a></span>        const <a class="code hl_typedef" href="classtre_1_1LocalizationManager.html#ac15434883516ee5d4da6668db6614bec">Map</a>&amp;       <a class="code hl_function" href="classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95">map</a>() const noexcept;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    private:</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        tr::StaticStringHashMap&lt;30, std::<span class="keywordtype">string</span>&gt; _map;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    };</div>
@@ -133,20 +133,20 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#ad1091396a2545e7553f709f8355c3fcd">   88</a></span>        <a class="code hl_function" href="classtre_1_1LocFileParseWithErrors.html#ad1091396a2545e7553f709f8355c3fcd">LocFileParseWithErrors</a>(std::string path, std::vector&lt;std::string&gt; errors, <a class="code hl_class" href="classtre_1_1LocalizationManager.html">LocalizationManager</a> manager) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f">   96</a></span>        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; <a class="code hl_function" href="classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f">errors</a>() const noexcept;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f">   95</a></span>        <span class="keyword">const</span> std::vector&lt;std::string&gt;&amp; <a class="code hl_function" href="classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f">errors</a>() const noexcept;</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a27d0160f0cab9ebee28789401920e634">  103</a></span>        <a class="code hl_class" href="classtre_1_1LocalizationManager.html">LocalizationManager</a>&amp;&amp; manager() &amp;&amp; noexcept;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a27d0160f0cab9ebee28789401920e634">  102</a></span>        <a class="code hl_class" href="classtre_1_1LocalizationManager.html">LocalizationManager</a>&amp;&amp;           manager() &amp;&amp; noexcept;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a92df6568f701d10123080f53a501704d">  110</a></span>        virtual const <span class="keywordtype">char</span>* what() const noexcept;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classtre_1_1LocFileParseWithErrors.html#a92df6568f701d10123080f53a501704d">  109</a></span>        virtual const <span class="keywordtype">char</span>*             what() const noexcept;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    private:</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        std::vector&lt;std::<span class="keywordtype">string</span>&gt; _errors;</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <a class="code hl_class" href="classtre_1_1LocalizationManager.html">LocalizationManager</a>      _manager;</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    };</div>
 </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>} <span class="comment">// namespace tre</span></div>
 <div class="ttc" id="aclasstre_1_1LocFileParseWithErrors_html"><div class="ttname"><a href="classtre_1_1LocFileParseWithErrors.html">tre::LocFileParseWithErrors</a></div><div class="ttdoc">Error thrown by a localization file parse with errors.</div><div class="ttdef"><b>Definition</b> localization_manager.hpp:79</div></div>
 <div class="ttc" id="aclasstre_1_1LocFileParseWithErrors_html_a4eb94255d7f1f013b40dfb45978b655f"><div class="ttname"><a href="classtre_1_1LocFileParseWithErrors.html#a4eb94255d7f1f013b40dfb45978b655f">tre::LocFileParseWithErrors::errors</a></div><div class="ttdeci">const std::vector&lt; std::string &gt; &amp; errors() const noexcept</div><div class="ttdoc">Gets the list of error messages.</div></div>
 <div class="ttc" id="aclasstre_1_1LocFileParseWithErrors_html_ad1091396a2545e7553f709f8355c3fcd"><div class="ttname"><a href="classtre_1_1LocFileParseWithErrors.html#ad1091396a2545e7553f709f8355c3fcd">tre::LocFileParseWithErrors::LocFileParseWithErrors</a></div><div class="ttdeci">LocFileParseWithErrors(std::string path, std::vector&lt; std::string &gt; errors, LocalizationManager manager) noexcept</div><div class="ttdoc">Constructs an error.</div></div>
