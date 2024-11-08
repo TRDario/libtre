@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['localizationmanager_0',['LocalizationManager',['../classtre_1_1LocalizationManager.html',1,'tre']]],
-  ['locfileparsewitherrors_1',['LocFileParseWithErrors',['../classtre_1_1LocFileParseWithErrors.html',1,'tre']]]
+  ['atlas2d_0',['Atlas2D',['../classtre_1_1Atlas2D.html',1,'tre']]],
+  ['atlasbitmap_1',['AtlasBitmap',['../structtre_1_1AtlasBitmap.html',1,'tre']]]
 ];

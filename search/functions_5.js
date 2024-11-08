@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['manager_0',['manager',['../classtre_1_1LocFileParseWithErrors.html#a27d0160f0cab9ebee28789401920e634',1,'tre::LocFileParseWithErrors']]],
-  ['map_1',['map',['../classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95',1,'tre::LocalizationManager']]]
+  ['generatestatetype_0',['generateStateType',['../state__manager_8hpp.html#afb2b556cf93aa8a8a4b9f4f29c1479c8',1,'tre']]]
 ];

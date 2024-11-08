@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['update_0',['update',['../structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38',1,'tre::State::update()'],['../classtre_1_1StateManager.html#a84d7a243ed49f7bfce7b5ed9c435327b',1,'tre::StateManager::update(tr::Duration delta)']]],
-  ['updatebenchmark_1',['updateBenchmark',['../classtre_1_1StateManager.html#ab7ef77c48f2d09ba659ff2a19c63c0a2',1,'tre::StateManager']]]
+  ['operator_5b_5d_0',['operator[]',['../classtre_1_1Atlas2D.html#acaa1a0de27eb9d0c4bc7ddca02ca09e8',1,'tre::Atlas2D::operator[]()'],['../classtre_1_1DynAtlas2D.html#a973b1559b5a2e2e52c016f98f0f5bf9f',1,'tre::DynAtlas2D::operator[]()'],['../classtre_1_1LocalizationManager.html#a33925a65cb04ad960ecc8313871c98f4',1,'tre::LocalizationManager::operator[]()']]]
 ];

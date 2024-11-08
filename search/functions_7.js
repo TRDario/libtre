@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['state_0',['state',['../classtre_1_1StateManager.html#aa7e6a4b840f3a26590dd6cedc67ea3bd',1,'tre::StateManager::state() noexcept'],['../classtre_1_1StateManager.html#ad45168552c7f631b03f0b41f78f9ffcb',1,'tre::StateManager::state() const noexcept']]],
-  ['statemanager_1',['StateManager',['../classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314',1,'tre::StateManager::StateManager() noexcept=default'],['../classtre_1_1StateManager.html#a1cb35b02ed68fd0ebb55b78461a2303f',1,'tre::StateManager::StateManager(std::unique_ptr&lt; State &gt; state) noexcept']]]
+  ['localizationmanager_0',['LocalizationManager',['../classtre_1_1LocalizationManager.html#a253f9f3024793cdffb17502309dccf50',1,'tre::LocalizationManager::LocalizationManager() noexcept'],['../classtre_1_1LocalizationManager.html#aa846119bd58595388bc7c724b873cbcb',1,'tre::LocalizationManager::LocalizationManager(Map map) noexcept'],['../classtre_1_1LocalizationManager.html#a47def6f05bfbf0dc18d0dccad8a7830e',1,'tre::LocalizationManager::LocalizationManager(const std::filesystem::path &amp;file)']]],
+  ['locfileparsewitherrors_1',['LocFileParseWithErrors',['../classtre_1_1LocFileParseWithErrors.html#ad1091396a2545e7553f709f8355c3fcd',1,'tre::LocFileParseWithErrors']]]
 ];
