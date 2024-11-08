@@ -3,6 +3,25 @@ if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
 endif()
 
+function(compile_shader_spv FILE)
+    add_custom_command(
+        OUTPUT ${FILE}.spv
+        COMMAND glslang -G -o ${FILE}.spv ${FILE}
+        DEPENDS ${FILE}
+        VERBATIM
+    )
+    add_custom_command(
+        OUTPUT ${FILE}.spv.hpp
+        COMMAND xxd -i -n RENDERER_2D_VERT_SPV ${FILE}.spv ${FILE}.spv.hpp
+        DEPENDS ${FILE}.spv
+        VERBATIM
+    )
+endfunction()
+
+set(RESOURCES_DIR "${CMAKE_CURRENT_SOURCE_DIR}/resources")
+compile_shader_spv(${RESOURCES_DIR}/renderer_2d.vert)
+compile_shader_spv(${RESOURCES_DIR}/renderer_2d.frag)
+
 project(tre LANGUAGES C CXX VERSION 0.0.1)
 
 add_library(tre STATIC)
@@ -14,6 +33,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 endif()
 target_sources(tre PRIVATE
     src/atlas.cpp src/localization_manager.cpp src/renderer_base.cpp src/state_manager.cpp
+)
+target_sources(tre PRIVATE
+    ${RESOURCES_DIR}/renderer_2d.vert.spv.hpp ${RESOURCES_DIR}/renderer_2d.frag.spv.hpp
 )
 target_sources(tre PUBLIC
     FILE_SET HEADERS

@@ -406,3 +406,8 @@ build/*
 doxygen/*
 !doxygen/manual
 !doxygen/Doxyfile
+
+# .h/.hpp and .spv files in resources
+resources/*.h
+resources/*.hpp
+resources/*.spv
