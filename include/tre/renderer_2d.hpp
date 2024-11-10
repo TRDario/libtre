@@ -1,7 +1,6 @@
 #pragma once
-#include "renderer_base.hpp"
-
-#include <forward_list>
+#include <map>
+#include <tr/geometry.hpp>
 #include <tr/tr.hpp>
 
 namespace tre {
@@ -11,34 +10,53 @@ namespace tre {
 	class Renderer2D {
 	public:
 		/**************************************************************************************************************
+		 * The unique renderer ID of this renderer.
+		 **************************************************************************************************************/
+		static constexpr std::uint32_t ID {-2U};
+
+		/**************************************************************************************************************
 		 * Shorthand for the vertex type used by the renderer.
 		 **************************************************************************************************************/
-		using Vertex                      = tr::TintVtx2;
+		using Vertex     = tr::TintVtx2;
 
 		/**************************************************************************************************************
 		 * The combination of texture and sampler used when drawing an object.
 		 **************************************************************************************************************/
-		using TextureRef                  = std::pair<const tr::Texture2D&, const tr::Sampler&>;
+		using TextureRef = std::pair<const tr::Texture2D&, const tr::Sampler&>;
 
 		/**************************************************************************************************************
-		 * The unique renderer ID of this renderer.
+		 * Creates the 2D renderer.
+		 *
+		 * Only one of these should be created at a time. This class can only be instantiated after an OpenGL context
+		 * is opened.
 		 **************************************************************************************************************/
-		static constexpr std::uint32_t ID = -2U;
+		Renderer2D();
 
 		/**************************************************************************************************************
 		 * Sets the size of the rendered field.
 		 *
 		 * @param size The new size of the rendered field.
 		 **************************************************************************************************************/
-		void                           setFieldSize(glm::vec2 size) noexcept;
+		void setFieldSize(glm::vec2 size) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the blending mode used by the renderer.
+		 *
+		 * @param blendMode The blending mode used by the renderer.
+		 **************************************************************************************************************/
+		void setBlendingMode(tr::BlendMode blendMode) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the scissor box used by the renderer.
+		 *
+		 * @param scissorBox The scissor box to use, or std::nullopt to disable the scissor test.
+		 **************************************************************************************************************/
+		void setScissorBox(std::optional<tr::RectI2> scissorBox) noexcept;
 
 		/**************************************************************************************************************
 		 * Adds an untextured rect to the list of objects to draw in the next draw call.
 		 *
-		 * @exception std::bad_alloc If an internal allocation failed.
-		 *
-		 * @param priority The drawing priority of the object (higher is drawn on top).
-		 * @param rect The rectangle to draw.
+		 * @exception std::bad_alloc If an itr::RectI2.
 		 * @param color The color of the rectangle.
 		 **************************************************************************************************************/
 		void addUntexturedRect(std::int64_t priority, const tr::RectF2& rect, tr::RGBA8 color);
@@ -233,7 +251,7 @@ namespace tre {
 		 * @param vertices The vertices of the polygon fan.
 		 * @param texture The texture and sampler used for the polygon fan.
 		 **************************************************************************************************************/
-		void addTexturedPolygonFan(std::int64_t priority, std::span<Vertex> vertices, TextureRef texture);
+		void addTexturedPolygonFan(std::int64_t priority, std::vector<Vertex> vertices, TextureRef texture);
 
 		/**************************************************************************************************************
 		 * Draws all added objects to a target.
@@ -249,25 +267,37 @@ namespace tre {
 		void draw(tr::GLContext& glContext, tr::BasicFramebuffer& target);
 
 	private:
-		using Triangle  = std::array<Vertex, 3>;
-		using Rectangle = std::array<Vertex, 4>;
-		using VertexFan = std::vector<Vertex>;
-		using RawData   = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
-
-		struct DrawObject {
-			std::variant<Triangle, Rectangle, VertexFan, RawData> data;
-			std::optional<TextureRef>                             texture;
-			std::int64_t                                          priority;
+		struct TextureRefHash {
+			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
 		};
 
-		tr::Shader                    _vertexShader;
-		tr::Shader                    _fragmentShader;
-		tr::TextureUnit               _textureUnit;
-		tr::VertexBuffer              _vertexBuffer;
-		tr::IndexBuffer               _indexBuffer;
+		using Triangle      = std::array<Vertex, 3>;
+		using Rectangle     = std::array<Vertex, 4>;
+		using VertexFan     = std::vector<Vertex>;
+		using RawData       = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
+		using PrimitiveList = std::vector<std::variant<Triangle, Rectangle, VertexFan, RawData>>;
+		using Priority      = std::unordered_map<std::optional<TextureRef>, PrimitiveList, TextureRefHash>;
+		using RenderGraph   = std::map<std::int64_t, Priority, std::greater<std::int64_t>>;
 
-		glm::vec2                     _fieldSize;
+		tr::Shader                 _vertexShader;
+		tr::Shader                 _fragmentShader;
+		tr::ShaderPipeline         _shaderPipeline;
+		tr::TextureUnit            _textureUnit;
+		tr::VertexBuffer           _vertexBuffer;
+		tr::IndexBuffer            _indexBuffer;
+		std::vector<Vertex>        _vertices;
+		std::vector<std::uint16_t> _indices;
+		RenderGraph                _renderGraph;
 
-		std::forward_list<DrawObject> _renderGraph;
+		glm::vec2                  _fieldSize;
+		tr::BlendMode              _blendMode;
+		tr::RectI2                 _scissorBox;
+
+	private:
+		void setupContext(tr::GLContext& glContext) noexcept;
+		void writeToVertexIndexVectors(
+			const std::variant<Triangle, Rectangle, VertexFan, RawData>& primitive,
+			std::uint16_t&                                               index
+		);
 	};
 } // namespace tre
