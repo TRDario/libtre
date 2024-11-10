@@ -1,7 +1,7 @@
 var searchData=
 [
   ['add_0',['add',['../classtre_1_1DynAtlas2D.html#aa36d7ce2a981a52c7e16fda37a64df72',1,'tre::DynAtlas2D']]],
-  ['addtexturedpolygonfan_1',['addTexturedPolygonFan',['../classtre_1_1Renderer2D.html#a0a7c40122376c8c32cc8a95098f0a884',1,'tre::Renderer2D']]],
+  ['addtexturedpolygonfan_1',['addTexturedPolygonFan',['../classtre_1_1Renderer2D.html#a9da5b2bb64b64d6d56b13d86f76a3538',1,'tre::Renderer2D']]],
   ['addtexturedrect_2',['addTexturedRect',['../classtre_1_1Renderer2D.html#a5ec6bc934f0686464c9efa30542bf76a',1,'tre::Renderer2D::addTexturedRect(std::int64_t priority, const tr::RectF2 &amp;rect, TextureRef texture, const tr::RectF2 &amp;uv, tr::RGBA8 tint)'],['../classtre_1_1Renderer2D.html#a9e49a4ea0babbcd01717fa009429c0db',1,'tre::Renderer2D::addTexturedRect(std::int64_t priority, const tr::RectF2 &amp;rect, TextureRef texture, std::array&lt; glm::vec2, 4 &gt; uvs, std::array&lt; tr::RGBA8, 4 &gt; tints)']]],
   ['addtexturedrotatedrectangle_3',['addTexturedRotatedRectangle',['../classtre_1_1Renderer2D.html#a443607669132f43d8dc19127cde0ac45',1,'tre::Renderer2D::addTexturedRotatedRectangle(std::int64_t priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, TextureRef texture, const tr::RectF2 &amp;uv, tr::RGBA8 tint)'],['../classtre_1_1Renderer2D.html#a9e356eb19ab9514ebf8616bc8087ced4',1,'tre::Renderer2D::addTexturedRotatedRectangle(std::int64_t priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, TextureRef texture, std::array&lt; glm::vec2, 4 &gt; uvs, std::array&lt; tr::RGBA8, 4 &gt; tints)']]],
   ['adduntexturedcircle_4',['addUntexturedCircle',['../classtre_1_1Renderer2D.html#a96a7a8defe4fc87ddba5fec39a26adaf',1,'tre::Renderer2D']]],

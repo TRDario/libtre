@@ -117,9 +117,12 @@ using&#160;</td><td class="memItemRight" valign="bottom"><b>Vertex</b> = tr::Tin
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0a7c40122376c8c32cc8a95098f0a884" id="r_a0a7c40122376c8c32cc8a95098f0a884"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a7c40122376c8c32cc8a95098f0a884">addTexturedPolygonFan</a> (std::int64_t priority, std::span&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt; vertices, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
-<tr class="memdesc:a0a7c40122376c8c32cc8a95098f0a884"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured polygon fan to the list of objects to draw in the next draw call.  <br /></td></tr>
-<tr class="separator:a0a7c40122376c8c32cc8a95098f0a884"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8189edba8ce1badffdd82849c14375e5" id="r_a8189edba8ce1badffdd82849c14375e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8189edba8ce1badffdd82849c14375e5">Renderer2D</a> ()</td></tr>
+<tr class="memdesc:a8189edba8ce1badffdd82849c14375e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the 2D renderer.  <br /></td></tr>
+<tr class="separator:a8189edba8ce1badffdd82849c14375e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9da5b2bb64b64d6d56b13d86f76a3538" id="r_a9da5b2bb64b64d6d56b13d86f76a3538"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9da5b2bb64b64d6d56b13d86f76a3538">addTexturedPolygonFan</a> (std::int64_t priority, std::vector&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt; vertices, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
+<tr class="memdesc:a9da5b2bb64b64d6d56b13d86f76a3538"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured polygon fan to the list of objects to draw in the next draw call.  <br /></td></tr>
+<tr class="separator:a9da5b2bb64b64d6d56b13d86f76a3538"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ec6bc934f0686464c9efa30542bf76a" id="r_a5ec6bc934f0686464c9efa30542bf76a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ec6bc934f0686464c9efa30542bf76a">addTexturedRect</a> (std::int64_t priority, const tr::RectF2 &amp;rect, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture, const tr::RectF2 &amp;uv, tr::RGBA8 tint)</td></tr>
 <tr class="memdesc:a5ec6bc934f0686464c9efa30542bf76a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a textured rect to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a5ec6bc934f0686464c9efa30542bf76a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -156,22 +159,49 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac5921b6a0910daa8de54d8c539283487" id="r_ac5921b6a0910daa8de54d8c539283487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5921b6a0910daa8de54d8c539283487">draw</a> (tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target)</td></tr>
 <tr class="memdesc:ac5921b6a0910daa8de54d8c539283487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all added objects to a target.  <br /></td></tr>
 <tr class="separator:ac5921b6a0910daa8de54d8c539283487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac07a9a0d3cc9e567b842ad426f4d8861" id="r_ac07a9a0d3cc9e567b842ad426f4d8861"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac07a9a0d3cc9e567b842ad426f4d8861">setBlendingMode</a> (tr::BlendMode blendMode) noexcept</td></tr>
+<tr class="memdesc:ac07a9a0d3cc9e567b842ad426f4d8861"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the blending mode used by the renderer.  <br /></td></tr>
+<tr class="separator:ac07a9a0d3cc9e567b842ad426f4d8861"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1acc60a675c99b31b6081c4c8e63187a" id="r_a1acc60a675c99b31b6081c4c8e63187a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1acc60a675c99b31b6081c4c8e63187a">setFieldSize</a> (glm::vec2 size) noexcept</td></tr>
 <tr class="memdesc:a1acc60a675c99b31b6081c4c8e63187a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the size of the rendered field.  <br /></td></tr>
 <tr class="separator:a1acc60a675c99b31b6081c4c8e63187a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81a43b7e33abf3b6ba8e7bbddd60aa0a" id="r_a81a43b7e33abf3b6ba8e7bbddd60aa0a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81a43b7e33abf3b6ba8e7bbddd60aa0a">setScissorBox</a> (std::optional&lt; tr::RectI2 &gt; scissorBox) noexcept</td></tr>
+<tr class="memdesc:a81a43b7e33abf3b6ba8e7bbddd60aa0a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the scissor box used by the renderer.  <br /></td></tr>
+<tr class="separator:a81a43b7e33abf3b6ba8e7bbddd60aa0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
 <tr class="memitem:a4581af5aaec4b15b87bb228098cc75ce" id="r_a4581af5aaec4b15b87bb228098cc75ce"><td class="memItemLeft" align="right" valign="top"><a id="a4581af5aaec4b15b87bb228098cc75ce" name="a4581af5aaec4b15b87bb228098cc75ce"></a>
-static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> = -2U</td></tr>
+static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> {-2U}</td></tr>
 <tr class="memdesc:a4581af5aaec4b15b87bb228098cc75ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique renderer ID of this renderer. <br /></td></tr>
 <tr class="separator:a4581af5aaec4b15b87bb228098cc75ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Basic, optimized 2D renderer. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0a7c40122376c8c32cc8a95098f0a884" name="a0a7c40122376c8c32cc8a95098f0a884"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a7c40122376c8c32cc8a95098f0a884">&#9670;&#160;</a></span>addTexturedPolygonFan()</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8189edba8ce1badffdd82849c14375e5" name="a8189edba8ce1badffdd82849c14375e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8189edba8ce1badffdd82849c14375e5">&#9670;&#160;</a></span>Renderer2D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tre::Renderer2D::Renderer2D </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates the 2D renderer. </p>
+<p>Only one of these should be created at a time. This class can only be instantiated after an OpenGL context is opened. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9da5b2bb64b64d6d56b13d86f76a3538" name="a9da5b2bb64b64d6d56b13d86f76a3538"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9da5b2bb64b64d6d56b13d86f76a3538">&#9670;&#160;</a></span>addTexturedPolygonFan()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -184,7 +214,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::span&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>vertices</em></span>, </td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>vertices</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -665,14 +695,12 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an itr::RectI2. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
     <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
@@ -838,6 +866,39 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 
 </div>
 </div>
+<a id="ac07a9a0d3cc9e567b842ad426f4d8861" name="ac07a9a0d3cc9e567b842ad426f4d8861"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac07a9a0d3cc9e567b842ad426f4d8861">&#9670;&#160;</a></span>setBlendingMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::setBlendingMode </td>
+          <td>(</td>
+          <td class="paramtype">tr::BlendMode</td>          <td class="paramname"><span class="paramname"><em>blendMode</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the blending mode used by the renderer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">blendMode</td><td>The blending mode used by the renderer. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a1acc60a675c99b31b6081c4c8e63187a" name="a1acc60a675c99b31b6081c4c8e63187a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1acc60a675c99b31b6081c4c8e63187a">&#9670;&#160;</a></span>setFieldSize()</h2>
 
@@ -865,6 +926,39 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">size</td><td>The new size of the rendered field. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a81a43b7e33abf3b6ba8e7bbddd60aa0a" name="a81a43b7e33abf3b6ba8e7bbddd60aa0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81a43b7e33abf3b6ba8e7bbddd60aa0a">&#9670;&#160;</a></span>setScissorBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::setScissorBox </td>
+          <td>(</td>
+          <td class="paramtype">std::optional&lt; tr::RectI2 &gt;</td>          <td class="paramname"><span class="paramname"><em>scissorBox</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the scissor box used by the renderer. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scissorBox</td><td>The scissor box to use, or std::nullopt to disable the scissor test. </td></tr>
   </table>
   </dd>
 </dl>
