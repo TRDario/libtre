@@ -14,14 +14,14 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Virtual destructor.
 		 **************************************************************************************************************/
-		virtual ~State()                                                   = default;
+		virtual ~State() = default;
 
 		/**************************************************************************************************************
 		 * Gets the type of the state.
 		 *
 		 * @return An ID uniquely associated with a state type.
 		 **************************************************************************************************************/
-		virtual std::uint32_t          type() const noexcept               = 0;
+		virtual std::uint32_t type() const noexcept = 0;
 
 		/**************************************************************************************************************
 		 * Handles an event.
@@ -30,7 +30,8 @@ namespace tre {
 		 *
 		 * @return
 		 * @parblock
-		 * When used inside a state manager, the return value of this function can dictate the progression to a new state.
+		 * When used inside a state manager, the return value of this function can dictate the progression to a new
+		 *state.
 		 *
 		 * Returning a non-nullptr state pointer will cause the manager to switch from the current state to the state
 		 * that was returned from this function.
@@ -47,7 +48,8 @@ namespace tre {
 		 *
 		 * @return
 		 * @parblock
-		 * When used inside a state manager, the return value of this function can dictate the progression to a new state.
+		 * When used inside a state manager, the return value of this function can dictate the progression to a new
+		 *state.
 		 *
 		 * Returning a non-nullptr state pointer will cause the manager to switch from the current state to the state
 		 * that was returned from this function.
@@ -55,19 +57,19 @@ namespace tre {
 		 * Returning nullptr will maintain the current state.
 		 * @endparblock
 		 **************************************************************************************************************/
-		virtual std::unique_ptr<State> update(tr::Duration delta)          = 0;
+		virtual std::unique_ptr<State> update(tr::Duration delta) = 0;
 
 		/**************************************************************************************************************
 		 * Draws the state to the screen.
 		 **************************************************************************************************************/
-		virtual void                   draw()                              = 0;
+		virtual void draw() = 0;
 	};
 
 	/******************************************************************************************************************
 	 * Game state manager.
 	 ******************************************************************************************************************/
 	class StateManager {
-	public:
+	  public:
 		/**************************************************************************************************************
 		 * Constructs a manager with no held state.
 		 **************************************************************************************************************/
@@ -85,7 +87,7 @@ namespace tre {
 		 *
 		 * @return True if the manager is holding a state, and false otherwise.
 		 **************************************************************************************************************/
-		bool                 has_state() const noexcept;
+		bool has_state() const noexcept;
 
 		/**************************************************************************************************************
 		 * Gets the held state.
@@ -94,7 +96,7 @@ namespace tre {
 		 *
 		 * @return A mutable reference to the held state.
 		 **************************************************************************************************************/
-		State&               state() noexcept;
+		State& state() noexcept;
 
 		/**************************************************************************************************************
 		 * Gets the held state.
@@ -103,7 +105,7 @@ namespace tre {
 		 *
 		 * @return An immutable reference to the held state.
 		 **************************************************************************************************************/
-		const State&         state() const noexcept;
+		const State& state() const noexcept;
 
 		/**************************************************************************************************************
 		 * Gets the benchmark that measures update time.
@@ -128,7 +130,7 @@ namespace tre {
 		 *
 		 * @param[in] event The event to the state.
 		 **************************************************************************************************************/
-		void                 handleEvent(const tr::Event& event);
+		void handleEvent(const tr::Event& event);
 
 		/**************************************************************************************************************
 		 * Updates the state.
@@ -139,7 +141,7 @@ namespace tre {
 		 *
 		 * @param[in] delta The time step since the last update.
 		 **************************************************************************************************************/
-		void                 update(tr::Duration delta);
+		void update(tr::Duration delta);
 
 		/**************************************************************************************************************
 		 * Draws the state.
@@ -148,12 +150,12 @@ namespace tre {
 		 *
 		 * Any exceptions that occur in the state's @em draw method will bubble up.
 		 **************************************************************************************************************/
-		void                 draw();
+		void draw();
 
-	private:
+	  private:
 		std::unique_ptr<State> _state;
-		tr::Benchmark          _updateBenchmark;
-		tr::Benchmark          _drawBenchmark;
+		tr::Benchmark _updateBenchmark;
+		tr::Benchmark _drawBenchmark;
 	};
 
 	/******************************************************************************************************************

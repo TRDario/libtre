@@ -2,29 +2,22 @@
 
 namespace tre {
 	bool skipLine(const std::string& line) noexcept;
-	bool
-	validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors, int lineNumber);
-	bool validateKey(
-		std::string_view                key,
-		const LocalizationManager::Map& map,
-		std::vector<std::string>&       errors,
-		int                             lineNumber
-	);
+	bool validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors,
+						   int lineNumber);
+	bool validateKey(std::string_view key, const LocalizationManager::Map& map, std::vector<std::string>& errors,
+					 int lineNumber);
 	std::string processValue(std::string_view rawValue, std::vector<std::string>& errors, int lineNumber);
 } // namespace tre
 
 bool tre::skipLine(const std::string& line) noexcept
 {
-	return line.empty() || line.starts_with("//")
-	    || std::ranges::all_of(line, [](auto chr) { return chr == ' ' || chr == '\t'; });
+	constexpr auto WHITESPACE{[](auto chr) { return chr == ' ' || chr == '\t'; }};
+
+	return line.empty() || line.starts_with("//") || std::ranges::all_of(line, WHITESPACE);
 }
 
-bool tre::validateDelimiter(
-	std::size_t               delimiter,
-	std::size_t               lineSize,
-	std::vector<std::string>& errors,
-	int                       lineNumber
-)
+bool tre::validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors,
+							int lineNumber)
 {
 	if (delimiter == std::string::npos) {
 		errors.emplace_back(std::format("line {}: Expected a delimiting colon.", lineNumber));
@@ -43,12 +36,8 @@ bool tre::validateDelimiter(
 	}
 }
 
-bool tre::validateKey(
-	std::string_view                key,
-	const LocalizationManager::Map& map,
-	std::vector<std::string>&       errors,
-	int                             lineNumber
-)
+bool tre::validateKey(std::string_view key, const LocalizationManager::Map& map, std::vector<std::string>& errors,
+					  int lineNumber)
 {
 	if (key.size() > 30) {
 		errors.emplace_back(std::format("line {}: Key string '{}' is too long.", lineNumber, key));
@@ -82,8 +71,7 @@ std::string tre::processValue(std::string_view rawValue, std::vector<std::string
 			}
 			else {
 				errors.emplace_back(
-					std::format("line {}: Unknown escape sequence \\{} in value string.", lineNumber, *it)
-				);
+					std::format("line {}: Unknown escape sequence \\{} in value string.", lineNumber, *it));
 			}
 		}
 		else {
@@ -94,15 +82,11 @@ std::string tre::processValue(std::string_view rawValue, std::vector<std::string
 	return value;
 }
 
-tre::LocFileParseWithErrors::LocFileParseWithErrors(
-	std::string              path,
-	std::vector<std::string> errors,
-	LocalizationManager      manager
-) noexcept
-	: FileError {path}
-	, _errors {std::move(errors)}
-	, _manager {std::move(manager)}
-{}
+tre::LocFileParseWithErrors::LocFileParseWithErrors(std::string path, std::vector<std::string> errors,
+													LocalizationManager manager) noexcept
+	: FileError{path}, _errors{std::move(errors)}, _manager{std::move(manager)}
+{
+}
 
 const std::vector<std::string>& tre::LocFileParseWithErrors::errors() const noexcept
 {
@@ -121,44 +105,44 @@ const char* tre::LocFileParseWithErrors::what() const noexcept
 	return str.c_str();
 }
 
-tre::LocalizationManager::LocalizationManager() noexcept
-{}
+tre::LocalizationManager::LocalizationManager() noexcept {}
 
 tre::LocalizationManager::LocalizationManager(Map map) noexcept
-	: _map {std::move(map)}
-{}
+	: _map{std::move(map)}
+{
+}
 
 tre::LocalizationManager::LocalizationManager(const std::filesystem::path& file)
 {
-	auto                     is {tr::openFileR(file)};
+	auto is{tr::openFileR(file)};
 	std::vector<std::string> errors;
 
-	std::string              line;
+	std::string line;
 	for (int lineNumber = 1; !is.eof(); ++lineNumber) {
 		std::getline(is, line);
 		if (skipLine(line)) {
 			continue;
 		}
-		std::size_t delimiter {line.find(':')};
+		std::size_t delimiter{line.find(':')};
 		if (!validateDelimiter(delimiter, line.size(), errors, lineNumber)) {
 			continue;
 		}
-		std::string_view key {line.begin(), line.begin() + delimiter};
+		std::string_view key{line.begin(), line.begin() + delimiter};
 		if (!validateKey(key, _map, errors, lineNumber)) {
 			continue;
 		}
-		std::string_view value {line.begin() + delimiter + 1, line.end()};
+		std::string_view value{line.begin() + delimiter + 1, line.end()};
 		_map.emplace(key, processValue(value, errors, lineNumber));
 	}
 
 	if (!errors.empty()) {
-		throw LocFileParseWithErrors {file.string(), std::move(errors), LocalizationManager {std::move(_map)}};
+		throw LocFileParseWithErrors{file.string(), std::move(errors), LocalizationManager{std::move(_map)}};
 	}
 }
 
 std::string_view tre::LocalizationManager::operator[](std::string_view key) const noexcept
 {
-	auto it {_map.find(key)};
+	auto it{_map.find(key)};
 	return it != _map.end() ? it->second : key;
 }
 

@@ -11,7 +11,7 @@ namespace tre {
 	 * Localization string manager.
 	 ******************************************************************************************************************/
 	class LocalizationManager {
-	public:
+	  public:
 		/**************************************************************************************************************
 		 * Shorthand for the base map type used by the manager.
 		 **************************************************************************************************************/
@@ -67,9 +67,9 @@ namespace tre {
 		 *
 		 * @return An immutable reference to the base map.
 		 **************************************************************************************************************/
-		const Map&       map() const noexcept;
+		const Map& map() const noexcept;
 
-	private:
+	  private:
 		tr::StaticStringHashMap<30, std::string> _map;
 	};
 
@@ -77,7 +77,7 @@ namespace tre {
 	 * Error thrown by a localization file parse with errors.
 	 ******************************************************************************************************************/
 	class LocFileParseWithErrors : public tr::FileError {
-	public:
+	  public:
 		/**************************************************************************************************************
 		 * Constructs an error.
 		 *
@@ -99,17 +99,17 @@ namespace tre {
 		 *
 		 * @return The localization manager as an rvalue.
 		 **************************************************************************************************************/
-		LocalizationManager&&           manager() && noexcept;
+		LocalizationManager&& manager() && noexcept;
 
 		/**************************************************************************************************************
 		 * Gets an error message.
 		 *
 		 * @return An explanatory error message.
 		 **************************************************************************************************************/
-		virtual const char*             what() const noexcept;
+		virtual const char* what() const noexcept;
 
-	private:
+	  private:
 		std::vector<std::string> _errors;
-		LocalizationManager      _manager;
+		LocalizationManager _manager;
 	};
 } // namespace tre

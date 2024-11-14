@@ -15,7 +15,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * The atlas bitmap.
 		 **************************************************************************************************************/
-		tr::Bitmap                    bitmap;
+		tr::Bitmap bitmap;
 
 		/**************************************************************************************************************
 		 * The atlas entries.
@@ -34,16 +34,14 @@ namespace tre {
 	 *
 	 * @return An atlas bitmap with entries named after the bitmaps that make up the atlas.
 	 ******************************************************************************************************************/
-	AtlasBitmap buildAtlasBitmap(
-		const tr::StringHashMap<tr::Bitmap>& bitmaps,
-		tr::BitmapFormat                     format = tr::BitmapFormat::RGBA_8888
-	);
+	AtlasBitmap buildAtlasBitmap(const tr::StringHashMap<tr::Bitmap>& bitmaps,
+								 tr::BitmapFormat format = tr::BitmapFormat::RGBA_8888);
 
 	/******************************************************************************************************************
 	 * Static 2D texture atlas.
 	 ******************************************************************************************************************/
 	class Atlas2D {
-	public:
+	  public:
 		/**************************************************************************************************************
 		 * Uploads a pre-made atlas bitmap.
 		 *
@@ -81,7 +79,7 @@ namespace tre {
 		 *
 		 * @return True if an entry with that name exists, and false otherwise.
 		 **************************************************************************************************************/
-		bool                 contains(std::string_view name) const noexcept;
+		bool contains(std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
@@ -91,17 +89,17 @@ namespace tre {
 		 *
 		 * @return The entry rect with normalized size and coordinates.
 		 **************************************************************************************************************/
-		const tr::RectF2&    operator[](std::string_view name) const noexcept;
+		const tr::RectF2& operator[](std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
 		 * Sets the debug label of the atlas texture.
 		 *
 		 * @param[in] label The new label of the atlas texture.
 		 **************************************************************************************************************/
-		void                 setLabel(std::string_view label) noexcept;
+		void setLabel(std::string_view label) noexcept;
 
-	private:
-		tr::Texture2D                 _tex;
+	  private:
+		tr::Texture2D _tex;
 		tr::StringHashMap<tr::RectF2> _entries;
 	};
 
@@ -109,7 +107,7 @@ namespace tre {
 	 * Dynamically-allocated 2D texture atlas.
 	 ******************************************************************************************************************/
 	class DynAtlas2D {
-	public:
+	  public:
 		/**************************************************************************************************************
 		 * Creates an empty atlas.
 		 **************************************************************************************************************/
@@ -141,7 +139,7 @@ namespace tre {
 		 *
 		 * @return True if an entry with that name exists, and false otherwise.
 		 **************************************************************************************************************/
-		bool                 contains(std::string_view name) const noexcept;
+		bool contains(std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
@@ -151,7 +149,7 @@ namespace tre {
 		 *
 		 * @return The entry rect with normalized size and coordinates.
 		 **************************************************************************************************************/
-		tr::RectF2           operator[](std::string_view name) const noexcept;
+		tr::RectF2 operator[](std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
 		 * Reserves a certain amount of space in the bitmap.
@@ -166,7 +164,7 @@ namespace tre {
 		 *
 		 * @param[in] capacity The new capacity of the atlas.
 		 **************************************************************************************************************/
-		void                 reserve(glm::ivec2 capacity);
+		void reserve(glm::ivec2 capacity);
 
 		/**************************************************************************************************************
 		 * Adds an entry to the atlas.
@@ -180,7 +178,7 @@ namespace tre {
 		 * @param[in] name The name of the new entry.
 		 * @param[in] bitmap The entry's bitmap data.
 		 **************************************************************************************************************/
-		void                 add(std::string name, tr::SubBitmap bitmap);
+		void add(std::string name, tr::SubBitmap bitmap);
 
 		/**************************************************************************************************************
 		 * Removes an entry from the atlas.
@@ -189,31 +187,32 @@ namespace tre {
 		 *
 		 * @param[in] name The name of the entry to remove.
 		 **************************************************************************************************************/
-		void                 remove(std::string_view name);
+		void remove(std::string_view name);
 
 		/**************************************************************************************************************
 		 * Removes all entries from the atlas.
 		 *
 		 * @exception std::bad_alloc If an internal allocation failed.
 		 **************************************************************************************************************/
-		void                 clear();
+		void clear();
 
 		/**************************************************************************************************************
 		 * Sets the debug label of the atlas texture.
 		 *
 		 * @param[in] label The new label of the atlas texture.
 		 **************************************************************************************************************/
-		void                 setLabel(std::string label) noexcept;
+		void setLabel(std::string label) noexcept;
 
-	private:
-		std::optional<tr::Texture2D>            _tex;
-		tr::StringHashMap<tr::RectI2>           _entries;
-		std::forward_list<tr::RectI2>           _freeRects;
-		std::string                             _label;
+	  private:
+		std::optional<tr::Texture2D> _tex;
+		tr::StringHashMap<tr::RectI2> _entries;
+		std::forward_list<tr::RectI2> _freeRects;
+		std::string _label;
 
 		// Does not append new free rects unlike the exposed function.
-		void                                    rawReserve(glm::ivec2 capacity);
-		// Finds the predecessor to the first free rect, reallocating the atlas texture if needed until a suitable rect is available.
+		void rawReserve(glm::ivec2 capacity);
+		// Finds the predecessor to the first free rect, reallocating the atlas texture if needed until a suitable rect
+		// is available.
 		std::forward_list<tr::RectI2>::iterator findFreeRectPrev(glm::ivec2 size);
 	};
 } // namespace tre

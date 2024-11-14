@@ -13,26 +13,26 @@ namespace tre {
 	/******************************************************************************************************************
 	 * Special ID indicating that rendering without a specific renderer was being done.
 	 ******************************************************************************************************************/
-	inline constexpr std::uint32_t NO_RENDERER {-1U};
+	inline constexpr std::uint32_t NO_RENDERER{-1U};
 
 	/******************************************************************************************************************
 	 * Generates a new valid renderer ID.
 	 *
 	 * @return A unique, unused renderer ID.
 	 ******************************************************************************************************************/
-	std::uint32_t                  generateRendererID() noexcept;
+	std::uint32_t generateRendererID() noexcept;
 
 	/******************************************************************************************************************
 	 * Gets the ID of the last used renderer.
 	 *
 	 * @return The ID of the last used renderer.
 	 ******************************************************************************************************************/
-	std::uint32_t                  lastRendererID() noexcept;
+	std::uint32_t lastRendererID() noexcept;
 
 	/******************************************************************************************************************
 	 * Sets the ID of the last used renderer.
 	 *
 	 * @param id The ID of the renderer to be set to last used.
 	 ******************************************************************************************************************/
-	void                           setLastRendererID(std::uint32_t id) noexcept;
+	void setLastRendererID(std::uint32_t id) noexcept;
 } // namespace tre
