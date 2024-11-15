@@ -102,67 +102,67 @@ $(function(){ initResizable(false); });
 <div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structtre_1_1State.html">   13</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtre_1_1State.html">State</a> {</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">   17</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">~State</a>()                                                   = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">   17</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">~State</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">   24</a></span>        <span class="keyword">virtual</span> std::uint32_t          <a class="code hl_function" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">type</a>() const noexcept               = 0;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">   24</a></span>        <span class="keyword">virtual</span> std::uint32_t <a class="code hl_function" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">type</a>() const noexcept = 0;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">   41</a></span>        virtual std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; <a class="code hl_function" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">handleEvent</a>(const tr::Event&amp; event) = 0;</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">   42</a></span>        virtual std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; <a class="code hl_function" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">handleEvent</a>(const tr::Event&amp; event) = 0;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">   58</a></span>        virtual std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; <a class="code hl_function" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">update</a>(tr::Duration delta)          = 0;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">   63</a></span>        virtual <span class="keywordtype">void</span>                   <a class="code hl_function" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">draw</a>()                              = 0;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    };</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">   60</a></span>        virtual std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; <a class="code hl_function" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">update</a>(tr::Duration delta) = 0;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">   65</a></span>        virtual <span class="keywordtype">void</span> <a class="code hl_function" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">draw</a>() = 0;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    };</div>
 </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="foldopen" id="foldopen00069" data-start="{" data-end="};">
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html">   69</a></span>    class <a class="code hl_class" href="classtre_1_1StateManager.html">StateManager</a> {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">   74</a></span>        <a class="code hl_function" href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">StateManager</a>() noexcept = default;</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a1cb35b02ed68fd0ebb55b78461a2303f">   81</a></span>        <a class="code hl_class" href="classtre_1_1StateManager.html">StateManager</a>(std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; state) noexcept;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#afda7eb2dcf515c0cc7fafe0b0b632b72">   88</a></span>        <span class="keywordtype">bool</span>                 has_state() const noexcept;</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#aa7e6a4b840f3a26590dd6cedc67ea3bd">   97</a></span>        <a class="code hl_struct" href="structtre_1_1State.html">State</a>&amp;               state() noexcept;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#ad45168552c7f631b03f0b41f78f9ffcb">  106</a></span>        const <a class="code hl_struct" href="structtre_1_1State.html">State</a>&amp;         state() const noexcept;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#ab7ef77c48f2d09ba659ff2a19c63c0a2">  113</a></span>        const tr::Benchmark&amp; updateBenchmark() const noexcept;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a63bdde930c26ba89ebfef981e707cdc7">  120</a></span>        const tr::Benchmark&amp; drawBenchmark() const noexcept;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a665b1d9aa61270b30526281b3187a72d">  131</a></span>        <span class="keywordtype">void</span>                 <a class="code hl_function" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">handleEvent</a>(const tr::Event&amp; event);</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a84d7a243ed49f7bfce7b5ed9c435327b">  142</a></span>        <span class="keywordtype">void</span>                 <a class="code hl_function" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">update</a>(tr::Duration delta);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a46d2ac79362a1a6f87639b36350c1085">  151</a></span>        <span class="keywordtype">void</span>                 <a class="code hl_function" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">draw</a>();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    private:</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; _state;</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        tr::Benchmark          _updateBenchmark;</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        tr::Benchmark          _drawBenchmark;</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    };</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="foldopen" id="foldopen00071" data-start="{" data-end="};">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html">   71</a></span>    class <a class="code hl_class" href="classtre_1_1StateManager.html">StateManager</a> {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">   76</a></span>        <a class="code hl_function" href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">StateManager</a>() noexcept = default;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a1cb35b02ed68fd0ebb55b78461a2303f">   83</a></span>        <a class="code hl_class" href="classtre_1_1StateManager.html">StateManager</a>(std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; state) noexcept;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#afda7eb2dcf515c0cc7fafe0b0b632b72">   90</a></span>        <span class="keywordtype">bool</span> has_state() const noexcept;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#aa7e6a4b840f3a26590dd6cedc67ea3bd">   99</a></span>        <a class="code hl_struct" href="structtre_1_1State.html">State</a>&amp; state() noexcept;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#ad45168552c7f631b03f0b41f78f9ffcb">  108</a></span>        const <a class="code hl_struct" href="structtre_1_1State.html">State</a>&amp; state() const noexcept;</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#ab7ef77c48f2d09ba659ff2a19c63c0a2">  115</a></span>        const tr::Benchmark&amp; updateBenchmark() const noexcept;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a63bdde930c26ba89ebfef981e707cdc7">  122</a></span>        const tr::Benchmark&amp; drawBenchmark() const noexcept;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a665b1d9aa61270b30526281b3187a72d">  133</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">handleEvent</a>(const tr::Event&amp; event);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a84d7a243ed49f7bfce7b5ed9c435327b">  144</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">update</a>(tr::Duration delta);</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classtre_1_1StateManager.html#a46d2ac79362a1a6f87639b36350c1085">  153</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">draw</a>();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>      private:</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        std::unique_ptr&lt;<a class="code hl_struct" href="structtre_1_1State.html">State</a>&gt; _state;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        tr::Benchmark _updateBenchmark;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        tr::Benchmark _drawBenchmark;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    };</div>
 </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="state__manager_8hpp.html#afb2b556cf93aa8a8a4b9f4f29c1479c8">  164</a></span>    std::uint32_t generateStateType() noexcept;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>} <span class="comment">// namespace tre</span></div>
-<div class="ttc" id="aclasstre_1_1StateManager_html"><div class="ttname"><a href="classtre_1_1StateManager.html">tre::StateManager</a></div><div class="ttdoc">Game state manager.</div><div class="ttdef"><b>Definition</b> state_manager.hpp:69</div></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="state__manager_8hpp.html#afb2b556cf93aa8a8a4b9f4f29c1479c8">  166</a></span>    std::uint32_t generateStateType() noexcept;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>} <span class="comment">// namespace tre</span></div>
+<div class="ttc" id="aclasstre_1_1StateManager_html"><div class="ttname"><a href="classtre_1_1StateManager.html">tre::StateManager</a></div><div class="ttdoc">Game state manager.</div><div class="ttdef"><b>Definition</b> state_manager.hpp:71</div></div>
 <div class="ttc" id="aclasstre_1_1StateManager_html_a2f76a4e51a3a58ebb4bb4499810b9314"><div class="ttname"><a href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">tre::StateManager::StateManager</a></div><div class="ttdeci">StateManager() noexcept=default</div><div class="ttdoc">Constructs a manager with no held state.</div></div>
 <div class="ttc" id="astructtre_1_1State_html"><div class="ttname"><a href="structtre_1_1State.html">tre::State</a></div><div class="ttdoc">Abstract game state interface.</div><div class="ttdef"><b>Definition</b> state_manager.hpp:13</div></div>
 <div class="ttc" id="astructtre_1_1State_html_a04fd7739162a973aa236b5030d3767da"><div class="ttname"><a href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">tre::State::handleEvent</a></div><div class="ttdeci">virtual std::unique_ptr&lt; State &gt; handleEvent(const tr::Event &amp;event)=0</div><div class="ttdoc">Handles an event.</div></div>
