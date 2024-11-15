@@ -249,6 +249,7 @@ namespace tre {
 
 	  private:
 		struct TextureRefHash {
+			/// @private
 			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
 		};
 
@@ -257,8 +258,7 @@ namespace tre {
 		using VertexFan = std::vector<Vertex>;
 		using RawData = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
 		using Primitive = std::variant<Triangle, Rectangle, VertexFan, RawData>;
-		using PrimitiveList = std::vector<Primitive>;
-		using Priority = std::unordered_map<std::optional<TextureRef>, PrimitiveList, TextureRefHash>;
+		using Priority = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
 		tr::Shader _vertexShader;
 		tr::Shader _fragmentShader;

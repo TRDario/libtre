@@ -232,27 +232,29 @@ void tre::Renderer2D::setupContext(tr::GLContext& glContext) noexcept
 
 void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index)
 {
-	std::visit(tr::overloaded{[&](const Triangle& triangle) {
-								  _vertices.insert(_vertices.end(), triangle.begin(), triangle.end());
-								  _indices.insert(_indices.end(), {index++, index++, index++});
-							  },
-							  [&](const Rectangle& rectangle) {
-								  _vertices.insert(_vertices.end(), rectangle.begin(), rectangle.end());
-								  tr::fillPolygonIndices(back_inserter(_indices), 4, index);
-								  index += 4;
-							  },
-							  [&](const VertexFan& fan) {
-								  _vertices.insert(_vertices.end(), fan.begin(), fan.end());
-								  tr::fillPolygonIndices(back_inserter(_indices), fan.size(), index);
-								  index += fan.size();
-							  },
-							  [&](const RawData& data) {
-								  const auto offset{std::views::transform([&](auto idx) { return idx + index; })};
-								  _vertices.insert(_vertices.end(), data.first.begin(), data.first.end());
-								  std::ranges::copy(data.second | offset, back_inserter(_indices));
-								  index += data.first.size();
-							  }},
-			   primitive);
+	const auto triangle{[&](const Triangle& triangle) {
+		_vertices.insert(_vertices.end(), triangle.begin(), triangle.end());
+		_indices.insert(_indices.end(), {index++, index++, index++});
+	}};
+	const auto rectangle{[&](const Rectangle& rectangle) {
+		_vertices.insert(_vertices.end(), rectangle.begin(), rectangle.end());
+		tr::fillPolygonIndices(back_inserter(_indices), 4, index);
+		index += 4;
+	}};
+	const auto fan{[&](const VertexFan& fan) {
+		_vertices.insert(_vertices.end(), fan.begin(), fan.end());
+		tr::fillPolygonIndices(back_inserter(_indices), fan.size(), index);
+		index += fan.size();
+	}};
+	const auto data{[&](const RawData& data) {
+		const auto offset{std::views::transform([&](auto idx) { return idx + index; })};
+
+		_vertices.insert(_vertices.end(), data.first.begin(), data.first.end());
+		std::ranges::copy(data.second | offset, back_inserter(_indices));
+		index += data.first.size();
+	}};
+
+	std::visit(tr::overloaded{triangle, rectangle, fan, data}, primitive);
 }
 
 void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFramebuffer& target, int minPriority)
