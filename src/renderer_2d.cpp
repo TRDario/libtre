@@ -36,7 +36,7 @@ tre::Renderer2D::Renderer2D()
 void tre::Renderer2D::setFieldSize(glm::vec2 size) noexcept
 {
 	_fieldSize = size;
-	_vertexShader.setUniform(0, _fieldSize);
+	_vertexShader.setUniform(0, glm::ortho(0.0f, _fieldSize.x, _fieldSize.y, 0.0f));
 }
 
 void tre::Renderer2D::setBlendingMode(tr::BlendMode blendMode) noexcept
