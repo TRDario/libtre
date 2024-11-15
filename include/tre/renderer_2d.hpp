@@ -259,7 +259,6 @@ namespace tre {
 		using Primitive = std::variant<Triangle, Rectangle, VertexFan, RawData>;
 		using PrimitiveList = std::vector<Primitive>;
 		using Priority = std::unordered_map<std::optional<TextureRef>, PrimitiveList, TextureRefHash>;
-		using RenderGraph = std::map<int, Priority, std::greater<int>>;
 
 		tr::Shader _vertexShader;
 		tr::Shader _fragmentShader;
@@ -269,7 +268,7 @@ namespace tre {
 		tr::IndexBuffer _indexBuffer;
 		std::vector<Vertex> _vertices;
 		std::vector<std::uint16_t> _indices;
-		RenderGraph _renderGraph;
+		std::map<int, Priority> _renderGraph;
 
 		glm::vec2 _fieldSize;
 		tr::BlendMode _blendMode;

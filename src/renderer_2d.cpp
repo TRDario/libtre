@@ -262,8 +262,8 @@ void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFrameb
 	}
 	glContext.setFramebuffer(target);
 
-	const auto end{std::ranges::find_if(_renderGraph, [=](auto& v) { return v.first < minPriority; })};
-	for (auto& priority : std::ranges::subrange{_renderGraph.begin(), end} | std::views::values) {
+	const std::ranges::subrange range{_renderGraph.lower_bound(minPriority), _renderGraph.end()};
+	for (auto& priority : range | std::views::values) {
 		for (auto& [texture, primitives] : priority) {
 			_vertices.clear();
 			_indices.clear();
@@ -284,7 +284,7 @@ void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFrameb
 			glContext.drawIndexed(tr::Primitive::TRIS, 0, _indexBuffer.size());
 		}
 	}
-	_renderGraph.erase(_renderGraph.begin(), end);
+	_renderGraph.erase(range.begin(), range.end());
 	setLastRendererID(ID);
 }
 
