@@ -1,11 +1,7 @@
-cmake_minimum_required(VERSION 3.23.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.24.0 FATAL_ERROR)
 if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
 endif()
-
-include(FetchContent)
-FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_TAG main)
-FetchContent_MakeAvailable(tr)
 
 function(compile_shader_spv FILE ARRAYNAME)
     if (UNIX)
@@ -31,6 +27,10 @@ compile_shader_spv(${RESOURCES_DIR}/renderer_2d.vert RENDERER_2D_VERT_SPV)
 compile_shader_spv(${RESOURCES_DIR}/renderer_2d.frag RENDERER_2D_FRAG_SPV)
 
 project(tre LANGUAGES C CXX VERSION 0.0.1)
+
+include(FetchContent)
+FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_TAG main FIND_PACKAGE_ARGS NAMES tr)
+FetchContent_MakeAvailable(tr)
 
 add_library(tre STATIC)
 target_link_libraries(tre PRIVATE tr)
