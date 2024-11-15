@@ -3,6 +3,10 @@ if(POLICY CMP0167)
   cmake_policy(SET CMP0167 NEW)
 endif()
 
+include(FetchContent)
+FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_TAG main)
+FetchContent_MakeAvailable(tr)
+
 function(compile_shader_spv FILE ARRAYNAME)
     if (UNIX)
         add_custom_command(
@@ -29,6 +33,7 @@ compile_shader_spv(${RESOURCES_DIR}/renderer_2d.frag RENDERER_2D_FRAG_SPV)
 project(tre LANGUAGES C CXX VERSION 0.0.1)
 
 add_library(tre STATIC)
+target_link_libraries(tre PRIVATE tr)
 target_compile_features(tre PRIVATE cxx_std_20)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(tre PRIVATE -Wall -Wpedantic)
