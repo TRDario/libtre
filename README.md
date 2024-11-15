@@ -18,4 +18,15 @@ libtre depends on the following external libraries:
 - [libtr](https://github.com/TRDario/libtr)
 
 ## Building ##
-libtre requires a C++20-compatible compiler. Files for building with CMake are provided.
+The following is required to build libtre:
+- A C++20 compiler.
+- CMake 3.24.0 or higher.
+- glslang
+- xxd
+
+libtre can be easily integrated into a project using CMake FetchContent:
+```
+include(FetchContent)
+FetchContent_Declare(tre GIT_REPOSITORY https://github.com/TRDario/libtre.git GIT_TAG main FIND_PACKAGE_ARGS NAMES tre)
+FetchContent_MakeAvailable(tre)
+```
