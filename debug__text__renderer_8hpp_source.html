@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.12.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libtre: tre Directory Reference</title>
+<title>libtre: debug_text_renderer.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -90,30 +90,32 @@ $(function(){ initResizable(false); });
 </div><!-- top -->
 <div id="doc-content">
 <div class="header">
-  <div class="headertitle"><div class="title">tre Directory Reference</div></div>
+  <div class="headertitle"><div class="title">debug_text_renderer.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="atlas_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="atlas_8hpp.html">atlas.hpp</a></td></tr>
-<tr class="memdesc:atlas_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides texture atlases. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="debug__text__renderer_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>debug_text_renderer.hpp</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="localization__manager_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="localization__manager_8hpp.html">localization_manager.hpp</a></td></tr>
-<tr class="memdesc:localization__manager_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a localization manager class. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="renderer__2d_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="renderer__2d_8hpp.html">renderer_2d.hpp</a></td></tr>
-<tr class="memdesc:renderer__2d_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a basic, batched 2D renderer. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="renderer__base_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><b>renderer_base.hpp</b></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="state__manager_8hpp_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="state__manager_8hpp.html">state_manager.hpp</a></td></tr>
-<tr class="memdesc:state__manager_8hpp"><td class="mdescLeft">&#160;</td><td class="mdescRight">Provides a game state management framework. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="renderer__2d_8hpp.html">renderer_2d.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>tre {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classtre_1_1DebugTextRenderer.html">   13</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtre_1_1DebugTextRenderer.html">DebugTextRenderer</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keywordtype">void</span> outputTo(<a class="code hl_class" href="classtre_1_1Renderer2D.html">Renderer2D</a>&amp; renderer, <span class="keywordtype">int</span> priority);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        tr::Texture2D _texture;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        tr::Sampler _sampler;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        glm::ivec2 _lPen;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        glm::ivec2 _rPen;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    };</div>
+</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>} <span class="comment">// namespace tre</span></div>
+<div class="ttc" id="aclasstre_1_1DebugTextRenderer_html"><div class="ttname"><a href="classtre_1_1DebugTextRenderer.html">tre::DebugTextRenderer</a></div><div class="ttdoc">Debug text renderer.</div><div class="ttdef"><b>Definition</b> debug_text_renderer.hpp:13</div></div>
+<div class="ttc" id="aclasstre_1_1Renderer2D_html"><div class="ttname"><a href="classtre_1_1Renderer2D.html">tre::Renderer2D</a></div><div class="ttdoc">Basic, optimized 2D renderer.</div><div class="ttdef"><b>Definition</b> renderer_2d.hpp:15</div></div>
+<div class="ttc" id="arenderer__2d_8hpp_html"><div class="ttname"><a href="renderer__2d_8hpp.html">renderer_2d.hpp</a></div><div class="ttdoc">Provides a basic, batched 2D renderer.</div></div>
+</div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
