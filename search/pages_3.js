@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['text_20format_0',['Formatted Debug Text Format',['../debformat.html',1,'']]]
+];

@@ -1,11 +1,8 @@
 var searchData=
 [
-  ['setblendingmode_0',['setBlendingMode',['../classtre_1_1Renderer2D.html#ac07a9a0d3cc9e567b842ad426f4d8861',1,'tre::Renderer2D']]],
-  ['setfieldsize_1',['setFieldSize',['../classtre_1_1Renderer2D.html#a1acc60a675c99b31b6081c4c8e63187a',1,'tre::Renderer2D']]],
-  ['setlabel_2',['setLabel',['../classtre_1_1Atlas2D.html#a446198b2c2ca4c4dcc25a1851d0eff43',1,'tre::Atlas2D::setLabel()'],['../classtre_1_1DynAtlas2D.html#a7637f52b55e5d35226baee47fab1babd',1,'tre::DynAtlas2D::setLabel()']]],
-  ['setscissorbox_3',['setScissorBox',['../classtre_1_1Renderer2D.html#a81a43b7e33abf3b6ba8e7bbddd60aa0a',1,'tre::Renderer2D']]],
-  ['state_4',['State',['../structtre_1_1State.html',1,'tre']]],
-  ['state_5',['state',['../classtre_1_1StateManager.html#aa7e6a4b840f3a26590dd6cedc67ea3bd',1,'tre::StateManager::state() noexcept'],['../classtre_1_1StateManager.html#ad45168552c7f631b03f0b41f78f9ffcb',1,'tre::StateManager::state() const noexcept']]],
-  ['state_5fmanager_2ehpp_6',['state_manager.hpp',['../state__manager_8hpp.html',1,'']]],
-  ['statemanager_7',['StateManager',['../classtre_1_1StateManager.html',1,'tre::StateManager'],['../classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314',1,'tre::StateManager::StateManager() noexcept=default'],['../classtre_1_1StateManager.html#a1cb35b02ed68fd0ebb55b78461a2303f',1,'tre::StateManager::StateManager(std::unique_ptr&lt; State &gt; state) noexcept']]]
+  ['remove_0',['remove',['../classtre_1_1DynAtlas2D.html#ac79c9e1d92d5db976a832dbcb73b94e8',1,'tre::DynAtlas2D']]],
+  ['renderer2d_1',['Renderer2D',['../classtre_1_1Renderer2D.html',1,'tre::Renderer2D'],['../classtre_1_1Renderer2D.html#a8189edba8ce1badffdd82849c14375e5',1,'tre::Renderer2D::Renderer2D()']]],
+  ['renderer_5f2d_2ehpp_2',['renderer_2d.hpp',['../renderer__2d_8hpp.html',1,'']]],
+  ['reserve_3',['reserve',['../classtre_1_1DynAtlas2D.html#ad68e9a70d3056d112febf33a509cbfa4',1,'tre::DynAtlas2D']]],
+  ['right_4',['RIGHT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403',1,'tre::DebugTextRenderer']]]
 ];

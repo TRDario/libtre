@@ -91,7 +91,9 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classtre_1_1DebugTextRenderer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">tre::DebugTextRenderer Class Reference</div></div>
 </div><!--header-->
@@ -102,15 +104,272 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="debug__text__renderer_8hpp_source.html">debug_text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:afa3e64e2edce696275bc804deadd1608" id="r_afa3e64e2edce696275bc804deadd1608"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a> : bool { <a class="el" href="#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758">LEFT</a>
+, <a class="el" href="#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403">RIGHT</a>
+ }</td></tr>
+<tr class="memdesc:afa3e64e2edce696275bc804deadd1608"><td class="mdescLeft">&#160;</td><td class="mdescRight">Text alignment types.  <a href="#afa3e64e2edce696275bc804deadd1608">More...</a><br /></td></tr>
+<tr class="separator:afa3e64e2edce696275bc804deadd1608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:af189f356c296ca066ff9e24367b9a25c" id="r_af189f356c296ca066ff9e24367b9a25c"><td class="memItemLeft" align="right" valign="top"><a id="af189f356c296ca066ff9e24367b9a25c" name="af189f356c296ca066ff9e24367b9a25c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>outputTo</b> (<a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;renderer, int priority)</td></tr>
-<tr class="separator:af189f356c296ca066ff9e24367b9a25c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad814d2141e02f091c2acdf361dc8cced" id="r_ad814d2141e02f091c2acdf361dc8cced"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad814d2141e02f091c2acdf361dc8cced">DebugTextRenderer</a> ()</td></tr>
+<tr class="memdesc:ad814d2141e02f091c2acdf361dc8cced"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the debug text renderer.  <br /></td></tr>
+<tr class="separator:ad814d2141e02f091c2acdf361dc8cced"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af02a3dfe9f1098b9b4ce33bdf35bd0e8" id="r_af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="memItemLeft" align="right" valign="top"><a id="af02a3dfe9f1098b9b4ce33bdf35bd0e8" name="af02a3dfe9f1098b9b4ce33bdf35bd0e8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> () noexcept</td></tr>
+<tr class="memdesc:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears any written text. <br /></td></tr>
+<tr class="separator:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab60ed31995cfcb1be031296c8ecb276a" id="r_ab60ed31995cfcb1be031296c8ecb276a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab60ed31995cfcb1be031296c8ecb276a">draw</a> (tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target)</td></tr>
+<tr class="memdesc:ab60ed31995cfcb1be031296c8ecb276a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all written text to a target.  <br /></td></tr>
+<tr class="separator:ab60ed31995cfcb1be031296c8ecb276a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b737daeaf3f1d2717fba3f4efb081f4" id="r_a8b737daeaf3f1d2717fba3f4efb081f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b737daeaf3f1d2717fba3f4efb081f4">setColumnLimit</a> (std::uint8_t columns) noexcept</td></tr>
+<tr class="memdesc:a8b737daeaf3f1d2717fba3f4efb081f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text's column limit.  <br /></td></tr>
+<tr class="separator:a8b737daeaf3f1d2717fba3f4efb081f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38518ffcf159440d1863b46777ca5d7c" id="r_a38518ffcf159440d1863b46777ca5d7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38518ffcf159440d1863b46777ca5d7c">setScale</a> (float scale) noexcept</td></tr>
+<tr class="memdesc:a38518ffcf159440d1863b46777ca5d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text's drawing scale.  <br /></td></tr>
+<tr class="separator:a38518ffcf159440d1863b46777ca5d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a227d5248b7e33bf66e4b41d803cd40da" id="r_a227d5248b7e33bf66e4b41d803cd40da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a227d5248b7e33bf66e4b41d803cd40da">write</a> (std::string_view text, tr::RGBA8 textColor=<a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a>, tr::RGBA8 backgroundColor=<a class="el" href="#aab76442188f79677a8bc08e3c91d5d00">NONE</a>, std::span&lt; tr::RGBA8 &gt; extraColors={}, <a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a> alignment=<a class="el" href="#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758">Align::LEFT</a>)</td></tr>
+<tr class="memdesc:a227d5248b7e33bf66e4b41d803cd40da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a line of formatted text.  <br /></td></tr>
+<tr class="separator:a227d5248b7e33bf66e4b41d803cd40da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a887f534c5a60910e844e2d1435838986" id="r_a887f534c5a60910e844e2d1435838986"><td class="memItemLeft" align="right" valign="top"><a id="a887f534c5a60910e844e2d1435838986" name="a887f534c5a60910e844e2d1435838986"></a>
+static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> {-3U}</td></tr>
+<tr class="memdesc:a887f534c5a60910e844e2d1435838986"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique renderer ID of this renderer. <br /></td></tr>
+<tr class="separator:a887f534c5a60910e844e2d1435838986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab76442188f79677a8bc08e3c91d5d00" id="r_aab76442188f79677a8bc08e3c91d5d00"><td class="memItemLeft" align="right" valign="top"><a id="aab76442188f79677a8bc08e3c91d5d00" name="aab76442188f79677a8bc08e3c91d5d00"></a>
+static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b>NONE</b> {0, 0, 0, 0}</td></tr>
+<tr class="memdesc:aab76442188f79677a8bc08e3c91d5d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used transparent color. <br /></td></tr>
+<tr class="separator:aab76442188f79677a8bc08e3c91d5d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b1f2dea3b7311260fdd3f0d6578a22" id="r_a32b1f2dea3b7311260fdd3f0d6578a22"><td class="memItemLeft" align="right" valign="top"><a id="a32b1f2dea3b7311260fdd3f0d6578a22" name="a32b1f2dea3b7311260fdd3f0d6578a22"></a>
+static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b>WHITE</b> {255, 255, 255, 255}</td></tr>
+<tr class="memdesc:a32b1f2dea3b7311260fdd3f0d6578a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used white color. <br /></td></tr>
+<tr class="separator:a32b1f2dea3b7311260fdd3f0d6578a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Debug text renderer. </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<p>The renderer is conceptualized around two independent "pens", a left-aligned and right-aligned one, writing text sequentially. Writing uses special text formatting, the specifics of which you can see at <a class="el" href="debformat.html">Formatted Debug Text Format</a>. </p>
+</div><h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="afa3e64e2edce696275bc804deadd1608" name="afa3e64e2edce696275bc804deadd1608"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa3e64e2edce696275bc804deadd1608">&#9670;&#160;</a></span>Align</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#afa3e64e2edce696275bc804deadd1608">tre::DebugTextRenderer::Align</a> : bool</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Text alignment types. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758" name="afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758"></a>LEFT&#160;</td><td class="fielddoc"><p>The text is is placed left-aligned from the left edge of the screen. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403" name="afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403"></a>RIGHT&#160;</td><td class="fielddoc"><p>The text is is placed right-aligned from the right edge of the screen. </p>
+</td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ad814d2141e02f091c2acdf361dc8cced" name="ad814d2141e02f091c2acdf361dc8cced"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad814d2141e02f091c2acdf361dc8cced">&#9670;&#160;</a></span>DebugTextRenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tre::DebugTextRenderer::DebugTextRenderer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Constructs the debug text renderer. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab60ed31995cfcb1be031296c8ecb276a" name="ab60ed31995cfcb1be031296c8ecb276a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab60ed31995cfcb1be031296c8ecb276a">&#9670;&#160;</a></span>draw()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::DebugTextRenderer::draw </td>
+          <td>(</td>
+          <td class="paramtype">tr::GLContext &amp;</td>          <td class="paramname"><span class="paramname"><em>glContext</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Draws all written text to a target. </p>
+<p>The text will remain drawable until a call to <a class="el" href="#af02a3dfe9f1098b9b4ce33bdf35bd0e8" title="Clears any written text.">clear()</a>.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">glContext</td><td>The OpenGL context to manipulate. </td></tr>
+    <tr><td class="paramname">target</td><td>The drawing target. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a8b737daeaf3f1d2717fba3f4efb081f4" name="a8b737daeaf3f1d2717fba3f4efb081f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8b737daeaf3f1d2717fba3f4efb081f4">&#9670;&#160;</a></span>setColumnLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::DebugTextRenderer::setColumnLimit </td>
+          <td>(</td>
+          <td class="paramtype">std::uint8_t</td>          <td class="paramname"><span class="paramname"><em>columns</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the text's column limit. </p>
+<p>Setting this in the middle of writing will leave any existing text as-is.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>The maximum allowed number of columns tolerated before a break is needed. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a38518ffcf159440d1863b46777ca5d7c" name="a38518ffcf159440d1863b46777ca5d7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38518ffcf159440d1863b46777ca5d7c">&#9670;&#160;</a></span>setScale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::DebugTextRenderer::setScale </td>
+          <td>(</td>
+          <td class="paramtype">float</td>          <td class="paramname"><span class="paramname"><em>scale</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Sets the text's drawing scale. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">scale</td><td>The scale of the text. Glyphs are 8x8 on x1.0 scale. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a227d5248b7e33bf66e4b41d803cd40da" name="a227d5248b7e33bf66e4b41d803cd40da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a227d5248b7e33bf66e4b41d803cd40da">&#9670;&#160;</a></span>write()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::DebugTextRenderer::write </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>textColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>backgroundColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#aab76442188f79677a8bc08e3c91d5d00">NONE</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; tr::RGBA8 &gt;</td>          <td class="paramname"><span class="paramname"><em>extraColors</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758">Align::LEFT</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes a line of formatted text. </p>
+<p>For specifics of the text format, see <a class="el" href="debformat.html">Formatted Debug Text Format</a>.</p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>The text to write. </td></tr>
+    <tr><td class="paramname">textColor</td><td>The default text color. </td></tr>
+    <tr><td class="paramname">backgroundColor</td><td>The default background color. </td></tr>
+    <tr><td class="paramname">extraColors</td><td>Additional colors used by the text. </td></tr>
+    <tr><td class="paramname">alignment</td><td>Whether to draw the text left- or right-aligned. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li><a class="el" href="debug__text__renderer_8hpp_source.html">debug_text_renderer.hpp</a></li>
 </ul>
 </div><!-- contents -->

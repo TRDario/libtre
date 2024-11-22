@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['localization_5fmanager_2ehpp_0',['localization_manager.hpp',['../localization__manager_8hpp.html',1,'']]]
+  ['debug_5ftext_5frenderer_2ehpp_0',['debug_text_renderer.hpp',['../debug__text__renderer_8hpp.html',1,'']]]
 ];

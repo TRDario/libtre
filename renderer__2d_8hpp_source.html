@@ -187,26 +187,24 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="keyword">using </span>Primitive = std::variant&lt;Triangle, Rectangle, VertexFan, RawData&gt;;</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keyword">using </span>Priority = std::unordered_map&lt;std::optional&lt;TextureRef&gt;, std::vector&lt;Primitive&gt;, TextureRefHash&gt;;</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        tr::Shader _vertexShader;</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        tr::Shader _fragmentShader;</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        tr::ShaderPipeline _shaderPipeline;</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        tr::TextureUnit _textureUnit;</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        tr::VertexBuffer _vertexBuffer;</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        tr::IndexBuffer _indexBuffer;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        std::vector&lt;Vertex&gt; _vertices;</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        std::vector&lt;std::uint16_t&gt; _indices;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        std::map&lt;int, Priority&gt; _renderGraph;</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        glm::vec2 _fieldSize;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        tr::BlendMode _blendMode;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        tr::RectI2 _scissorBox;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="keywordtype">void</span> setupContext(tr::GLContext&amp; glContext) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        <span class="keywordtype">void</span> writeToVertexIndexVectors(<span class="keyword">const</span> Primitive&amp; primitive, std::uint16_t&amp; index);</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    };</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        tr::OwningShaderPipeline _shaderPipeline;</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        tr::TextureUnit _textureUnit;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        tr::VertexBuffer _vertexBuffer;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        tr::IndexBuffer _indexBuffer;</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        std::vector&lt;Vertex&gt; _vertices;</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        std::vector&lt;std::uint16_t&gt; _indices;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        std::map&lt;int, Priority&gt; _renderGraph;</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        glm::vec2 _fieldSize;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        tr::BlendMode _blendMode;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        tr::RectI2 _scissorBox;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>      <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <span class="keywordtype">void</span> setupContext(tr::GLContext&amp; glContext) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="keywordtype">void</span> writeToVertexIndexVectors(<span class="keyword">const</span> Primitive&amp; primitive, std::uint16_t&amp; index);</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>    };</div>
 </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>} <span class="comment">// namespace tre</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>} <span class="comment">// namespace tre</span></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html"><div class="ttname"><a href="classtre_1_1Renderer2D.html">tre::Renderer2D</a></div><div class="ttdoc">Basic, optimized 2D renderer.</div><div class="ttdef"><b>Definition</b> renderer_2d.hpp:15</div></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html_a03761fb5d5dff11477416ee598ff5838"><div class="ttname"><a href="classtre_1_1Renderer2D.html#a03761fb5d5dff11477416ee598ff5838">tre::Renderer2D::drawUpToPriority</a></div><div class="ttdeci">void drawUpToPriority(tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target, int minPriority)</div><div class="ttdoc">Draws added objects of a certain priotrity or higher to a target.</div></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html_a053e2c91fd6a63cffc664b7643fdb303"><div class="ttname"><a href="classtre_1_1Renderer2D.html#a053e2c91fd6a63cffc664b7643fdb303">tre::Renderer2D::addUntexturedCircle</a></div><div class="ttdeci">void addUntexturedCircle(int priority, const tr::CircleF &amp;circle, tr::RGBA8 color)</div><div class="ttdoc">Adds an untextured circle to the list of objects to draw in the next draw call.</div></div>

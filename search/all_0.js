@@ -9,7 +9,8 @@ var searchData=
   ['adduntexturedpolygonfan_6',['addUntexturedPolygonFan',['../classtre_1_1Renderer2D.html#a15d100e6211aa5aadf593f7e602f371a',1,'tre::Renderer2D']]],
   ['adduntexturedrect_7',['addUntexturedRect',['../classtre_1_1Renderer2D.html#a07a782bc88052b094f1ae435fd98c835',1,'tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2 &amp;rect, tr::RGBA8 color)'],['../classtre_1_1Renderer2D.html#ae1ff19265ab404720fc2656dfeb683b2',1,'tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2 &amp;rect, std::array&lt; tr::RGBA8, 4 &gt; colors)']]],
   ['adduntexturedrotatedrectangle_8',['addUntexturedRotatedRectangle',['../classtre_1_1Renderer2D.html#a291dc97286bee6d8ff1e8f963d0f9421',1,'tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, tr::RGBA8 color)'],['../classtre_1_1Renderer2D.html#aca013df2847f5d3896f0877e6b1337fa',1,'tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, std::array&lt; tr::RGBA8, 4 &gt; colors)']]],
-  ['atlas_2ehpp_9',['atlas.hpp',['../atlas_8hpp.html',1,'']]],
-  ['atlas2d_10',['Atlas2D',['../classtre_1_1Atlas2D.html',1,'tre::Atlas2D'],['../classtre_1_1Atlas2D.html#a34bb260c1b42de743956c772e69042cb',1,'tre::Atlas2D::Atlas2D(AtlasBitmap atlasBitmap)'],['../classtre_1_1Atlas2D.html#a9592a0ce6929e9d0914dc6953565c78a',1,'tre::Atlas2D::Atlas2D(const tr::StringHashMap&lt; tr::Bitmap &gt; &amp;bitmaps)']]],
-  ['atlasbitmap_11',['AtlasBitmap',['../structtre_1_1AtlasBitmap.html',1,'tre']]]
+  ['align_9',['Align',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608',1,'tre::DebugTextRenderer']]],
+  ['atlas_2ehpp_10',['atlas.hpp',['../atlas_8hpp.html',1,'']]],
+  ['atlas2d_11',['Atlas2D',['../classtre_1_1Atlas2D.html',1,'tre::Atlas2D'],['../classtre_1_1Atlas2D.html#a34bb260c1b42de743956c772e69042cb',1,'tre::Atlas2D::Atlas2D(AtlasBitmap atlasBitmap)'],['../classtre_1_1Atlas2D.html#a9592a0ce6929e9d0914dc6953565c78a',1,'tre::Atlas2D::Atlas2D(const tr::StringHashMap&lt; tr::Bitmap &gt; &amp;bitmaps)']]],
+  ['atlasbitmap_12',['AtlasBitmap',['../structtre_1_1AtlasBitmap.html',1,'tre']]]
 ];
