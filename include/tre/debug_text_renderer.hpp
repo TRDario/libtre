@@ -126,8 +126,8 @@ namespace tre {
 		std::vector<ShaderGlyph> _shaderGlyphs;
 
 		void writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
-							  std::optional<decltype(_shaderGlyphs)::iterator> lineStart,
-							  std::optional<decltype(_shaderGlyphs)::iterator> wordStart, tr::RGBA8 textColor,
+							  std::optional<decltype(_shaderGlyphs)::iterator>& lineStart,
+							  std::optional<decltype(_shaderGlyphs)::iterator>& wordStart, tr::RGBA8 textColor,
 							  tr::RGBA8 backgroundColor, Align alignment);
 		void setupContext(tr::GLContext& glContext) noexcept;
 	};

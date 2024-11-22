@@ -59,8 +59,8 @@ void tre::DebugTextRenderer::clear() noexcept
 }
 
 void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
-											  std::optional<decltype(_shaderGlyphs)::iterator> lineStart,
-											  std::optional<decltype(_shaderGlyphs)::iterator> wordStart,
+											  std::optional<decltype(_shaderGlyphs)::iterator>& lineStart,
+											  std::optional<decltype(_shaderGlyphs)::iterator>& wordStart,
 											  tr::RGBA8 textColor, tr::RGBA8 backgroundColor, Align alignment)
 {
 	if (lineLength >= _columnLimit) {
@@ -121,7 +121,10 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 
 			switch (*it) {
 			case 'b':
-				if (++it != text.end() && std::isdigit(*it) && *it - '0' < extraColors.size()) {
+				if (++it == text.end()) {
+					goto break_loop;
+				}
+				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
 					curBgColor = extraColors[*it - '0'];
 				}
 				break;
@@ -129,7 +132,10 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 				curBgColor = backgroundColor;
 				break;
 			case 'c':
-				if (++it != text.end() && std::isdigit(*it) && *it - '0' < extraColors.size()) {
+				if (++it == text.end()) {
+					goto break_loop;
+				}
+				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
 					curTextColor = extraColors[*it - '0'];
 				}
 				break;
@@ -137,7 +143,10 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 				curTextColor = textColor;
 				break;
 			case 'i':
-				if (++it != text.end() && std::isdigit(*it)) {
+				if (++it == text.end()) {
+					goto break_loop;
+				}
+				if (std::isdigit(*it)) {
 					for (int i = 0; i < *it - '0'; ++i) {
 						writeRegularChar(' ', line, lineLength, lineStart, wordStart, curTextColor, curBgColor,
 										 alignment);
@@ -168,6 +177,7 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 			writeRegularChar(*it, line, lineLength, lineStart, wordStart, curTextColor, curBgColor, alignment);
 		}
 	}
+break_loop:
 	++line;
 }
 
