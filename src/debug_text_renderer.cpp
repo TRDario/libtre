@@ -84,8 +84,8 @@ void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std:
 		lineStart = wordStart;
 	}
 
+	_shaderGlyphs.push_back({{lineLength, line}, alignment == Align::RIGHT, chr, textColor, backgroundColor});
 	if (chr != ' ') {
-		_shaderGlyphs.push_back({{lineLength, line}, alignment == Align::RIGHT, chr, textColor, backgroundColor});
 		if (!lineStart.has_value()) {
 			lineStart = _shaderGlyphs.end() - 1;
 		}
@@ -115,11 +115,13 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 
 	for (auto it = text.begin(); it != text.end(); ++it) {
 		if (*it == '\\') {
-			++it;
+			if (++it == text.end()) {
+				break;
+			}
+
 			switch (*it) {
 			case 'b':
-				++it;
-				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
+				if (++it != text.end() && std::isdigit(*it) && *it - '0' < extraColors.size()) {
 					curBgColor = extraColors[*it - '0'];
 				}
 				break;
@@ -127,8 +129,7 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 				curBgColor = backgroundColor;
 				break;
 			case 'c':
-				++it;
-				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
+				if (++it != text.end() && std::isdigit(*it) && *it - '0' < extraColors.size()) {
 					curTextColor = extraColors[*it - '0'];
 				}
 				break;
@@ -136,8 +137,7 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 				curTextColor = textColor;
 				break;
 			case 'i':
-				++it;
-				if (std::isdigit(*it)) {
+				if (++it != text.end() && std::isdigit(*it)) {
 					for (int i = 0; i < *it - '0'; ++i) {
 						writeRegularChar(' ', line, lineLength, lineStart, wordStart, curTextColor, curBgColor,
 										 alignment);
