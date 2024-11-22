@@ -187,7 +187,7 @@ void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer
 			_shaderGlyphBuffer.setLabel("Glyph Buffer (tre Debug Text)");
 #endif
 		}
-		_shaderGlyphBuffer.setArray(tr::asBytes(_shaderGlyphs));
+		_shaderGlyphBuffer.setArray(tr::rangeBytes(_shaderGlyphs));
 		_shaderPipeline.vertexShader().setUniform(0, glm::ortho<float>(0, targetSize.x, targetSize.y, 0));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
 		glContext.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
