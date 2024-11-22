@@ -25,7 +25,7 @@ void main() {
 
     const vec2 glyphPos          = vec2(packedGlyphAttrs & 0xFF, packedGlyphAttrs >> 8 & 0xFF);
 	const bool glyphRightAligned = bool(packedGlyphAttrs >> 16 & 0xFF);
-    const int  glyphChar         = packedGlyphAttrs >> 16 & 0xFF;
+    const int  glyphChar         = packedGlyphAttrs >> 24 & 0xFF;
     const vec4 glyphTextColor    = vec4((packedTextColor       & 0xFF) / 255.0,
                                   		(packedTextColor >> 8  & 0xFF) / 255.0,
                                   		(packedTextColor >> 16 & 0xFF) / 255.0,
