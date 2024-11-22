@@ -27,6 +27,7 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	_textureUnit.setSampler(_sampler);
 	_textureUnit.setTexture(_font);
 	_shaderPipeline.fragmentShader().setUniform(2, _textureUnit);
+	setScale(1.0f);
 
 #ifndef NDEBUG
 	_shaderPipeline.setLabel("tre::DebugTextRenderer Pipeline");

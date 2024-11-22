@@ -19,9 +19,9 @@ layout(location = 1) out vec4 vf_textColor;
 layout(location = 2) out vec4 vf_backgroundColor;
 
 void main() {
-    const int packedGlyphAttrs = glyphs[gl_InstanceID * 2];
-	const int packedTextColor  = glyphs[gl_InstanceID * 2 + 1];
-	const int packedBGColor    = glyphs[gl_InstanceID * 2 + 2];
+    const int packedGlyphAttrs = glyphs[gl_InstanceID * 3];
+	const int packedTextColor  = glyphs[gl_InstanceID * 3 + 1];
+	const int packedBGColor    = glyphs[gl_InstanceID * 3 + 2];
 
     const vec2 glyphPos          = vec2(packedGlyphAttrs & 0xFF, packedGlyphAttrs >> 8 & 0xFF);
 	const bool glyphRightAligned = bool(packedGlyphAttrs >> 16 & 0xFF);
