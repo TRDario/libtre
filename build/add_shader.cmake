@@ -5,7 +5,7 @@ find_program(GLSLANG glslang)
 function(add_shader TARGET FILE ARRAYNAME)
     add_custom_command(
         OUTPUT ${FILE}.spv
-        COMMAND ${GLSLANG} -G -o ${FILE}.spv ${FILE}
+        COMMAND ${GLSLANG} --quiet -G -o ${FILE}.spv ${FILE}
         DEPENDS ${FILE}
         COMMENT "Compiling shader ${FILE}"
         VERBATIM
