@@ -5,6 +5,8 @@ namespace tre {
 #include "../resources/debug_text.frag.spv.hpp"
 #include "../resources/debug_text.vert.spv.hpp"
 #include "../resources/debug_text_font.bmp.hpp"
+
+	constexpr std::array<glm::u8vec2, 4> GLYPH_VERTICES{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}};
 } // namespace tre
 
 using VtxAttrF = tr::VertexAttributeF;
@@ -14,6 +16,7 @@ tre::DebugTextRenderer::DebugTextRenderer()
 					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}},
 	  _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY},
 	  _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8},
+	  _vertexBuffer{tr::asBytes(GLYPH_VERTICES)},
 	  _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}},
 	  _columnLimit{255},
 	  _leftLine{0},
