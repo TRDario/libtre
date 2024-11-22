@@ -61,7 +61,7 @@ void tre::DebugTextRenderer::clear() noexcept
 void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
 											  std::optional<decltype(_shaderGlyphs)::iterator>& lineStart,
 											  std::optional<decltype(_shaderGlyphs)::iterator>& wordStart,
-											  tr::RGBA8& textColor, tr::RGBA8& backgroundColor, Align alignment)
+											  tr::RGBA8 textColor, tr::RGBA8 backgroundColor, Align alignment)
 {
 	if (lineLength >= _columnLimit) {
 		lineLength = 0;
