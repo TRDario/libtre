@@ -1,6 +1,42 @@
 #include "../include/tre/debug_text_renderer.hpp"
 #include "../include/tre/renderer_base.hpp"
 
+namespace tre {
+#include "../resources/debug_text.frag.spv.hpp"
+#include "../resources/debug_text.vert.spv.hpp"
+#include "../resources/debug_text_font.bmp.hpp"
+} // namespace tre
+
+using VtxAttrF = tr::VertexAttributeF;
+
+tre::DebugTextRenderer::DebugTextRenderer()
+	: _shaderPipeline{{tr::asBytes(DEBUG_TEXT_VERT_SPV), tr::ShaderType::VERTEX},
+					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}},
+	  _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY},
+	  _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8},
+	  _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}},
+	  _columnLimit{255},
+	  _leftLine{0},
+	  _rightLine{0}
+{
+	_sampler.setMagFilter(tr::MagFilter::NEAREST);
+	_sampler.setMinFilter(tr::MinFilter::LINEAR);
+	_textureUnit.setSampler(_sampler);
+	_textureUnit.setTexture(_font);
+	_shaderPipeline.fragmentShader().setUniform(2, _textureUnit);
+
+#ifndef NDEBUG
+	_shaderPipeline.setLabel("tre::DebugTextRenderer Pipeline");
+	_shaderPipeline.vertexShader().setLabel("tre::DebugTextRenderer Vertex Shader");
+	_shaderPipeline.fragmentShader().setLabel("tre::DebugTextRenderer Fragment Shader");
+	_shaderGlyphBuffer.setLabel("tre::DebugTextRenderer Shader Glyph Buffer");
+	_font.setLabel("tre::DebugTextRenderer Font Texture");
+	_sampler.setLabel("tre::DebugTextRenderer Sampler");
+	_vertexBuffer.setLabel("tre::DebugTextRenderer Vertex Buffer");
+	_vertexFormat.setLabel("tre::DebugTextRenderer Vertex Format");
+#endif
+}
+
 void tre::DebugTextRenderer::setScale(float scale) noexcept
 {
 	_shaderPipeline.vertexShader().setUniform(1, scale);
@@ -15,6 +51,7 @@ void tre::DebugTextRenderer::clear() noexcept
 {
 	_shaderGlyphs.clear();
 	_leftLine = 0;
+	_rightLine = 0;
 }
 
 void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
@@ -22,7 +59,7 @@ void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std:
 											  std::optional<decltype(_shaderGlyphs)::iterator> wordStart,
 											  tr::RGBA8 textColor, tr::RGBA8 backgroundColor, Align alignment)
 {
-	if (lineLength >= 80) {
+	if (lineLength >= _columnLimit) {
 		lineLength = 0;
 		++line;
 
@@ -66,8 +103,6 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 	}
 
 	std::uint8_t& line{alignment == Align::LEFT ? _leftLine : _rightLine};
-	const auto oldGlyphsSize{_shaderGlyphs.size()};
-
 	std::uint8_t lineLength = 0;
 	std::optional<decltype(_shaderGlyphs)::iterator> lineStart;
 	std::optional<decltype(_shaderGlyphs)::iterator> wordStart;

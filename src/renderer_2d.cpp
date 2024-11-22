@@ -24,8 +24,8 @@ namespace tre {
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()
-	: _shaderPipeline{{{(const std::byte*)(RENDERER_2D_VERT_SPV), RENDERER_2D_VERT_SPV_len}, tr::ShaderType::VERTEX},
-					  {{(const std::byte*)(RENDERER_2D_FRAG_SPV), RENDERER_2D_FRAG_SPV_len}, tr::ShaderType::FRAGMENT}},
+	: _shaderPipeline{{tr::asBytes(RENDERER_2D_VERT_SPV), tr::ShaderType::VERTEX},
+					  {tr::asBytes(RENDERER_2D_FRAG_SPV), tr::ShaderType::FRAGMENT}},
 	  _blendMode{tr::ALPHA_BLENDING},
 	  _scissorBox{NO_SCISSOR_BOX}
 {
