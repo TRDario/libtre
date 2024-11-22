@@ -399,7 +399,8 @@ FodyWeavers.xsd
 
 # Build directory
 build/*
-!build/compile_shader_spv.cmake
+!build/add_embedded_file.cmake
+!build/add_shader.cmake
 !build/tre-config.cmake
 !build/tre.pc.in
 

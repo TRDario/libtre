@@ -1,0 +1,38 @@
+/**********************************************************************************************************************
+ * @page debformat Formatted Debug Text Format
+ * 
+ * debug_text_renderer.hpp features a formatted text mode with a number of built-in controls. The following are the
+ * valid escape sequences for those controls:
+ *
+ * <code>\\b[i]</code>
+ *
+ * - Sets the background color to the color at index @em i of the span @em colors passed to the function.
+ *   If @em i is invalid, nothing happens.
+ *
+ * <code>\\B</code>
+ *
+ * - Resets the background color to the default color.
+ *
+ * <code>\\c[i]</code>
+ *
+ * - Sets the text color to the color at index @em i of the span @em colors passed to the function.
+ *   If @em i is invalid, nothing happens.
+ *
+ * <code>\\C</code>
+ *
+ * - Resets the text color to the default color.
+ *
+ * <code>\\i[n]</code>
+ *
+ * - Indents the pen by @em n spaces. If <code>n < 1</code>, nothing happens.
+ *
+ * <code>\\n</code>
+ *
+ * - Moves the pen down by one line.
+ *
+ * <code>\\t</code>
+ *
+ * - Equivalent to <code>\\i4</code>.
+ *
+ * Unknown escape sequences are ignored.
+ **********************************************************************************************************************/

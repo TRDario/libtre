@@ -260,9 +260,7 @@ namespace tre {
 		using Primitive = std::variant<Triangle, Rectangle, VertexFan, RawData>;
 		using Priority = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
-		tr::Shader _vertexShader;
-		tr::Shader _fragmentShader;
-		tr::ShaderPipeline _shaderPipeline;
+		tr::OwningShaderPipeline _shaderPipeline;
 		tr::TextureUnit _textureUnit;
 		tr::VertexBuffer _vertexBuffer;
 		tr::IndexBuffer _indexBuffer;

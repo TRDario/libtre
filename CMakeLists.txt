@@ -6,7 +6,7 @@ endif()
 include(CMakePackageConfigHelpers)
 include(FetchContent)
 include(GNUInstallDirs)
-include(build/compile_shader_spv.cmake)
+include(build/add_shader.cmake)
 
 project(tre LANGUAGES C CXX VERSION 0.0.1)
 add_library(tre STATIC)
@@ -22,12 +22,11 @@ FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_
 FetchContent_MakeAvailable(tr)
 target_link_libraries(tre PRIVATE tr)
 
-compile_shader_spv(${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
-compile_shader_spv(${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)
-target_sources(tre PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.vert.spv.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.frag.spv.hpp
-)
+add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
+add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)
+add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text.vert DEBUG_TEXT_VERT_SPV)
+add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text.frag DEBUG_TEXT_FRAG_SPV)
+add_embedded_file(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text_font.bmp DEBUG_TEXT_FONT_BMP)
 
 target_sources(tre PRIVATE
     src/atlas.cpp src/localization_manager.cpp src/renderer_2d.cpp src/renderer_base.cpp src/state_manager.cpp

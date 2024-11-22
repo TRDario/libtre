@@ -24,19 +24,25 @@ namespace tre {
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()
-	: _vertexShader{{(const std::byte*)(RENDERER_2D_VERT_SPV), RENDERER_2D_VERT_SPV_len}, tr::ShaderType::VERTEX},
-	  _fragmentShader{{(const std::byte*)(RENDERER_2D_FRAG_SPV), RENDERER_2D_FRAG_SPV_len}, tr::ShaderType::FRAGMENT},
-	  _shaderPipeline{_vertexShader, _fragmentShader},
+	: _shaderPipeline{{{(const std::byte*)(RENDERER_2D_VERT_SPV), RENDERER_2D_VERT_SPV_len}, tr::ShaderType::VERTEX},
+					  {{(const std::byte*)(RENDERER_2D_FRAG_SPV), RENDERER_2D_FRAG_SPV_len}, tr::ShaderType::FRAGMENT}},
 	  _blendMode{tr::ALPHA_BLENDING},
 	  _scissorBox{NO_SCISSOR_BOX}
 {
+#ifndef NDEBUG
+	_shaderPipeline.setLabel("tre::Renderer2D Pipeline");
+	_shaderPipeline.vertexShader().setLabel("tre::Renderer2D Vertex Shader");
+	_shaderPipeline.fragmentShader().setLabel("tre::Renderer2D Fragment Shader");
+	_vertexBuffer.setLabel("tre::Renderer2D Vertex Buffer");
+	_indexBuffer.setLabel("tre::Renderer2D Index Buffer");
+#endif
 	setFieldSize({1, 1});
 }
 
 void tre::Renderer2D::setFieldSize(glm::vec2 size) noexcept
 {
 	_fieldSize = size;
-	_vertexShader.setUniform(0, glm::ortho(0.0f, _fieldSize.x, _fieldSize.y, 0.0f));
+	_shaderPipeline.vertexShader().setUniform(0, glm::ortho(0.0f, _fieldSize.x, _fieldSize.y, 0.0f));
 }
 
 void tre::Renderer2D::setBlendingMode(tr::BlendMode blendMode) noexcept
@@ -261,6 +267,7 @@ void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFrameb
 {
 	if (lastRendererID() != ID) {
 		setupContext(glContext);
+		setLastRendererID(ID);
 	}
 	glContext.setFramebuffer(target);
 
@@ -287,7 +294,6 @@ void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFrameb
 		}
 	}
 	_renderGraph.erase(range.begin(), range.end());
-	setLastRendererID(ID);
 }
 
 void tre::Renderer2D::draw(tr::GLContext& glContext, tr::BasicFramebuffer& target)
