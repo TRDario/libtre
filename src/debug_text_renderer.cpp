@@ -1,6 +1,8 @@
 #include "../include/tre/debug_text_renderer.hpp"
 #include "../include/tre/renderer_base.hpp"
 
+#include <GL/gl.h>
+
 namespace tre {
 #include "../resources/debug_text.frag.spv.hpp"
 #include "../resources/debug_text.vert.spv.hpp"
@@ -22,11 +24,17 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	  _leftLine{0},
 	  _rightLine{0}
 {
+	assert(glGetError() != GL_INVALID_OPERATION);
 	_sampler.setMagFilter(tr::MagFilter::NEAREST);
+	assert(glGetError() != GL_INVALID_OPERATION);
 	_sampler.setMinFilter(tr::MinFilter::LINEAR);
+	assert(glGetError() != GL_INVALID_OPERATION);
 	_textureUnit.setSampler(_sampler);
+	assert(glGetError() != GL_INVALID_OPERATION);
 	_textureUnit.setTexture(_font);
+	assert(glGetError() != GL_INVALID_OPERATION);
 	_shaderPipeline.fragmentShader().setUniform(2, _textureUnit);
+	assert(glGetError() != GL_INVALID_OPERATION);
 	setScale(1.0f);
 
 #ifndef NDEBUG
@@ -58,127 +66,151 @@ void tre::DebugTextRenderer::clear() noexcept
 	_rightLine = 0;
 }
 
-void tre::DebugTextRenderer::writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
-											  std::optional<decltype(_shaderGlyphs)::iterator>& lineStart,
-											  std::optional<decltype(_shaderGlyphs)::iterator>& wordStart,
-											  tr::RGBA8 textColor, tr::RGBA8 backgroundColor, Align alignment)
+void tre::DebugTextRenderer::rightAlignLine(std::size_t begin, std::size_t end) noexcept
 {
-	if (lineLength >= _columnLimit) {
-		lineLength = 0;
-		++line;
+	for (auto i = begin; i < end; ++i) {
+		_shaderGlyphs[i].pos.x = end - i;
+	}
+}
 
-		if (wordStart.has_value()) {
-			if (wordStart != lineStart) {
-				for (auto& glyph : std::ranges::subrange{*wordStart, _shaderGlyphs.end()}) {
-					glyph.pos = {lineLength++, glyph.pos.y + 1};
-				}
-			}
-
-			if (alignment == Align::RIGHT) {
-				for (auto it = *lineStart; it != *wordStart; ++it) {
-					it->pos.x = std::distance(it, *wordStart);
-				}
-			}
-		}
-
-		lineStart = wordStart;
+void tre::DebugTextRenderer::trimTrailingWhitespace(DebugTextContext& context) noexcept
+{
+	auto lineEnd = context.wordStart - 1;
+	while (lineEnd > context.lineStart && _shaderGlyphs[lineEnd].chr != ' ') {
+		--lineEnd;
 	}
 
-	_shaderGlyphs.push_back({{lineLength, line}, alignment == Align::RIGHT, chr, textColor, backgroundColor});
-	if (chr != ' ') {
-		if (!lineStart.has_value()) {
-			lineStart = _shaderGlyphs.end() - 1;
-		}
-		if (!wordStart.has_value()) {
-			wordStart = _shaderGlyphs.end() - 1;
-		}
+	if (lineEnd != context.wordStart) {
+		_shaderGlyphs.erase(_shaderGlyphs.begin() + lineEnd, _shaderGlyphs.begin() + context.wordStart);
+		context.wordStart = lineEnd;
+	}
+}
+
+void tre::DebugTextRenderer::moveCurrentWordToNextLine(DebugTextContext& context) noexcept
+{
+	for (auto it = _shaderGlyphs.begin() + context.wordStart; it != _shaderGlyphs.end(); ++it) {
+		it->pos = {context.lineLength++, context.line};
+	}
+	context.lineStart = context.wordStart;
+}
+
+void tre::DebugTextRenderer::breakAtLastWhitespace(DebugTextContext& context) noexcept
+{
+	trimTrailingWhitespace(context);
+	if (context.alignment == Align::RIGHT) {
+		rightAlignLine(context.lineStart, context.wordStart);
+	}
+	moveCurrentWordToNextLine(context);
+}
+
+void tre::DebugTextRenderer::breakOverlongWord(DebugTextContext& context) noexcept
+{
+	if (context.alignment == Align::RIGHT) {
+		rightAlignLine(context.lineStart, context.lineStart + _columnLimit);
+	}
+	_shaderGlyphs.back().pos = {context.lineLength++, context.line};
+
+	context.lineStart += _columnLimit;
+	context.wordStart = context.lineStart;
+}
+
+void tre::DebugTextRenderer::handleColumnLimit(DebugTextContext& context) noexcept
+{
+	context.lineLength = 0;
+	++context.line;
+
+	if (context.wordStart > context.lineStart) {
+		breakAtLastWhitespace(context);
 	}
 	else {
-		wordStart.reset();
+		breakOverlongWord(context);
 	}
-	++lineLength;
+}
+
+void tre::DebugTextRenderer::writeCharacter(char chr, DebugTextContext& context)
+{
+	if (context.lineLength == _columnLimit && chr == ' ') {
+		handleNewline(context);
+	}
+	else {
+		_shaderGlyphs.push_back({{context.lineLength, context.line},
+								 context.alignment == Align::RIGHT,
+								 chr,
+								 context.textColor,
+								 context.backgroundColor});
+
+		if (_shaderGlyphs.size() - context.textStart > 1) {
+			const auto prev{_shaderGlyphs[_shaderGlyphs.size() - 2].chr};
+			if (prev == ' ' && chr != ' ') {
+				context.wordStart = _shaderGlyphs.size() - 1;
+			}
+		}
+
+		if (++context.lineLength > _columnLimit) {
+			handleColumnLimit(context);
+		}
+	}
+}
+
+void tre::DebugTextRenderer::handleNewline(DebugTextContext& context)
+{
+	if (context.alignment == Align::RIGHT) {
+		rightAlignLine(context.lineStart, _shaderGlyphs.size());
+	}
+
+	context.lineLength = 0;
+	context.wordStart = _shaderGlyphs.size();
+	context.lineStart = _shaderGlyphs.size();
+	++context.line;
+}
+
+void tre::DebugTextRenderer::handleControlSequence(std::string_view::iterator& it, std::string_view::iterator end,
+												   DebugTextContext& context, tr::RGBA8 textColor,
+												   tr::RGBA8 backgroundColor, std::span<tr::RGBA8> extraColors)
+{
+	switch (*it) {
+	case 'b':
+		if (std::next(it) != end && std::isdigit(*++it) && *it - '0' < extraColors.size()) {
+			context.backgroundColor = extraColors[*it - '0'];
+		}
+		break;
+	case 'B':
+		context.backgroundColor = backgroundColor;
+		break;
+	case 'c':
+		if (std::next(it) != end && std::isdigit(*++it) && *it - '0' < extraColors.size()) {
+			context.textColor = extraColors[*it - '0'];
+		}
+		break;
+	case 'C':
+		context.textColor = textColor;
+		break;
+	case 'n':
+		handleNewline(context);
+		break;
+	default:
+		break;
+	}
 }
 
 void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, tr::RGBA8 backgroundColor,
 								   std::span<tr::RGBA8> extraColors, Align alignment)
 {
-	if (text.empty()) {
-		return;
-	}
-
-	std::uint8_t& line{alignment == Align::LEFT ? _leftLine : _rightLine};
-	std::uint8_t lineLength = 0;
-	std::optional<decltype(_shaderGlyphs)::iterator> lineStart;
-	std::optional<decltype(_shaderGlyphs)::iterator> wordStart;
-	tr::RGBA8 curTextColor{textColor};
-	tr::RGBA8 curBgColor{backgroundColor};
+	auto& line{alignment == Align::RIGHT ? _rightLine : _leftLine};
+	const auto oldSize{_shaderGlyphs.size()};
+	DebugTextContext context{line, alignment, textColor, backgroundColor, 0, oldSize, oldSize, oldSize};
 
 	for (auto it = text.begin(); it != text.end(); ++it) {
 		if (*it == '\\') {
-			if (++it == text.end()) {
-				break;
-			}
-
-			switch (*it) {
-			case 'b':
-				if (++it == text.end()) {
-					goto break_loop;
-				}
-				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
-					curBgColor = extraColors[*it - '0'];
-				}
-				break;
-			case 'B':
-				curBgColor = backgroundColor;
-				break;
-			case 'c':
-				if (++it == text.end()) {
-					goto break_loop;
-				}
-				if (std::isdigit(*it) && *it - '0' < extraColors.size()) {
-					curTextColor = extraColors[*it - '0'];
-				}
-				break;
-			case 'C':
-				curTextColor = textColor;
-				break;
-			case 'i':
-				if (++it == text.end()) {
-					goto break_loop;
-				}
-				if (std::isdigit(*it)) {
-					for (int i = 0; i < *it - '0'; ++i) {
-						writeRegularChar(' ', line, lineLength, lineStart, wordStart, curTextColor, curBgColor,
-										 alignment);
-					}
-				}
-				break;
-			case 'n':
-				if (alignment == Align::RIGHT && lineStart.has_value()) {
-					for (auto it = *lineStart; it != _shaderGlyphs.end(); ++it) {
-						it->pos.x = std::distance(it, _shaderGlyphs.end());
-					}
-				}
-
-				lineLength = 0;
-				wordStart.reset();
-				lineStart.reset();
-				++line;
-				break;
-			case 't':
-				for (int i = 0; i < 4; ++i) {
-					writeRegularChar(' ', line, lineLength, lineStart, wordStart, curTextColor, curBgColor, alignment);
-				}
-			default:
-				break;
+			if (std::next(it) != text.end()) {
+				handleControlSequence(++it, text.end(), context, textColor, backgroundColor, extraColors);
 			}
 		}
 		else {
-			writeRegularChar(*it, line, lineLength, lineStart, wordStart, curTextColor, curBgColor, alignment);
+			writeCharacter(*it, context);
 		}
 	}
-break_loop:
-	++line;
+	handleNewline(context);
 }
 
 void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer& target)
@@ -189,7 +221,6 @@ void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer
 			setLastRendererID(ID);
 		}
 		glContext.setFramebuffer(target);
-		const auto targetSize{target.size()};
 
 		if (_shaderGlyphBuffer.arrayCapacity() < _shaderGlyphs.size() * sizeof(ShaderGlyph)) {
 			const auto newCapacity{std::bit_ceil(_shaderGlyphs.size() * sizeof(ShaderGlyph))};
@@ -199,7 +230,7 @@ void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer
 #endif
 		}
 		_shaderGlyphBuffer.setArray(tr::rangeBytes(_shaderGlyphs));
-		_shaderPipeline.vertexShader().setUniform(0, glm::ortho<float>(0, targetSize.x, targetSize.y, 0));
+		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.size()));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
 		glContext.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
 	}

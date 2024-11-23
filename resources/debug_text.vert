@@ -9,7 +9,7 @@ layout(std430, binding = 0) buffer b_glyphs {
     int glyphs[];
 };
 
-layout(location = 0) uniform mat4  u_camera;
+layout(location = 0) uniform vec2  u_bounds;
 layout(location = 1) uniform float u_scale;
 
 layout(location = 0) in  vec2 v_offset;
@@ -39,10 +39,14 @@ void main() {
     vf_textColor = glyphTextColor;
     vf_backgroundColor = glyphBGColor;
 
+	vec2 finalPos;
 	if (glyphRightAligned) {
-		gl_Position = u_camera * vec4((v_offset + vec2(1.0 - glyphPos.x, glyphPos.y)) * GLYPH_SIZE * u_scale, 0, 1);
+		finalPos = glyphPos * GLYPH_SIZE * u_scale;
+		finalPos.x = u_bounds.x - finalPos.x;
+		finalPos += v_offset * GLYPH_SIZE * u_scale;
 	}
 	else {
-		gl_Position = u_camera * vec4((v_offset + glyphPos) * GLYPH_SIZE * u_scale, 0, 1);
+		finalPos = (v_offset + glyphPos) * GLYPH_SIZE * u_scale;
 	}
+	gl_Position = vec4(finalPos.x / (u_bounds.x / 2) - 1.0, -finalPos.y / (u_bounds.y / 2) + 1.0, 0, 1);
 }

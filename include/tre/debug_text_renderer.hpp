@@ -110,6 +110,16 @@ namespace tre {
 			tr::RGBA8 textColor;
 			tr::RGBA8 backgroundColor;
 		};
+		struct DebugTextContext {
+			std::uint8_t& line;
+			Align alignment;
+			tr::RGBA8 textColor;
+			tr::RGBA8 backgroundColor;
+			std::uint8_t lineLength;
+			std::size_t textStart;
+			std::size_t lineStart;
+			std::size_t wordStart;
+		};
 		/// @endcond
 
 		tr::OwningShaderPipeline _shaderPipeline;
@@ -125,10 +135,17 @@ namespace tre {
 		std::uint8_t _rightLine;
 		std::vector<ShaderGlyph> _shaderGlyphs;
 
-		void writeRegularChar(char chr, std::uint8_t& line, std::uint8_t& lineLength,
-							  std::optional<decltype(_shaderGlyphs)::iterator>& lineStart,
-							  std::optional<decltype(_shaderGlyphs)::iterator>& wordStart, tr::RGBA8 textColor,
-							  tr::RGBA8 backgroundColor, Align alignment);
+		void rightAlignLine(std::size_t begin, std::size_t end) noexcept;
+		void trimTrailingWhitespace(DebugTextContext& context) noexcept;
+		void moveCurrentWordToNextLine(DebugTextContext& context) noexcept;
+		void breakAtLastWhitespace(DebugTextContext& context) noexcept;
+		void breakOverlongWord(DebugTextContext& context) noexcept;
+		void handleColumnLimit(DebugTextContext& context) noexcept;
+		void writeCharacter(char chr, DebugTextContext& context);
+		void handleNewline(DebugTextContext& context);
+		void handleControlSequence(std::string_view::iterator& it, std::string_view::iterator end,
+								   DebugTextContext& context, tr::RGBA8 textColor, tr::RGBA8 backgroundColor,
+								   std::span<tr::RGBA8> extraColors);
 		void setupContext(tr::GLContext& glContext) noexcept;
 	};
 } // namespace tre

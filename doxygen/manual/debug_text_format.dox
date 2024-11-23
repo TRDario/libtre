@@ -22,17 +22,9 @@
  *
  * - Resets the text color to the default color.
  *
- * <code>\\i[n]</code>
- *
- * - Indents the pen by @em n spaces. If <code>n < 1</code>, nothing happens.
- *
  * <code>\\n</code>
  *
  * - Moves the pen down by one line.
- *
- * <code>\\t</code>
- *
- * - Equivalent to <code>\\i4</code>.
  *
  * Unknown escape sequences are ignored.
  **********************************************************************************************************************/
