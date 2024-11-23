@@ -230,7 +230,7 @@ void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer
 #endif
 		}
 		_shaderGlyphBuffer.setArray(tr::rangeBytes(_shaderGlyphs));
-		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.size()));
+		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.viewport().size));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
 		glContext.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
 	}
