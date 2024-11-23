@@ -1,12 +1,14 @@
 find_program(XXD xxd)
 
 function(add_embedded_file TARGET FILE ARRAYNAME)
+	set(FILEPATH "${FILE}")
+	cmake_path(ABSOLUTE_PATH FILEPATH NORMALIZE)
 	add_custom_command(
-		OUTPUT ${FILE}.hpp
-		COMMAND ${XXD} -i -n ${ARRAYNAME} ${FILE} ${FILE}.hpp
-		DEPENDS ${FILE}
-		COMMENT "Creating embeddable header ${FILE}.hpp"
+		OUTPUT ${FILEPATH}.hpp
+		COMMAND ${XXD} -i -n ${ARRAYNAME} ${FILEPATH} ${FILEPATH}.hpp
+		DEPENDS ${FILEPATH}
+		COMMENT "Generating header ${FILE}.hpp"
 		VERBATIM
 	)
-	target_sources(tre PRIVATE ${FILE}.hpp)
+	target_sources(tre PRIVATE ${FILEPATH}.hpp)
 endfunction()

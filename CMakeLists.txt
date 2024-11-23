@@ -22,11 +22,11 @@ FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_
 FetchContent_MakeAvailable(tr)
 target_link_libraries(tre PRIVATE tr)
 
-add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
-add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)
-add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text.vert DEBUG_TEXT_VERT_SPV)
-add_shader(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text.frag DEBUG_TEXT_FRAG_SPV)
-add_embedded_file(tre ${CMAKE_CURRENT_SOURCE_DIR}/resources/debug_text_font.bmp DEBUG_TEXT_FONT_BMP)
+add_shader(tre resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
+add_shader(tre resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)
+add_shader(tre resources/debug_text.vert DEBUG_TEXT_VERT_SPV)
+add_shader(tre resources/debug_text.frag DEBUG_TEXT_FRAG_SPV)
+add_embedded_file(tre resources/debug_text_font.bmp DEBUG_TEXT_FONT_BMP)
 
 target_sources(tre PRIVATE
     src/atlas.cpp src/debug_text_renderer.cpp src/localization_manager.cpp src/renderer_2d.cpp src/renderer_base.cpp
