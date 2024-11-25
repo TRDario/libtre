@@ -39,6 +39,11 @@ tre::Renderer2D::Renderer2D()
 	setFieldSize({1, 1});
 }
 
+glm::vec2 tre::Renderer2D::fieldSize() const noexcept
+{
+	return _fieldSize;
+}
+
 void tre::Renderer2D::setFieldSize(glm::vec2 size) noexcept
 {
 	_fieldSize = size;

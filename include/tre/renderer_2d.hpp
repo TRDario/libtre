@@ -38,6 +38,13 @@ namespace tre {
 		Renderer2D();
 
 		/**************************************************************************************************************
+		 * Gets the size of the rendered field.
+		 *
+		 * @return The size of the rendered field.
+		 **************************************************************************************************************/
+		glm::vec2 fieldSize() const noexcept;
+
+		/**************************************************************************************************************
 		 * Sets the size of the rendered field.
 		 *
 		 * @param size The new size of the rendered field.
