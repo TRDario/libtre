@@ -188,6 +188,9 @@ void tre::DebugTextRenderer::handleControlSequence(std::string_view::iterator& i
 	case 'n':
 		handleNewline(context);
 		break;
+	case '\\':
+		writeCharacter('\\', context);
+		break;
 	default:
 		break;
 	}
