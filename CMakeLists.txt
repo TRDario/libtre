@@ -30,11 +30,11 @@ add_embedded_file(tre resources/debug_text_font.bmp DEBUG_TEXT_FONT_BMP)
 
 target_sources(tre PRIVATE
     src/atlas.cpp src/debug_text_renderer.cpp src/localization_manager.cpp src/renderer_2d.cpp src/renderer_base.cpp
-    src/state_manager.cpp
+    src/state_manager.cpp src/text_renderer.cpp
 )
 target_sources(tre PUBLIC FILE_SET HEADERS BASE_DIRS include FILES
     include/tre/atlas.hpp include/tre/debug_text_renderer.hpp include/tre/localization_manager.hpp include/tre/renderer_2d.hpp
-    include/tre/renderer_base.hpp include/tre/state_manager.hpp
+    include/tre/renderer_base.hpp include/tre/state_manager.hpp include/tre/text_renderer.hpp
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build/tre.pc.in ${CMAKE_CURRENT_BINARY_DIR}/tre.pc @ONLY)
