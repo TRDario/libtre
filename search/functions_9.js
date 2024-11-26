@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['operator_5b_5d_0',['operator[]',['../classtre_1_1Atlas2D.html#acaa1a0de27eb9d0c4bc7ddca02ca09e8',1,'tre::Atlas2D::operator[]()'],['../classtre_1_1DynAtlas2D.html#a973b1559b5a2e2e52c016f98f0f5bf9f',1,'tre::DynAtlas2D::operator[]()'],['../classtre_1_1LocalizationManager.html#a33925a65cb04ad960ecc8313871c98f4',1,'tre::LocalizationManager::operator[]()']]]
+  ['manager_0',['manager',['../classtre_1_1LocFileParseWithErrors.html#a27d0160f0cab9ebee28789401920e634',1,'tre::LocFileParseWithErrors']]],
+  ['map_1',['map',['../classtre_1_1LocalizationManager.html#a8bf69f750413d65f4a423443a9b5ea95',1,'tre::LocalizationManager']]]
 ];
