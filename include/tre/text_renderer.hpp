@@ -132,9 +132,9 @@ namespace tre {
 		glm::vec2 posAnchor;
 
 		/**************************************************************************************************************
-		 * The size of the textbox.
+		 * The height of the textbox.
 		 **************************************************************************************************************/
-		glm::vec2 size;
+		float height;
 
 		/**************************************************************************************************************
 		 * The rotation of the textbox around the position.
@@ -144,7 +144,12 @@ namespace tre {
 		/**************************************************************************************************************
 		 * The alignment of the text within the textbox.
 		 **************************************************************************************************************/
-		VerticalAlign align;
+		VerticalAlign textAlign;
+
+		/**************************************************************************************************************
+		 * The tint of the text in the textbox.
+		 **************************************************************************************************************/
+		tr::RGBA8 tint;
 	};
 
 	/******************************************************************************************************************
@@ -175,6 +180,150 @@ namespace tre {
 		 * The alignment of the text within the textbox.
 		 **************************************************************************************************************/
 		Align textAlign;
+	};
+
+	/******************************************************************************************************************
+	 * Renderer for persistent text.
+	 *
+	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
+	 ******************************************************************************************************************/
+	class StaticTextRenderer {
+	  public:
+		/**************************************************************************************************************
+		 * Constructs the static text renderer.
+		 **************************************************************************************************************/
+		StaticTextRenderer() noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the DPI of the renderer.
+		 *
+		 * This function cannot be called if any text has been added, but not forwarded to the 2D renderer.
+		 *
+		 * @param dpi The new text DPI, by default it is 72.
+		 **************************************************************************************************************/
+		void setDPI(unsigned int dpi) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the DPI of the renderer.
+		 *
+		 * This function clears all existing entries unless the DPI matches the previous DPI.
+		 *
+		 * @param dpi The new text DPI, by default it is {72, 72}.
+		 **************************************************************************************************************/
+		void setDPI(glm::uvec2 dpi) noexcept;
+
+		/**************************************************************************************************************
+		 * Adds an unformatted, single-style text entry.
+		 *
+		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param name The name of the text entry. An entry of the same name must not exist already, otherwise a failed
+		 *             assertion may be triggered.
+		 * @param text The text string.
+		 * @param font The font to use for the text.
+		 * @param fontSize The font size to use for the text.
+		 * @param style The font style to use for the text.
+		 * @param textColor The color to use for the text.
+		 * @param outline The outline parameters to use for the text, or NO_OUTLINE.
+		 * @param maxWidth The maximum width of the entry.
+		 * @param alignment The horizontal alignment of the entry.
+		 **************************************************************************************************************/
+		void newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
+								 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth,
+								 HorizontalAlign alignment);
+
+		/**************************************************************************************************************
+		 * Adds an unformatted, single-style text entry.
+		 *
+		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param name The name of the text entry. An entry of the same name must not exist already, otherwise a failed
+		 *             assertion may be triggered.
+		 * @param text The text string.
+		 * @param font The font to use for the text.
+		 * @param fontSize The font size to use for the text.
+		 * @param style The font style to use for the text.
+		 * @param textColor The color to use for the text.
+		 * @param outline The outline parameters to use for the text, or NO_OUTLINE.
+		 * @param maxWidth The maximum width of the entry.
+		 * @param alignment The horizontal alignment of the entry.
+		 **************************************************************************************************************/
+		void newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font, int fontSize,
+								 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth,
+								 HorizontalAlign alignment);
+
+		/**************************************************************************************************************
+		 * Adds a formatted, multistyle text entry.
+		 *
+		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param name The name of the text entry. An entry of the same name must not exist already, otherwise a failed
+		 *             assertion may be triggered.
+		 * @param text The text string. See @ref renderformat for the specifics of the text format.
+		 * @param font The font to use for the text.
+		 * @param fontSize The font size to use for the text.
+		 * @param textColor The color to use for the text.
+		 * @param outline The outline parameters to use for the text, or NO_OUTLINE.
+		 * @param maxWidth The maximum width of the entry.
+		 * @param alignment The horizontal alignment of the entry.
+		 **************************************************************************************************************/
+		void newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+							   tr::RGBA8 textColor, TextOutline outline, int maxWidth, HorizontalAlign alignment);
+
+		/**************************************************************************************************************
+		 * Adds a formatted, multistyle text entry.
+		 *
+		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param name The name of the text entry. An entry of the same name must not exist already, otherwise a failed
+		 *             assertion may be triggered.
+		 * @param text The text string. See @ref renderformat for the specifics of the text format.
+		 * @param font The font to use for the text.
+		 * @param fontSize The font size to use for the text.
+		 * @param textColors The available text colors. By default, the color at index 0 is used.
+		 *                   Must not be empty, otherwise a failed assertion may be triggered.
+		 * @param outline The outline parameters to use for the text, or NO_OUTLINE.
+		 * @param maxWidth The maximum width of the entry.
+		 * @param alignment The horizontal alignment of the entry.
+		 **************************************************************************************************************/
+		void newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+							   std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
+							   HorizontalAlign alignment);
+
+		/**************************************************************************************************************
+		 * Removes a text entry from the renderer.
+		 *
+		 * @param name The name of the entry to remove.
+		 **************************************************************************************************************/
+		void removeEntry(std::string_view name) noexcept;
+
+		/**************************************************************************************************************
+		 * Adds an instance of a text entry.
+		 *
+		 * @param priority The drawing priority of the text (higher is drawn on top).
+		 * @param entry The name of the text entry to use. If no such entry exists, no instances will be added.
+		 * @param textbox The textbox to frame the text around.
+		 **************************************************************************************************************/
+		void addInstance(int priority, std::string entry, const StaticTextbox& textbox);
+
+		/**************************************************************************************************************
+		 * Forwards all of the added text to the 2D renderer.
+		 *
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param renderer The renderer to forward to.
+		 **************************************************************************************************************/
+		void forward(Renderer2D& renderer);
+
+	  private:
+		DynAtlas2D _atlas;
+		tr::StringHashMap<std::pair<int, HorizontalAlign>> _entryAlignmentInfo;
+		std::map<int, std::vector<std::pair<std::string, StaticTextbox>>> _instances;
+		glm::uvec2 _dpi;
 	};
 
 	/******************************************************************************************************************
@@ -213,7 +362,7 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
 		 * @exception std::bad_alloc If an internal allocation failed.
 		 *
-		 * @param priority The drawing priority of the object (higher is drawn on top).
+		 * @param priority The drawing priority of the text (higher is drawn on top).
 		 * @param text The text string.
 		 * @param font The font to use for the text.
 		 * @param fontSize The font size to use for the text.
@@ -231,7 +380,7 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
 		 * @exception std::bad_alloc If an internal allocation failed.
 		 *
-		 * @param priority The drawing priority of the object (higher is drawn on top).
+		 * @param priority The drawing priority of the text (higher is drawn on top).
 		 * @param text The text string.
 		 * @param font The font to use for the text.
 		 * @param fontSize The font size to use for the text.
@@ -250,7 +399,7 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
 		 * @exception std::bad_alloc If an internal allocation failed.
 		 *
-		 * @param priority The drawing priority of the object (higher is drawn on top).
+		 * @param priority The drawing priority of the text (higher is drawn on top).
 		 * @param text The text string. See @ref renderformat for the specifics of the text format.
 		 * @param font The font to use for the text.
 		 * @param fontSize The font size to use for the text.
@@ -267,7 +416,7 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation failed.
 		 * @exception std::bad_alloc If an internal allocation failed.
 		 *
-		 * @param priority The drawing priority of the object (higher is drawn on top).
+		 * @param priority The drawing priority of the text (higher is drawn on top).
 		 * @param text The text string. See @ref renderformat for the specifics of the text format.
 		 * @param font The font to use for the text.
 		 * @param fontSize The font size to use for the text.

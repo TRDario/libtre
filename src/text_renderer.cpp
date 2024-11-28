@@ -49,6 +49,9 @@ namespace tre {
 									HorizontalAlign alignment, std::span<tr::RGBA8> textColors, int outline,
 									tr::RGBA8 outlineColor);
 
+	glm::vec2 calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
+								 const tre::StaticTextbox& textbox) noexcept;
+
 	glm::vec2 calculatePosAnchor(glm::vec2 textSize, const tre::DynamicTextbox& textbox) noexcept;
 } // namespace tre
 
@@ -237,6 +240,147 @@ tr::Bitmap tre::renderMultistyleText(std::string_view text, tr::TTFont& font, in
 		}
 	}
 	return createFinalBitmap(context);
+}
+
+tre::StaticTextRenderer::StaticTextRenderer() noexcept
+	: _dpi{72, 72}
+{
+#ifndef NDEBUG
+	_atlas.setLabel("(tre) Static Text Renderer Atlas");
+#endif
+}
+
+void tre::StaticTextRenderer::setDPI(unsigned int dpi) noexcept
+{
+	setDPI({dpi, dpi});
+}
+
+void tre::StaticTextRenderer::setDPI(glm::uvec2 dpi) noexcept
+{
+	if (dpi != _dpi) {
+		assert(dpi.x > 0 && dpi.y > 0);
+		_dpi = dpi;
+		_atlas.clear();
+	}
+}
+
+void tre::StaticTextRenderer::newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
+												  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
+												  int maxWidth, HorizontalAlign alignment)
+{
+	assert(!_atlas.contains(name));
+
+	if (std::string_view{text}.empty()) {
+		return;
+	}
+
+	font.resize(fontSize, _dpi);
+	font.setStyle(style);
+	font.setWrapAlignment(tr::TTFont::WrapAlignment(alignment));
+
+	if (outline.thickness != 0) {
+		font.setOutline(0);
+		const auto textBitmap{font.renderWrapped(text, textColor, maxWidth)};
+		font.setOutline(outline.thickness);
+		auto outlineBitmap{font.renderWrapped(text, outline.color, maxWidth)};
+		outlineBitmap.blit({outline.thickness, outline.thickness},
+						   textBitmap.sub({{}, outlineBitmap.size() - glm::ivec2{outline.thickness * 2}}));
+		_atlas.add(std::move(name), outlineBitmap);
+	}
+	else {
+		_atlas.add(std::move(name), font.renderWrapped(text, textColor, maxWidth));
+	}
+}
+
+void tre::StaticTextRenderer::newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font,
+												  int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor,
+												  TextOutline outline, int maxWidth, HorizontalAlign alignment)
+{
+	newUnformattedEntry(std::move(name), text.c_str(), font, fontSize, style, textColor, outline, maxWidth, alignment);
+}
+
+void tre::StaticTextRenderer::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+												tr::RGBA8 textColor, TextOutline outline, int maxWidth,
+												HorizontalAlign alignment)
+{
+	newFormattedEntry(std::move(name), text, font, fontSize, {&textColor, 1}, outline, maxWidth, alignment);
+}
+
+void tre::StaticTextRenderer::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+												std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
+												HorizontalAlign alignment)
+{
+	assert(!_atlas.contains(name));
+
+	if (text.empty()) {
+		return;
+	}
+
+	const auto bitmap{renderMultistyleText(text, font, fontSize, _dpi, maxWidth, alignment, textColors,
+										   outline.thickness, outline.color)};
+	_atlas.add(std::move(name), bitmap);
+}
+
+void tre::StaticTextRenderer::removeEntry(std::string_view name) noexcept
+{
+	_atlas.remove(name);
+}
+
+void tre::StaticTextRenderer::addInstance(int priority, std::string entry, const StaticTextbox& textbox)
+{
+	if (_atlas.contains(entry)) {
+		_instances[priority].emplace_back(std::move(entry), textbox);
+	}
+}
+
+glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
+								  const tre::StaticTextbox& textbox) noexcept
+{
+	const glm::vec2 textBoxSize{maxWidth, textbox.height};
+	switch (Align(int(horizontalAlignment) + int(textbox.textAlign))) {
+	case Align::TOP_LEFT:
+		return textbox.posAnchor;
+	case Align::TOP_CENTER:
+		return {textbox.posAnchor.x - (textBoxSize.x - textSize.x) / 2.0f, textbox.posAnchor.y};
+	case Align::TOP_RIGHT:
+		return {textbox.posAnchor.x - textBoxSize.x + textSize.x, textbox.posAnchor.y};
+	case Align::CENTER_LEFT:
+		return {textbox.posAnchor.x, textbox.posAnchor.y - (textBoxSize.y - textSize.y) / 2.0f};
+	case Align::CENTER:
+		return textbox.posAnchor - (textBoxSize - textSize) / 2.0f;
+	case Align::CENTER_RIGHT:
+		return {textbox.posAnchor.x - textBoxSize.x + textSize.x,
+				textbox.posAnchor.y - (textBoxSize.y - textSize.y) / 2.0f};
+	case Align::BOTTOM_LEFT:
+		return {textbox.posAnchor.x, textbox.posAnchor.y - textBoxSize.y + textSize.y};
+	case Align::BOTTOM_CENTER:
+		return {textbox.posAnchor.x - (textBoxSize.x - textSize.x) / 2.0f,
+				textbox.posAnchor.y - textBoxSize.y + textSize.y};
+	case Align::BOTTOM_RIGHT:
+		return textbox.posAnchor - textBoxSize + textSize;
+	}
+}
+
+void tre::StaticTextRenderer::forward(Renderer2D& renderer)
+{
+	for (auto& [priority, instances] : _instances) {
+		for (std::size_t i = 0; i < instances.size(); ++i) {
+			const auto& name{instances[i].first};
+			if (!_atlas.contains(name)) {
+				continue;
+			}
+
+			const auto& textbox{instances[i].second};
+			const auto& alignmentInfo{_entryAlignmentInfo[name]};
+			const auto texture{_atlas[name]};
+			const glm::vec2 size{texture.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
+			const glm::vec2 posAnchor{calculatePosAnchor(size, alignmentInfo.first, alignmentInfo.second, textbox)};
+
+			renderer.addTexturedRotatedRectangle(priority, textbox.pos, posAnchor, size, textbox.rotation,
+												 {_atlas.texture(), bilinearSampler()}, texture, textbox.tint);
+		}
+	}
+	_instances.clear();
 }
 
 tre::DynamicTextRenderer::DynamicTextRenderer() noexcept
