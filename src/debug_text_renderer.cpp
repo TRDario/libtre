@@ -1,5 +1,6 @@
 #include "../include/tre/debug_text_renderer.hpp"
 #include "../include/tre/renderer_base.hpp"
+#include "../include/tre/sampler.hpp"
 
 #include <GL/gl.h>
 
@@ -18,23 +19,15 @@ tre::DebugTextRenderer::DebugTextRenderer()
 					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}},
 	  _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY},
 	  _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8},
-	  _vertexBuffer{tr::asBytes(GLYPH_VERTICES)},
 	  _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}},
+	  _vertexBuffer{tr::asBytes(GLYPH_VERTICES)},
 	  _columnLimit{255},
 	  _leftLine{0},
 	  _rightLine{0}
 {
-	assert(glGetError() != GL_INVALID_OPERATION);
-	_sampler.setMagFilter(tr::MagFilter::NEAREST);
-	assert(glGetError() != GL_INVALID_OPERATION);
-	_sampler.setMinFilter(tr::MinFilter::LINEAR);
-	assert(glGetError() != GL_INVALID_OPERATION);
-	_textureUnit.setSampler(_sampler);
-	assert(glGetError() != GL_INVALID_OPERATION);
 	_textureUnit.setTexture(_font);
-	assert(glGetError() != GL_INVALID_OPERATION);
+	_textureUnit.setSampler(nearestNeighborSampler());
 	_shaderPipeline.fragmentShader().setUniform(2, _textureUnit);
-	assert(glGetError() != GL_INVALID_OPERATION);
 	setScale(1.0f);
 
 #ifndef NDEBUG
@@ -43,7 +36,6 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	_shaderPipeline.fragmentShader().setLabel("tre::DebugTextRenderer Fragment Shader");
 	_shaderGlyphBuffer.setLabel("tre::DebugTextRenderer Shader Glyph Buffer");
 	_font.setLabel("tre::DebugTextRenderer Font Texture");
-	_sampler.setLabel("tre::DebugTextRenderer Sampler");
 	_vertexBuffer.setLabel("tre::DebugTextRenderer Vertex Buffer");
 	_vertexFormat.setLabel("tre::DebugTextRenderer Vertex Format");
 #endif

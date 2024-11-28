@@ -64,7 +64,7 @@ namespace tre {
 		 *
 		 * Setting this in the middle of writing will leave any existing text as-is.
 		 *
-		 * @param scale The maximum allowed number of columns tolerated before a break is needed.
+		 * @param columns The maximum allowed number of columns tolerated before a break is needed.
 		 **************************************************************************************************************/
 		void setColumnLimit(std::uint8_t columns) noexcept;
 
@@ -125,10 +125,9 @@ namespace tre {
 		tr::OwningShaderPipeline _shaderPipeline;
 		tr::ShaderBuffer _shaderGlyphBuffer;
 		tr::Texture2D _font;
-		tr::Sampler _sampler;
 		tr::TextureUnit _textureUnit;
-		tr::VertexBuffer _vertexBuffer;
 		tr::VertexFormat _vertexFormat;
+		tr::VertexBuffer _vertexBuffer;
 
 		std::uint8_t _columnLimit;
 		std::uint8_t _leftLine;
