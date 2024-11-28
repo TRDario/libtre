@@ -4,7 +4,7 @@
  * debug_text_renderer.hpp features a formatted text mode with a number of built-in controls. The following are the
  * valid escape sequences for those controls:
  *
- * <code>\\b[i]</code>
+ * <code>\\b[i]</code> (where @em i is 0-9)
  *
  * - Sets the background color to the color at index @em i of the span @em colors passed to the function.
  *   If @em i is invalid, nothing happens.
@@ -13,7 +13,7 @@
  *
  * - Resets the background color to the default color.
  *
- * <code>\\c[i]</code>
+ * <code>\\c[i]</code> (where @em i is 0-9)
  *
  * - Sets the text color to the color at index @em i of the span @em colors passed to the function.
  *   If @em i is invalid, nothing happens.

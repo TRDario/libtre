@@ -1,6 +1,6 @@
 /**********************************************************************************************************************
- * @file atlas.hpp
- * @brief Provides texture atlases.
+ * @file renderer_base.hpp
+ * @brief Provides utilities for basic renderer checks.
  * @details libtre prefers to work with self-contained renderers, as opposed to directly manipulating OpenGL state.
  *          This can cause inefficiencies if repeated, redundant state changes are made. This file thus provides
  *          helper functions to minimize switching state when not needed.

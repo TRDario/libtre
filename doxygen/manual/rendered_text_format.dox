@@ -7,7 +7,7 @@
  * <code>\\\\</code>
  * - Escape sequence for outputting '\\'.
  *
- * <code>\\c[n]</code> (where @em n is 0-9)
+ * <code>\\c[i]</code> (where @em i is 0-9)
  * - Sets the text color to color at index @em n of the span of colors passed to the function.
  *   If @em i is an invalid index, nothing happens.
  *
