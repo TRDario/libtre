@@ -1,4 +1,5 @@
 #include "../include/tre/text_renderer.hpp"
+#include "../include/tre/sampler.hpp"
 #include <numeric>
 
 namespace tre {
@@ -17,7 +18,7 @@ namespace tre {
 		tr::RGBA8 curTextColor;
 		tr::RGBA8 outlineColor;
 		std::span<tr::RGBA8> textColors;
-		AlignHorizontal alignment;
+		HorizontalAlign alignment;
 	};
 
 	glm::ivec2 calculateFinalBitmapSize(const MultistyleTextContext& context) noexcept;
@@ -45,8 +46,10 @@ namespace tre {
 	tr::Bitmap createFinalBitmap(MultistyleTextContext& context);
 
 	tr::Bitmap renderMultistyleText(std::string_view text, tr::TTFont& font, int size, glm::uvec2 dpi, int maxWidth,
-									AlignHorizontal alignment, std::span<tr::RGBA8> textColors, int outline,
+									HorizontalAlign alignment, std::span<tr::RGBA8> textColors, int outline,
 									tr::RGBA8 outlineColor);
+
+	glm::vec2 calculatePosAnchor(glm::vec2 textSize, const tre::DynamicTextbox& textbox) noexcept;
 } // namespace tre
 
 glm::ivec2 tre::calculateFinalBitmapSize(const MultistyleTextContext& context) noexcept
@@ -129,15 +132,20 @@ void tre::calculateLineLeft(MultistyleTextContext& context) noexcept
 std::string_view::iterator tre::handleTextBlock(std::string_view::iterator start, std::string_view::iterator textEnd,
 												MultistyleTextContext& context)
 {
-	const auto end{std::find(std::next(start), textEnd, '\\')};
+	constexpr std::array<char, 2> DELIMITERS{'\\', '\n'};
+	const auto end{std::find_first_of(std::next(start), textEnd, DELIMITERS.begin(), DELIMITERS.end())};
 	std::string copy{start, end};
 	for (auto it = copy.begin(); it != copy.end();) {
-		auto fit{context.font.measure(std::to_address(it), context.lineLeft).text};
-		if (!adjustFit(fit, it, copy.end(), context)) {
+		auto fit{context.font.measure(std::to_address(it), context.lineLeft)};
+		if (!adjustFit(fit.text, it, copy.end(), context)) {
 			continue;
 		}
-		emplaceTextPart(it, copy.end(), fit, context);
-		calculateLineLeft(context);
+		emplaceTextPart(it, copy.end(), fit.text, context);
+		context.lineLeft -= fit.width - 2 * context.outline;
+		if (context.lineLeft < 0) {
+			++context.line;
+			context.lineLeft = context.maxWidth;
+		}
 	}
 	return end;
 }
@@ -153,10 +161,6 @@ std::string_view::iterator tre::handleControlSequence(std::string_view::iterator
 	switch (*start) {
 	case '\\':
 		return handleTextBlock(start, textEnd, context);
-	case 'n':
-		++context.line;
-		context.lineLeft = context.maxWidth;
-		return std::next(start);
 	case 'c':
 		if (std::next(start) != textEnd && std::isdigit(*++start) && *start - '0' < context.textColors.size()) {
 			context.curTextColor = context.textColors[*start - '0'];
@@ -184,12 +188,12 @@ int tre::calculateXOffset(std::vector<TextPart>::iterator it, std::vector<TextPa
 {
 	const auto pred{[&](int sum, auto& part) { return sum + part.bitmap.size().x - 2 * context.outline; }};
 	switch (context.alignment) {
-	case AlignHorizontal::LEFT:
+	case HorizontalAlign::LEFT:
 		return 0;
-	case AlignHorizontal::RIGHT:
-		return context.maxWidth - accumulate(it, lineEnd, 0, pred);
-	case AlignHorizontal::CENTER:
-		return context.maxWidth - (accumulate(it, lineEnd, 0, pred)) / 2;
+	case HorizontalAlign::RIGHT:
+		return context.maxWidth - std::accumulate(it, lineEnd, 0, pred) - 2 * context.outline;
+	case HorizontalAlign::CENTER:
+		return (context.maxWidth - std::accumulate(it, lineEnd, 0, pred)) / 2 - context.outline;
 	}
 }
 
@@ -207,7 +211,7 @@ tr::Bitmap tre::createFinalBitmap(MultistyleTextContext& context)
 }
 
 tr::Bitmap tre::renderMultistyleText(std::string_view text, tr::TTFont& font, int size, glm::uvec2 dpi, int maxWidth,
-									 AlignHorizontal alignment, std::span<tr::RGBA8> textColors, int outline,
+									 HorizontalAlign alignment, std::span<tr::RGBA8> textColors, int outline,
 									 tr::RGBA8 outlineColor)
 {
 	assert(!text.empty());
@@ -223,6 +227,11 @@ tr::Bitmap tre::renderMultistyleText(std::string_view text, tr::TTFont& font, in
 		if (*it == '\\') {
 			it = handleControlSequence(++it, text.end(), context);
 		}
+		else if (*it == '\n') {
+			++context.line;
+			context.lineLeft = context.maxWidth;
+			++it;
+		}
 		else {
 			it = handleTextBlock(it, text.end(), context);
 		}
@@ -230,26 +239,39 @@ tr::Bitmap tre::renderMultistyleText(std::string_view text, tr::TTFont& font, in
 	return createFinalBitmap(context);
 }
 
-void tre::DynamicTextRenderer::setDPI(unsigned int dpi) noexcept
+tre::DynamicTextRenderer::DynamicTextRenderer() noexcept
+	: _dpi{72, 72}
 {
-	setDPI(dpi, dpi);
+#ifndef NDEBUG
+	_atlas.setLabel("(tre) Dynamic Text Renderer Atlas");
+#endif
 }
 
-void tre::DynamicTextRenderer::setDPI(unsigned int x, unsigned int y) noexcept
+void tre::DynamicTextRenderer::setDPI(unsigned int dpi) noexcept
 {
-	assert(x > 0 && y > 0);
+	setDPI({dpi, dpi});
+}
+
+void tre::DynamicTextRenderer::setDPI(glm::uvec2 dpi) noexcept
+{
+	assert(dpi.x > 0 && dpi.y > 0);
 	assert(_textboxes.empty());
-	_dpi = {x, y};
+	_dpi = dpi;
 }
 
 void tre::DynamicTextRenderer::addUnformatted(int priority, const char* text, tr::TTFont& font, int fontSize,
 											  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
-											  const Textbox& textbox)
+											  const DynamicTextbox& textbox)
 {
+	if (std::string_view{text}.empty()) {
+		return;
+	}
+
 	font.resize(fontSize, _dpi);
 	font.setStyle(style);
 	font.setWrapAlignment(tr::TTFont::WrapAlignment(int(textbox.textAlign) % 3));
 
+	auto name{std::format("{}x{}", priority, _textboxes[priority].size())};
 	if (outline.thickness != 0) {
 		font.setOutline(0);
 		const auto textBitmap{font.renderWrapped(text, textColor, textbox.size.x)};
@@ -257,76 +279,83 @@ void tre::DynamicTextRenderer::addUnformatted(int priority, const char* text, tr
 		auto outlineBitmap{font.renderWrapped(text, outline.color, textbox.size.x)};
 		outlineBitmap.blit({outline.thickness, outline.thickness},
 						   textBitmap.sub({{}, outlineBitmap.size() - glm::ivec2{outline.thickness * 2}}));
-		_atlas.add(std::format("{}x{}", priority, _textboxes[priority].size()), outlineBitmap);
+		_atlas.add(std::move(name), outlineBitmap);
 	}
 	else {
-		_atlas.add(std::to_string(_textboxes.size()), font.renderWrapped(text, textColor, textbox.size.x));
+		_atlas.add(std::move(name), font.renderWrapped(text, textColor, textbox.size.x));
 	}
 
 	_textboxes[priority].push_back(textbox);
 }
 
+void tre::DynamicTextRenderer::addUnformatted(int priority, const std::string& text, tr::TTFont& font, int fontSize,
+											  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
+											  const DynamicTextbox& textbox)
+{
+	addUnformatted(priority, text.c_str(), font, fontSize, style, textColor, outline, textbox);
+}
+
 void tre::DynamicTextRenderer::addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize,
-											tr::RGBA8 textColor, TextOutline outline, const Textbox& textbox)
+											tr::RGBA8 textColor, TextOutline outline, const DynamicTextbox& textbox)
 {
 	addFormatted(priority, text, font, fontSize, {&textColor, 1}, outline, textbox);
 }
 
 void tre::DynamicTextRenderer::addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize,
 											std::span<tr::RGBA8> textColors, TextOutline outline,
-											const Textbox& textbox)
+											const DynamicTextbox& textbox)
 {
-	const auto align{AlignHorizontal(int(textbox.textAlign) % 3)};
+	if (text.empty()) {
+		return;
+	}
+
+	const auto align{HorizontalAlign(int(textbox.textAlign) % 3)};
 	const auto bitmap{renderMultistyleText(text, font, fontSize, _dpi, textbox.size.x, align, textColors,
 										   outline.thickness, outline.color)};
 	_atlas.add(std::format("{}x{}", priority, _textboxes[priority].size()), bitmap);
 	_textboxes[priority].push_back(textbox);
 }
 
-void tre::DynamicTextRenderer::forwardUpToPriority(Renderer2D& renderer, int minPriority)
+glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, const tre::DynamicTextbox& textbox) noexcept
 {
-	const std::ranges::subrange range{_textboxes.lower_bound(minPriority), _textboxes.end()};
-	for (auto& [priority, textboxes] : range) {
-		for (std::size_t i = 0; i < textboxes.size(); ++i) {
-			const auto& texture{_atlas[std::format("{}x{}", priority, i)]};
-			glm::vec2 size{texture.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
-
-			glm::vec2 tl = textboxes[i].pos - textboxes[i].posAnchor;
-			switch (textboxes[i].textAlign) {
-			case Align::TOP_LEFT:
-				break;
-			case Align::TOP_CENTER:
-				tl.x += (textboxes[i].size.x - size.x) / 2.0f;
-				break;
-			case Align::TOP_RIGHT:
-				tl.x += textboxes[i].size.x - size.x;
-				break;
-			case Align::CENTER_LEFT:
-				tl.y += (textboxes[i].size.y - size.y) / 2.0f;
-				break;
-			case Align::CENTER:
-				tl += (textboxes[i].size - size) / 2.0f;
-				break;
-			case Align::CENTER_RIGHT:
-				tl.x += textboxes[i].size.x - size.x;
-				tl.y += (textboxes[i].size.y - size.y) / 2.0f;
-				break;
-			case Align::BOTTOM_LEFT:
-				tl.y += textboxes[i].size.y - size.y;
-				break;
-			case Align::BOTTOM_CENTER:
-				tl.x += (textboxes[i].size.x - size.x) / 2.0f;
-				tl.y += textboxes[i].size.y - size.y;
-				break;
-			case Align::BOTTOM_RIGHT:
-				tl += textboxes[i].size - size;
-				break;
-			}
-		}
+	switch (textbox.textAlign) {
+	case Align::TOP_LEFT:
+		return textbox.posAnchor;
+	case Align::TOP_CENTER:
+		return {textbox.posAnchor.x - (textbox.size.x - textSize.x) / 2.0f, textbox.posAnchor.y};
+	case Align::TOP_RIGHT:
+		return {textbox.posAnchor.x - textbox.size.x + textSize.x, textbox.posAnchor.y};
+	case Align::CENTER_LEFT:
+		return {textbox.posAnchor.x, textbox.posAnchor.y - (textbox.size.y - textSize.y) / 2.0f};
+	case Align::CENTER:
+		return textbox.posAnchor - (textbox.size - textSize) / 2.0f;
+	case Align::CENTER_RIGHT:
+		return {textbox.posAnchor.x - textbox.size.x + textSize.x,
+				textbox.posAnchor.y - (textbox.size.y - textSize.y) / 2.0f};
+	case Align::BOTTOM_LEFT:
+		return {textbox.posAnchor.x, textbox.posAnchor.y - textbox.size.y + textSize.y};
+	case Align::BOTTOM_CENTER:
+		return {textbox.posAnchor.x - (textbox.size.x - textSize.x) / 2.0f,
+				textbox.posAnchor.y - textbox.size.y + textSize.y};
+	case Align::BOTTOM_RIGHT:
+		return textbox.posAnchor - textbox.size + textSize;
 	}
 }
 
 void tre::DynamicTextRenderer::forward(Renderer2D& renderer)
 {
-	forwardUpToPriority(renderer, std::numeric_limits<int>::min());
+	for (auto& [priority, textboxes] : _textboxes) {
+		for (std::size_t i = 0; i < textboxes.size(); ++i) {
+			const auto& textbox{textboxes[i]};
+			const auto name{std::format("{}x{}", priority, i)};
+			const auto texture{_atlas[name]};
+			const glm::vec2 size{texture.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
+			const glm::vec2 posAnchor{calculatePosAnchor(size, textbox)};
+
+			renderer.addTexturedRotatedRectangle(priority, textbox.pos, posAnchor, size, textbox.rotation,
+												 {_atlas.texture(), bilinearSampler()}, texture, {255, 255, 255, 255});
+		}
+	}
+	_atlas.clear();
+	_textboxes.clear();
 }
