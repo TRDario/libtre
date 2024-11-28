@@ -29,7 +29,7 @@ namespace tre {
 	 * @exception tr::BitmapBadAlloc If allocating the bitmap failed.
 	 * @exception std::bad_alloc If allocating the entry map failed.
 	 *
-	 * @param[in] bitmap A list of named bitmaps.
+	 * @param[in] bitmaps A list of named bitmaps.
 	 * @param[in] format The format of the atlas bitmap.
 	 *
 	 * @return An atlas bitmap with entries named after the bitmaps that make up the atlas.
@@ -61,7 +61,7 @@ namespace tre {
 		 * @exception tr::TextureBadAlloc If allocating the texture failed.
 		 * @exception std::bad_alloc If allocating a entry map failed.
 		 *
-		 * @param[in] bitmap A list of named bitmaps to upload.
+		 * @param[in] bitmaps A list of named bitmaps to upload.
 		 **************************************************************************************************************/
 		Atlas2D(const tr::StringHashMap<tr::Bitmap>& bitmaps);
 

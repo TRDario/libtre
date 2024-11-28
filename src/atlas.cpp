@@ -257,7 +257,7 @@ std::forward_list<tr::RectI2>::iterator tre::DynAtlas2D::findFreeRectPrev(glm::i
 		glm::uvec2 capacity{std::bit_ceil((unsigned int)(size.x)), std::bit_ceil((unsigned int)(size.y))};
 		rawReserve(capacity);
 		_freeRects.emplace_front(glm::ivec2{0, 0}, capacity);
-		return _freeRects.begin();
+		return _freeRects.before_begin();
 	}
 	else {
 		auto it{tre::findFreeRectPrev(_freeRects, size)};
