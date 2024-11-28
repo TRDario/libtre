@@ -68,7 +68,10 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Adds an untextured rect to the list of objects to draw in the next draw call.
 		 *
-		 * @exception std::bad_alloc If an itr::RectI2.
+		 * @exception std::bad_alloc If an internal allocation failed.
+		 *
+		 * @param priority The drawing priority of the object (higher is drawn on top).
+		 * @param rect The rectangle to draw.
 		 * @param color The color of the rectangle.
 		 **************************************************************************************************************/
 		void addUntexturedRect(int priority, const tr::RectF2& rect, tr::RGBA8 color);
@@ -120,7 +123,7 @@ namespace tre {
 		 *
 		 * @param priority The drawing priority of the object (higher is drawn on top).
 		 * @param pos The position of the posAnchor.
-		 * @param posAchor The position of the position/rotation anchor within the rectangle.
+		 * @param posAnchor The position of the position/rotation anchor within the rectangle.
 		 * @param size The size of the rectangle.
 		 * @param rotation The rotation of the rectangle.
 		 * @param color The color of the rectangle.
@@ -135,7 +138,7 @@ namespace tre {
 		 *
 		 * @param priority The drawing priority of the object (higher is drawn on top).
 		 * @param pos The position of the posAnchor.
-		 * @param posAchor The position of the position/rotation anchor within the rectangle.
+		 * @param posAnchor The position of the position/rotation anchor within the rectangle.
 		 * @param size The size of the rectangle.
 		 * @param rotation The rotation of the rectangle.
 		 * @param colors The colors of the rectangle, sampled counterclockwise starting from the top-left.
@@ -150,7 +153,7 @@ namespace tre {
 		 *
 		 * @param priority The drawing priority of the object (higher is drawn on top).
 		 * @param pos The position of the posAnchor.
-		 * @param posAchor The position of the position/rotation anchor within the rectangle.
+		 * @param posAnchor The position of the position/rotation anchor within the rectangle.
 		 * @param size The size of the rectangle.
 		 * @param rotation The rotation of the rectangle.
 		 * @param texture The texture and sampler used for the rectangle.
@@ -167,7 +170,7 @@ namespace tre {
 		 *
 		 * @param priority The drawing priority of the object (higher is drawn on top).
 		 * @param pos The position of the posAnchor.
-		 * @param posAchor The position of the position/rotation anchor within the rectangle.
+		 * @param posAnchor The position of the position/rotation anchor within the rectangle.
 		 * @param size The size of the rectangle.
 		 * @param rotation The rotation of the rectangle.
 		 * @param texture The texture and sampler used for the rectangle.
