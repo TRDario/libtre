@@ -93,70 +93,207 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">text_renderer.hpp</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#include &quot;<a class="code" href="atlas_8hpp.html">atlas.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &quot;<a class="code" href="renderer__2d_8hpp.html">renderer_2d.hpp</a>&quot;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>tre {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keyword">enum class</span> AlignHorizontal : std::uint8_t {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>        LEFT,</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        CENTER,</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>        RIGHT</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    };</div>
+<a href="text__renderer_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="atlas_8hpp.html">atlas.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="renderer__2d_8hpp.html">renderer_2d.hpp</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>tre {</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">enum class</span> Align : std::uint8_t {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        TOP_LEFT,</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        TOP_CENTER,</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        TOP_RIGHT,</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        CENTER_LEFT,</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        CENTER,</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        CENTER_RIGHT,</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        BOTTOM_LEFT,</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        BOTTOM_CENTER,</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        BOTTOM_RIGHT</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    };</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">struct </span>TextOutline {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">int</span> thickness;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        tr::RGBA8 color;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    };</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> TextOutline NO_OUTLINE{0, {0, 0, 0, 0}};</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">   13</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> : std::uint8_t {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758">LEFT</a>,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862ac397289ee45877be0cd49811fe245b4e">CENTER</a>,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862a21507b40c80068eda19865706fdc2403">RIGHT</a></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    };</div>
+</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">struct </span>Textbox {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        glm::vec2 pos;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        glm::vec2 posAnchor;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        glm::vec2 size;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        tr::AngleF rotation;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        Align textAlign;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    };</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">class </span>DynamicTextRenderer {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>      <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordtype">void</span> setDPI(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dpi) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordtype">void</span> setDPI(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> x, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> y) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2">   33</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2">VerticalAlign</a> : std::uint8_t {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2a6705777b712ee811e76fb07162081d63">TOP</a>,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862ac397289ee45877be0cd49811fe245b4e">CENTER</a> = 3,</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordtype">void</span> addUnformatted(<span class="keywordtype">int</span> priority, <span class="keyword">const</span> <span class="keywordtype">char</span>* text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize, tr::TTFont::Style style,</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                            tr::RGBA8 textColor, TextOutline outline, <span class="keyword">const</span> Textbox&amp; textbox);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="keywordtype">void</span> addFormatted(<span class="keywordtype">int</span> priority, std::string_view text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize, tr::RGBA8 textColor,</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                          TextOutline outline, <span class="keyword">const</span> Textbox&amp; textbox);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2a1fabf63de5c96c78e2a40805bcdeb73b">BOTTOM</a> = 6</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    };</div>
+</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordtype">void</span> addFormatted(<span class="keywordtype">int</span> priority, std::string_view text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize,</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                          std::span&lt;tr::RGBA8&gt; textColors, TextOutline outline, <span class="keyword">const</span> Textbox&amp; textbox);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordtype">void</span> forwardUpToPriority(Renderer2D&amp; renderer, <span class="keywordtype">int</span> minPriority);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00053" data-start="{" data-end="};">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15ee">   53</a></span>    <span class="keyword">enum class</span> <a class="code hl_enumeration" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15ee">Align</a> : std::uint8_t {</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordtype">void</span> forward(Renderer2D&amp; renderer);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        DynAtlas2D _atlas;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        std::map&lt;int, std::vector&lt;Textbox&gt;&gt; _textboxes;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        glm::uvec2 _dpi;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    };</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>} <span class="comment">// namespace tre</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea747385047b85ae751f83adb36435a3c1">TOP_LEFT</a>,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eeae4e8367937db13de78dd9a710df92164">TOP_CENTER</a>,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea901d87dedda8db733f5e6d34c4eb5fe0">TOP_RIGHT</a>,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea3cd98a7cfaab4e96e43dc7cc0b9aefe6">CENTER_LEFT</a>,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862ac397289ee45877be0cd49811fe245b4e">CENTER</a>,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea08ff9677a4ace6c15b6e6361985d4f9b">CENTER_RIGHT</a>,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea8d81ac82421d1b03da58fccb9174892e">BOTTOM_LEFT</a>,</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea3480601794fd3b5473219ae158219fd4">BOTTOM_CENTER</a>,</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <a class="code hl_enumvalue" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea341b72aaab1308a3e6667af1e52f5def">BOTTOM_RIGHT</a></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    };</div>
+</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="foldopen" id="foldopen00103" data-start="{" data-end="};">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="structtre_1_1TextOutline.html">  103</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="structtre_1_1TextOutline.html#ac44f1b40475f7ad58c37d8cdcd3fc68b">  107</a></span>        <span class="keywordtype">int</span> <a class="code hl_variable" href="structtre_1_1TextOutline.html#ac44f1b40475f7ad58c37d8cdcd3fc68b">thickness</a>;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="structtre_1_1TextOutline.html#a5b5d9d29ff06683dc1811275632bb93f">  112</a></span>        tr::RGBA8 <a class="code hl_variable" href="structtre_1_1TextOutline.html#a5b5d9d29ff06683dc1811275632bb93f">color</a>;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    };</div>
+</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="text__renderer_8hpp.html#aa79002b278ae0c30edbc10a455b26e94">  118</a></span>    <span class="keyword">inline</span> <span class="keyword">constexpr</span> <a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> <a class="code hl_variable" href="text__renderer_8hpp.html#aa79002b278ae0c30edbc10a455b26e94">NO_OUTLINE</a>{0, {0, 0, 0, 0}};</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="foldopen" id="foldopen00123" data-start="{" data-end="};">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html">  123</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtre_1_1StaticTextbox.html">StaticTextbox</a> {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html#af78de0dad3aa367e08d0f80a1a11a572">  127</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1StaticTextbox.html#af78de0dad3aa367e08d0f80a1a11a572">pos</a>;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html#adf5a0b7f56355bb73cb431a76a096e80">  132</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1StaticTextbox.html#adf5a0b7f56355bb73cb431a76a096e80">posAnchor</a>;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html#adff15f63d711586d5528837d0744c48f">  137</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1StaticTextbox.html#adff15f63d711586d5528837d0744c48f">size</a>;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html#a0722f78d8e8f2f6932817b1d729a85e4">  142</a></span>        tr::AngleF <a class="code hl_variable" href="structtre_1_1StaticTextbox.html#a0722f78d8e8f2f6932817b1d729a85e4">rotation</a>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="structtre_1_1StaticTextbox.html#ac969757121a458b0b8d68d080b3b7d6d">  147</a></span>        <a class="code hl_enumeration" href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2">VerticalAlign</a> <a class="code hl_variable" href="structtre_1_1StaticTextbox.html#ac969757121a458b0b8d68d080b3b7d6d">align</a>;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    };</div>
+</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="foldopen" id="foldopen00153" data-start="{" data-end="};">
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html">  153</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html#a4a8263fd3c2a463978ab6c199190ceb2">  157</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1DynamicTextbox.html#a4a8263fd3c2a463978ab6c199190ceb2">pos</a>;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html#a4ae47a809a9b30e086ad79cd0cec6dfc">  162</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1DynamicTextbox.html#a4ae47a809a9b30e086ad79cd0cec6dfc">posAnchor</a>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html#aa06eeff15acf1ec50d5bc45f88783bce">  167</a></span>        glm::vec2 <a class="code hl_variable" href="structtre_1_1DynamicTextbox.html#aa06eeff15acf1ec50d5bc45f88783bce">size</a>;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html#ab8971ae0b387315aa8717d34a445bfee">  172</a></span>        tr::AngleF <a class="code hl_variable" href="structtre_1_1DynamicTextbox.html#ab8971ae0b387315aa8717d34a445bfee">rotation</a>;</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="structtre_1_1DynamicTextbox.html#aec8e15738db97363d20c2f09e85b0f01">  177</a></span>        <a class="code hl_enumeration" href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15ee">Align</a> <a class="code hl_variable" href="structtre_1_1DynamicTextbox.html#aec8e15738db97363d20c2f09e85b0f01">textAlign</a>;</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    };</div>
+</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="foldopen" id="foldopen00185" data-start="{" data-end="};">
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html">  185</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classtre_1_1DynamicTextRenderer.html">DynamicTextRenderer</a> {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>      <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a658619b606cc7d5908b9c622f608cf3d">  190</a></span>        <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a658619b606cc7d5908b9c622f608cf3d">DynamicTextRenderer</a>() noexcept;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a471f1a2b827d083d67d351ed3588a671">  199</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a471f1a2b827d083d67d351ed3588a671">setDPI</a>(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> dpi) noexcept;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a45364ec20ad1519c51647c9a98c22201">  208</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a471f1a2b827d083d67d351ed3588a671">setDPI</a>(glm::uvec2 dpi) noexcept;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a818848f66d6f26801962a9c323bfb67b">  225</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a818848f66d6f26801962a9c323bfb67b">addUnformatted</a>(<span class="keywordtype">int</span> priority, const <span class="keywordtype">char</span>* text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize, tr::TTFont::Style style,</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>                            tr::RGBA8 textColor, <a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a>&amp; textbox);</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#ae1ce04071e5709f4445afa6430bab042">  243</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a818848f66d6f26801962a9c323bfb67b">addUnformatted</a>(<span class="keywordtype">int</span> priority, const std::<span class="keywordtype">string</span>&amp; text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize,</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>                            tr::TTFont::Style style, tr::RGBA8 textColor, <a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> outline,</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>                            const <a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a>&amp; textbox);</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a33dd438de33e8d467b572cea29bc190b">  261</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a33dd438de33e8d467b572cea29bc190b">addFormatted</a>(<span class="keywordtype">int</span> priority, std::string_view text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize, tr::RGBA8 textColor,</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                          <a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a>&amp; textbox);</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#aad9e70c2bc9d8a1d4fbbb3ebf78ab472">  279</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a33dd438de33e8d467b572cea29bc190b">addFormatted</a>(<span class="keywordtype">int</span> priority, std::string_view text, tr::TTFont&amp; font, <span class="keywordtype">int</span> fontSize,</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                          std::span&lt;tr::RGBA8&gt; textColors, <a class="code hl_struct" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a>&amp; textbox);</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno"><a class="line" href="classtre_1_1DynamicTextRenderer.html#a815ed6418dd74ff491f688ca92a241f1">  289</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1DynamicTextRenderer.html#a815ed6418dd74ff491f688ca92a241f1">forward</a>(<a class="code hl_class" href="classtre_1_1Renderer2D.html">Renderer2D</a>&amp; renderer);</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>      private:</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        <a class="code hl_class" href="classtre_1_1DynAtlas2D.html">DynAtlas2D</a> _atlas;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        std::map&lt;<span class="keywordtype">int</span>, std::vector&lt;<a class="code hl_struct" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a>&gt;&gt; _textboxes;</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        glm::uvec2 _dpi;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    };</div>
+</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>} <span class="comment">// namespace tre</span></div>
 <div class="ttc" id="aatlas_8hpp_html"><div class="ttname"><a href="atlas_8hpp.html">atlas.hpp</a></div><div class="ttdoc">Provides texture atlases.</div></div>
+<div class="ttc" id="aclasstre_1_1DynAtlas2D_html"><div class="ttname"><a href="classtre_1_1DynAtlas2D.html">tre::DynAtlas2D</a></div><div class="ttdoc">Dynamically-allocated 2D texture atlas.</div><div class="ttdef"><b>Definition</b> atlas.hpp:109</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html">tre::DynamicTextRenderer</a></div><div class="ttdoc">Renderer for one-off or frequently changing text.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:185</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html_a33dd438de33e8d467b572cea29bc190b"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html#a33dd438de33e8d467b572cea29bc190b">tre::DynamicTextRenderer::addFormatted</a></div><div class="ttdeci">void addFormatted(int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, TextOutline outline, const DynamicTextbox &amp;textbox)</div><div class="ttdoc">Adds formatted, multistyle text.</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html_a471f1a2b827d083d67d351ed3588a671"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html#a471f1a2b827d083d67d351ed3588a671">tre::DynamicTextRenderer::setDPI</a></div><div class="ttdeci">void setDPI(unsigned int dpi) noexcept</div><div class="ttdoc">Sets the DPI of the renderer.</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html_a658619b606cc7d5908b9c622f608cf3d"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html#a658619b606cc7d5908b9c622f608cf3d">tre::DynamicTextRenderer::DynamicTextRenderer</a></div><div class="ttdeci">DynamicTextRenderer() noexcept</div><div class="ttdoc">Constructs the dynamic text renderer.</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html_a815ed6418dd74ff491f688ca92a241f1"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html#a815ed6418dd74ff491f688ca92a241f1">tre::DynamicTextRenderer::forward</a></div><div class="ttdeci">void forward(Renderer2D &amp;renderer)</div><div class="ttdoc">Forwards all of the added text to the 2D renderer.</div></div>
+<div class="ttc" id="aclasstre_1_1DynamicTextRenderer_html_a818848f66d6f26801962a9c323bfb67b"><div class="ttname"><a href="classtre_1_1DynamicTextRenderer.html#a818848f66d6f26801962a9c323bfb67b">tre::DynamicTextRenderer::addUnformatted</a></div><div class="ttdeci">void addUnformatted(int priority, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, const DynamicTextbox &amp;textbox)</div><div class="ttdoc">Adds unformatted, single-style text.</div></div>
+<div class="ttc" id="aclasstre_1_1Renderer2D_html"><div class="ttname"><a href="classtre_1_1Renderer2D.html">tre::Renderer2D</a></div><div class="ttdoc">Basic, optimized 2D renderer.</div><div class="ttdef"><b>Definition</b> renderer_2d.hpp:15</div></div>
 <div class="ttc" id="arenderer__2d_8hpp_html"><div class="ttname"><a href="renderer__2d_8hpp.html">renderer_2d.hpp</a></div><div class="ttdoc">Provides a basic, batched 2D renderer.</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html">tre::DynamicTextbox</a></div><div class="ttdoc">Dynamic text textbox rectangle.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:153</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html_a4a8263fd3c2a463978ab6c199190ceb2"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html#a4a8263fd3c2a463978ab6c199190ceb2">tre::DynamicTextbox::pos</a></div><div class="ttdeci">glm::vec2 pos</div><div class="ttdoc">The position of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:157</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html_a4ae47a809a9b30e086ad79cd0cec6dfc"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html#a4ae47a809a9b30e086ad79cd0cec6dfc">tre::DynamicTextbox::posAnchor</a></div><div class="ttdeci">glm::vec2 posAnchor</div><div class="ttdoc">Where the position of the texbox is relative to the top-left of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:162</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html_aa06eeff15acf1ec50d5bc45f88783bce"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html#aa06eeff15acf1ec50d5bc45f88783bce">tre::DynamicTextbox::size</a></div><div class="ttdeci">glm::vec2 size</div><div class="ttdoc">The size of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:167</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html_ab8971ae0b387315aa8717d34a445bfee"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html#ab8971ae0b387315aa8717d34a445bfee">tre::DynamicTextbox::rotation</a></div><div class="ttdeci">tr::AngleF rotation</div><div class="ttdoc">The rotation of the textbox around the position.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:172</div></div>
+<div class="ttc" id="astructtre_1_1DynamicTextbox_html_aec8e15738db97363d20c2f09e85b0f01"><div class="ttname"><a href="structtre_1_1DynamicTextbox.html#aec8e15738db97363d20c2f09e85b0f01">tre::DynamicTextbox::textAlign</a></div><div class="ttdeci">Align textAlign</div><div class="ttdoc">The alignment of the text within the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:177</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html"><div class="ttname"><a href="structtre_1_1StaticTextbox.html">tre::StaticTextbox</a></div><div class="ttdoc">Static text textbox rectangle.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:123</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html_a0722f78d8e8f2f6932817b1d729a85e4"><div class="ttname"><a href="structtre_1_1StaticTextbox.html#a0722f78d8e8f2f6932817b1d729a85e4">tre::StaticTextbox::rotation</a></div><div class="ttdeci">tr::AngleF rotation</div><div class="ttdoc">The rotation of the textbox around the position.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:142</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html_ac969757121a458b0b8d68d080b3b7d6d"><div class="ttname"><a href="structtre_1_1StaticTextbox.html#ac969757121a458b0b8d68d080b3b7d6d">tre::StaticTextbox::align</a></div><div class="ttdeci">VerticalAlign align</div><div class="ttdoc">The alignment of the text within the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:147</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html_adf5a0b7f56355bb73cb431a76a096e80"><div class="ttname"><a href="structtre_1_1StaticTextbox.html#adf5a0b7f56355bb73cb431a76a096e80">tre::StaticTextbox::posAnchor</a></div><div class="ttdeci">glm::vec2 posAnchor</div><div class="ttdoc">Where the position of the texbox is relative to the top-left of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:132</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html_adff15f63d711586d5528837d0744c48f"><div class="ttname"><a href="structtre_1_1StaticTextbox.html#adff15f63d711586d5528837d0744c48f">tre::StaticTextbox::size</a></div><div class="ttdeci">glm::vec2 size</div><div class="ttdoc">The size of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:137</div></div>
+<div class="ttc" id="astructtre_1_1StaticTextbox_html_af78de0dad3aa367e08d0f80a1a11a572"><div class="ttname"><a href="structtre_1_1StaticTextbox.html#af78de0dad3aa367e08d0f80a1a11a572">tre::StaticTextbox::pos</a></div><div class="ttdeci">glm::vec2 pos</div><div class="ttdoc">The position of the textbox.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:127</div></div>
+<div class="ttc" id="astructtre_1_1TextOutline_html"><div class="ttname"><a href="structtre_1_1TextOutline.html">tre::TextOutline</a></div><div class="ttdoc">Text outline settings.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:103</div></div>
+<div class="ttc" id="astructtre_1_1TextOutline_html_a5b5d9d29ff06683dc1811275632bb93f"><div class="ttname"><a href="structtre_1_1TextOutline.html#a5b5d9d29ff06683dc1811275632bb93f">tre::TextOutline::color</a></div><div class="ttdeci">tr::RGBA8 color</div><div class="ttdoc">The color of the outline.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:112</div></div>
+<div class="ttc" id="astructtre_1_1TextOutline_html_ac44f1b40475f7ad58c37d8cdcd3fc68b"><div class="ttname"><a href="structtre_1_1TextOutline.html#ac44f1b40475f7ad58c37d8cdcd3fc68b">tre::TextOutline::thickness</a></div><div class="ttdeci">int thickness</div><div class="ttdoc">The thickness of the outline.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:107</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a0c4756284e05fab37c17a28b0126c8d2"><div class="ttname"><a href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2">tre::VerticalAlign</a></div><div class="ttdeci">VerticalAlign</div><div class="ttdoc">Vertical text alignment types.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:33</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a0c4756284e05fab37c17a28b0126c8d2a1fabf63de5c96c78e2a40805bcdeb73b"><div class="ttname"><a href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2a1fabf63de5c96c78e2a40805bcdeb73b">tre::VerticalAlign::BOTTOM</a></div><div class="ttdeci">@ BOTTOM</div><div class="ttdoc">The text is is placed bottom-aligned from the bottom edge of the textbox.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a0c4756284e05fab37c17a28b0126c8d2a6705777b712ee811e76fb07162081d63"><div class="ttname"><a href="text__renderer_8hpp.html#a0c4756284e05fab37c17a28b0126c8d2a6705777b712ee811e76fb07162081d63">tre::VerticalAlign::TOP</a></div><div class="ttdeci">@ TOP</div><div class="ttdoc">The text is is placed top-aligned from the top edge of the textbox.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a36e8a7b9092bac4482958403ac5f7862"><div class="ttname"><a href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">tre::HorizontalAlign</a></div><div class="ttdeci">HorizontalAlign</div><div class="ttdoc">Horizontal text alignment types.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:13</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a36e8a7b9092bac4482958403ac5f7862a21507b40c80068eda19865706fdc2403"><div class="ttname"><a href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862a21507b40c80068eda19865706fdc2403">tre::HorizontalAlign::RIGHT</a></div><div class="ttdeci">@ RIGHT</div><div class="ttdoc">The text is is placed right-aligned from the right edge of the textbox.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758"><div class="ttname"><a href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758">tre::HorizontalAlign::LEFT</a></div><div class="ttdeci">@ LEFT</div><div class="ttdoc">The text is is placed left-aligned from the left edge of the textbox.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_a36e8a7b9092bac4482958403ac5f7862ac397289ee45877be0cd49811fe245b4e"><div class="ttname"><a href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862ac397289ee45877be0cd49811fe245b4e">tre::HorizontalAlign::CENTER</a></div><div class="ttdeci">@ CENTER</div><div class="ttdoc">The text is is placed center-aligned from the center of the textbox.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_aa79002b278ae0c30edbc10a455b26e94"><div class="ttname"><a href="text__renderer_8hpp.html#aa79002b278ae0c30edbc10a455b26e94">tre::NO_OUTLINE</a></div><div class="ttdeci">constexpr TextOutline NO_OUTLINE</div><div class="ttdoc">Special text outline value that represents a lack of an outline.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:118</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15ee"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15ee">tre::Align</a></div><div class="ttdeci">Align</div><div class="ttdoc">Text alignment types.</div><div class="ttdef"><b>Definition</b> text_renderer.hpp:53</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea08ff9677a4ace6c15b6e6361985d4f9b"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea08ff9677a4ace6c15b6e6361985d4f9b">tre::Align::CENTER_RIGHT</a></div><div class="ttdeci">@ CENTER_RIGHT</div><div class="ttdoc">The text is aligned from the center vertically and from the right horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea341b72aaab1308a3e6667af1e52f5def"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea341b72aaab1308a3e6667af1e52f5def">tre::Align::BOTTOM_RIGHT</a></div><div class="ttdeci">@ BOTTOM_RIGHT</div><div class="ttdoc">The text is aligned from the bottom vertically and from the right horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea3480601794fd3b5473219ae158219fd4"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea3480601794fd3b5473219ae158219fd4">tre::Align::BOTTOM_CENTER</a></div><div class="ttdeci">@ BOTTOM_CENTER</div><div class="ttdoc">The text is aligned from the bottom vertically and from the center horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea3cd98a7cfaab4e96e43dc7cc0b9aefe6"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea3cd98a7cfaab4e96e43dc7cc0b9aefe6">tre::Align::CENTER_LEFT</a></div><div class="ttdeci">@ CENTER_LEFT</div><div class="ttdoc">The text is aligned from the center vertically and from the left horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea747385047b85ae751f83adb36435a3c1"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea747385047b85ae751f83adb36435a3c1">tre::Align::TOP_LEFT</a></div><div class="ttdeci">@ TOP_LEFT</div><div class="ttdoc">The text is aligned from the top vertically and from the left horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea8d81ac82421d1b03da58fccb9174892e"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea8d81ac82421d1b03da58fccb9174892e">tre::Align::BOTTOM_LEFT</a></div><div class="ttdeci">@ BOTTOM_LEFT</div><div class="ttdoc">The text is aligned from the bottom vertically and from the left horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eea901d87dedda8db733f5e6d34c4eb5fe0"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eea901d87dedda8db733f5e6d34c4eb5fe0">tre::Align::TOP_RIGHT</a></div><div class="ttdeci">@ TOP_RIGHT</div><div class="ttdoc">The text is aligned from the top vertically and from the right horizontally.</div></div>
+<div class="ttc" id="atext__renderer_8hpp_html_ac40fb74cd776e32fe1dd9687076f15eeae4e8367937db13de78dd9a710df92164"><div class="ttname"><a href="text__renderer_8hpp.html#ac40fb74cd776e32fe1dd9687076f15eeae4e8367937db13de78dd9a710df92164">tre::Align::TOP_CENTER</a></div><div class="ttdeci">@ TOP_CENTER</div><div class="ttdoc">The text is aligned from the top vertically and from the center horizontally.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

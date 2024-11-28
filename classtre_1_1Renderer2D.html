@@ -416,7 +416,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
   <table class="params">
     <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
     <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
     <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
@@ -488,7 +488,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
   <table class="params">
     <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
     <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
     <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
@@ -701,12 +701,14 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an itr::RectI2. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
     <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
@@ -764,7 +766,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
   <table class="params">
     <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
     <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
     <tr><td class="paramname">colors</td><td>The colors of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
@@ -824,7 +826,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
   <table class="params">
     <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
     <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
     <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
     <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>

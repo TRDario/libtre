@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['text_20format_0',['Formatted Debug Text Format',['../debformat.html',1,'']]]
+  ['rendered_20text_20format_0',['Formatted Rendered Text Format',['../renderformat.html',1,'']]]
 ];

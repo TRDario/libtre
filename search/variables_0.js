@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bitmap_0',['bitmap',['../structtre_1_1AtlasBitmap.html#ab4698ff2573cefb720e974369a959fa5',1,'tre::AtlasBitmap']]]
+  ['align_0',['align',['../structtre_1_1StaticTextbox.html#ac969757121a458b0b8d68d080b3b7d6d',1,'tre::StaticTextbox']]]
 ];
