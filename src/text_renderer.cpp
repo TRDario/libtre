@@ -50,9 +50,9 @@ namespace tre {
 									tr::RGBA8 outlineColor);
 
 	glm::vec2 calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
-								 const tre::StaticTextbox& textbox) noexcept;
+								 const StaticTextRenderer::Textbox& textbox) noexcept;
 
-	glm::vec2 calculatePosAnchor(glm::vec2 textSize, const tre::DynamicTextbox& textbox) noexcept;
+	glm::vec2 calculatePosAnchor(glm::vec2 textSize, const DynamicTextRenderer::Textbox& textbox) noexcept;
 } // namespace tre
 
 glm::ivec2 tre::calculateFinalBitmapSize(const MultistyleTextContext& context) noexcept
@@ -326,18 +326,18 @@ void tre::StaticTextRenderer::removeEntry(std::string_view name) noexcept
 	_atlas.remove(name);
 }
 
-void tre::StaticTextRenderer::addInstance(int priority, std::string entry, const StaticTextbox& textbox)
+void tre::StaticTextRenderer::addInstance(int priority, std::string_view entry, const Textbox& textbox)
 {
 	if (_atlas.contains(entry)) {
-		_instances[priority].emplace_back(std::move(entry), textbox);
+		_instances[priority].emplace_back(textbox, _atlas[entry], _fixedEntryTextboxInfo.find(entry)->second);
 	}
 }
 
 glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
-								  const tre::StaticTextbox& textbox) noexcept
+								  const StaticTextRenderer::Textbox& textbox) noexcept
 {
 	const glm::vec2 textBoxSize{maxWidth, textbox.height};
-	switch (Align(int(horizontalAlignment) + int(textbox.textAlign))) {
+	switch (Align(int(horizontalAlignment) + int(textbox.textAlignment))) {
 	case Align::TOP_LEFT:
 		return textbox.posAnchor;
 	case Align::TOP_CENTER:
@@ -365,19 +365,13 @@ void tre::StaticTextRenderer::forward(Renderer2D& renderer)
 {
 	for (auto& [priority, instances] : _instances) {
 		for (std::size_t i = 0; i < instances.size(); ++i) {
-			const auto& name{instances[i].first};
-			if (!_atlas.contains(name)) {
-				continue;
-			}
+			const auto& [textbox, uv, fixedInfo]{instances[i]};
+			const glm::vec2 size{uv.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
+			const glm::vec2 posAnchor{calculatePosAnchor(size, fixedInfo.width, fixedInfo.textAlignment, textbox)};
+			const Renderer2D::TextureRef texture{_atlas.texture(), bilinearSampler()};
 
-			const auto& textbox{instances[i].second};
-			const auto& alignmentInfo{_entryAlignmentInfo[name]};
-			const auto texture{_atlas[name]};
-			const glm::vec2 size{texture.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
-			const glm::vec2 posAnchor{calculatePosAnchor(size, alignmentInfo.first, alignmentInfo.second, textbox)};
-
-			renderer.addTexturedRotatedRectangle(priority, textbox.pos, posAnchor, size, textbox.rotation,
-												 {_atlas.texture(), bilinearSampler()}, texture, textbox.tint);
+			renderer.addTexturedRotatedRectangle(priority, textbox.pos, posAnchor, size, textbox.rotation, texture, uv,
+												 textbox.tint);
 		}
 	}
 	_instances.clear();
@@ -405,7 +399,7 @@ void tre::DynamicTextRenderer::setDPI(glm::uvec2 dpi) noexcept
 
 void tre::DynamicTextRenderer::addUnformatted(int priority, const char* text, tr::TTFont& font, int fontSize,
 											  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
-											  const DynamicTextbox& textbox)
+											  const Textbox& textbox)
 {
 	if (std::string_view{text}.empty()) {
 		return;
@@ -413,7 +407,7 @@ void tre::DynamicTextRenderer::addUnformatted(int priority, const char* text, tr
 
 	font.resize(fontSize, _dpi);
 	font.setStyle(style);
-	font.setWrapAlignment(tr::TTFont::WrapAlignment(int(textbox.textAlign) % 3));
+	font.setWrapAlignment(tr::TTFont::WrapAlignment(int(textbox.textAlignment) % 3));
 
 	auto name{std::format("{}x{}", priority, _textboxes[priority].size())};
 	if (outline.thickness != 0) {
@@ -434,35 +428,35 @@ void tre::DynamicTextRenderer::addUnformatted(int priority, const char* text, tr
 
 void tre::DynamicTextRenderer::addUnformatted(int priority, const std::string& text, tr::TTFont& font, int fontSize,
 											  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
-											  const DynamicTextbox& textbox)
+											  const Textbox& textbox)
 {
 	addUnformatted(priority, text.c_str(), font, fontSize, style, textColor, outline, textbox);
 }
 
 void tre::DynamicTextRenderer::addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize,
-											tr::RGBA8 textColor, TextOutline outline, const DynamicTextbox& textbox)
+											tr::RGBA8 textColor, TextOutline outline, const Textbox& textbox)
 {
 	addFormatted(priority, text, font, fontSize, {&textColor, 1}, outline, textbox);
 }
 
 void tre::DynamicTextRenderer::addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize,
 											std::span<tr::RGBA8> textColors, TextOutline outline,
-											const DynamicTextbox& textbox)
+											const Textbox& textbox)
 {
 	if (text.empty()) {
 		return;
 	}
 
-	const auto align{HorizontalAlign(int(textbox.textAlign) % 3)};
+	const auto align{HorizontalAlign(int(textbox.textAlignment) % 3)};
 	const auto bitmap{renderMultistyleText(text, font, fontSize, _dpi, textbox.size.x, align, textColors,
 										   outline.thickness, outline.color)};
 	_atlas.add(std::format("{}x{}", priority, _textboxes[priority].size()), bitmap);
 	_textboxes[priority].push_back(textbox);
 }
 
-glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, const tre::DynamicTextbox& textbox) noexcept
+glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, const DynamicTextRenderer::Textbox& textbox) noexcept
 {
-	switch (textbox.textAlign) {
+	switch (textbox.textAlignment) {
 	case Align::TOP_LEFT:
 		return textbox.posAnchor;
 	case Align::TOP_CENTER:
