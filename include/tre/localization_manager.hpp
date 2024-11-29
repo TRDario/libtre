@@ -110,6 +110,6 @@ namespace tre {
 
 	  private:
 		std::vector<std::string> _errors;
-		LocalizationManager _manager;
+		LocalizationManager      _manager;
 	};
 } // namespace tre

@@ -2,7 +2,7 @@
 
 const tr::Sampler& tre::nearestNeighborSampler() noexcept
 {
-	static bool inited{false};
+	static bool        inited{false};
 	static tr::Sampler sampler;
 	if (!inited) {
 		sampler.setMinFilter(tr::MinFilter::NEAREST);
@@ -17,7 +17,7 @@ const tr::Sampler& tre::nearestNeighborSampler() noexcept
 
 const tr::Sampler& tre::bilinearSampler() noexcept
 {
-	static bool inited{false};
+	static bool        inited{false};
 	static tr::Sampler sampler;
 	if (!inited) {
 		sampler.setMinFilter(tr::MinFilter::LINEAR);
@@ -32,7 +32,7 @@ const tr::Sampler& tre::bilinearSampler() noexcept
 
 const tr::Sampler& tre::trilinearSampler() noexcept
 {
-	static bool inited{false};
+	static bool        inited{false};
 	static tr::Sampler sampler;
 	if (!inited) {
 		sampler.setMinFilter(tr::MinFilter::LMIPS_LINEAR);

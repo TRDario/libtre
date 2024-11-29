@@ -35,7 +35,7 @@ namespace tre {
 	 * @return An atlas bitmap with entries named after the bitmaps that make up the atlas.
 	 ******************************************************************************************************************/
 	AtlasBitmap buildAtlasBitmap(const tr::StringHashMap<tr::Bitmap>& bitmaps,
-								 tr::BitmapFormat format = tr::BitmapFormat::RGBA_8888);
+								 tr::BitmapFormat                     format = tr::BitmapFormat::RGBA_8888);
 
 	/******************************************************************************************************************
 	 * Static 2D texture atlas.
@@ -99,7 +99,7 @@ namespace tre {
 		void setLabel(std::string_view label) noexcept;
 
 	  private:
-		tr::Texture2D _tex;
+		tr::Texture2D                 _tex;
 		tr::StringHashMap<tr::RectF2> _entries;
 	};
 
@@ -204,10 +204,10 @@ namespace tre {
 		void setLabel(std::string label) noexcept;
 
 	  private:
-		std::optional<tr::Texture2D> _tex;
+		std::optional<tr::Texture2D>  _tex;
 		tr::StringHashMap<tr::RectI2> _entries;
 		std::forward_list<tr::RectI2> _freeRects;
-		std::string _label;
+		std::string                   _label;
 
 		// Does not append new free rects unlike the exposed function.
 		void rawReserve(glm::ivec2 capacity);

@@ -293,21 +293,21 @@ namespace tre {
 	  private:
 		/// @cond IMPLEMENTATION
 		struct FixedEntryTextboxInfo {
-			int width;
+			int             width;
 			HorizontalAlign textAlignment;
 		};
 
 		struct Instance {
-			Textbox textbox;
-			tr::RectF2 rect;
+			Textbox               textbox;
+			tr::RectF2            rect;
 			FixedEntryTextboxInfo fixedInfo;
 		};
 		/// @endcond
 
-		DynAtlas2D _atlas;
-		tr::StringHashMap<FixedEntryTextboxInfo> _fixedEntryTextboxInfo;
+		DynAtlas2D                                     _atlas;
+		tr::StringHashMap<FixedEntryTextboxInfo>       _fixedEntryTextboxInfo;
 		std::unordered_map<int, std::vector<Instance>> _instances;
-		glm::uvec2 _dpi;
+		glm::uvec2                                     _dpi;
 	};
 
 	/******************************************************************************************************************
@@ -451,8 +451,8 @@ namespace tre {
 		void forward(Renderer2D& renderer);
 
 	  private:
-		DynAtlas2D _atlas;
+		DynAtlas2D                                    _atlas;
 		std::unordered_map<int, std::vector<Textbox>> _textboxes;
-		glm::uvec2 _dpi;
+		glm::uvec2                                    _dpi;
 	};
 } // namespace tre

@@ -1,9 +1,9 @@
 #include "../include/tre/atlas.hpp"
 
-using NamedBitmaps = tr::StringHashMap<tr::Bitmap>;
+using NamedBitmaps  = tr::StringHashMap<tr::Bitmap>;
 using NamedBitmapIt = NamedBitmaps::const_iterator;
-using FreeRectList = std::forward_list<tr::RectI2>;
-using FreeRectIt = FreeRectList::iterator;
+using FreeRectList  = std::forward_list<tr::RectI2>;
+using FreeRectIt    = FreeRectList::iterator;
 
 namespace tre {
 	glm::ivec2 doubleSmallerComponent(glm::ivec2 size) noexcept;
@@ -37,7 +37,7 @@ int tre::area(glm::ivec2 size) noexcept
 glm::ivec2 tre::initialSize(const NamedBitmaps& bitmaps) noexcept
 {
 	glm::ivec2 size{};
-	int bitmapArea{};
+	int        bitmapArea{};
 	for (auto& [name, bitmap] : bitmaps) {
 		auto bitmapSize{bitmap.size()};
 		if (bitmapSize.x > size.x) {
@@ -58,7 +58,7 @@ std::vector<NamedBitmapIt> tre::bitmapsByArea(const NamedBitmaps& bitmaps)
 {
 	constexpr auto GREATER_AREA{[](auto& l, auto& r) { return area(l->second.size()) > area(r->second.size()); }};
 
-	const auto iterators{std::views::iota(bitmaps.begin(), bitmaps.end())};
+	const auto                 iterators{std::views::iota(bitmaps.begin(), bitmaps.end())};
 	std::vector<NamedBitmapIt> list{iterators.begin(), iterators.end()};
 	std::ranges::sort(list, GREATER_AREA);
 	return list;
@@ -67,7 +67,7 @@ std::vector<NamedBitmapIt> tre::bitmapsByArea(const NamedBitmaps& bitmaps)
 FreeRectIt tre::findFreeRectPrev(FreeRectList& freeRects, glm::ivec2 size) noexcept
 {
 	FreeRectIt minPrev{freeRects.end()};
-	int minArea;
+	int        minArea;
 	for (auto [prev, it] = std::pair(freeRects.before_begin(), freeRects.begin()); it != freeRects.end(); prev = it++) {
 		if (it->size.x < size.x || it->size.y < size.y) {
 			continue;
@@ -129,9 +129,9 @@ std::optional<tr::StringHashMap<tr::RectI2>> tre::tryPacking(glm::ivec2 size, co
 std::pair<glm::ivec2, tr::StringHashMap<tr::RectI2>> tre::pack(const NamedBitmaps& bitmaps)
 {
 	glm::ivec2 size{initialSize(bitmaps)};
-	auto rects{tryPacking(size, bitmaps)};
+	auto       rects{tryPacking(size, bitmaps)};
 	while (!rects.has_value()) {
-		size = doubleSmallerComponent(size);
+		size  = doubleSmallerComponent(size);
 		rects = tryPacking(size, bitmaps);
 	}
 	return {size, *std::move(rects)};
@@ -219,7 +219,7 @@ void tre::DynAtlas2D::rawReserve(glm::ivec2 capacity)
 		if (capacity.x <= oldCapacity.x && capacity.y <= oldCapacity.y) {
 			return;
 		}
-		tr::Texture2D newTex{capacity, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8};
+		tr::Texture2D          newTex{capacity, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8};
 		static tr::Framebuffer dynArrayCopyFBO;
 #ifndef NDEBUG
 		static bool addedLabel{false};
@@ -264,18 +264,18 @@ std::forward_list<tr::RectI2>::iterator tre::DynAtlas2D::findFreeRectPrev(glm::i
 		if (it == _freeRects.end()) {
 			glm::ivec2 oldCapacity{_tex->size()};
 			glm::ivec2 newCapacity{doubleSmallerComponent(_tex->size())};
-			auto& newRect1{_freeRects.emplace_front(glm::ivec2{oldCapacity.x, 0},
-													glm::ivec2{newCapacity.x - oldCapacity.x, oldCapacity.y})};
-			auto& newRect2{_freeRects.emplace_front(glm::ivec2{0, oldCapacity.y},
-													glm::ivec2{newCapacity.x, newCapacity.y - oldCapacity.y})};
+			auto&      newRect1{_freeRects.emplace_front(glm::ivec2{oldCapacity.x, 0},
+														 glm::ivec2{newCapacity.x - oldCapacity.x, oldCapacity.y})};
+			auto&      newRect2{_freeRects.emplace_front(glm::ivec2{0, oldCapacity.y},
+														 glm::ivec2{newCapacity.x, newCapacity.y - oldCapacity.y})};
 			it = tre::findFreeRectPrev(_freeRects, size);
 			while (it == _freeRects.end()) {
 				newCapacity = doubleSmallerComponent(newCapacity);
-				newRect1 = {_freeRects.emplace_front(glm::ivec2{oldCapacity.x, 0},
-													 glm::ivec2{newCapacity.x - oldCapacity.x, oldCapacity.y})};
-				newRect2 = {_freeRects.emplace_front(glm::ivec2{0, oldCapacity.y},
-													 glm::ivec2{newCapacity.x, newCapacity.y - oldCapacity.y})};
-				it = tre::findFreeRectPrev(_freeRects, size);
+				newRect1    = {_freeRects.emplace_front(glm::ivec2{oldCapacity.x, 0},
+														glm::ivec2{newCapacity.x - oldCapacity.x, oldCapacity.y})};
+				newRect2    = {_freeRects.emplace_front(glm::ivec2{0, oldCapacity.y},
+														glm::ivec2{newCapacity.x, newCapacity.y - oldCapacity.y})};
+				it          = tre::findFreeRectPrev(_freeRects, size);
 			}
 			rawReserve(newCapacity);
 		}

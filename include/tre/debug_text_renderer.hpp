@@ -105,33 +105,33 @@ namespace tre {
 		/// @cond IMPLEMENTATION
 		struct ShaderGlyph {
 			glm::u8vec2 pos;
-			bool alignRight;
-			char chr;
-			tr::RGBA8 textColor;
-			tr::RGBA8 backgroundColor;
+			bool        alignRight;
+			char        chr;
+			tr::RGBA8   textColor;
+			tr::RGBA8   backgroundColor;
 		};
 		struct DebugTextContext {
 			std::uint8_t& line;
-			Align alignment;
-			tr::RGBA8 textColor;
-			tr::RGBA8 backgroundColor;
-			std::uint8_t lineLength;
-			std::size_t textStart;
-			std::size_t lineStart;
-			std::size_t wordStart;
+			Align         alignment;
+			tr::RGBA8     textColor;
+			tr::RGBA8     backgroundColor;
+			std::uint8_t  lineLength;
+			std::size_t   textStart;
+			std::size_t   lineStart;
+			std::size_t   wordStart;
 		};
 		/// @endcond
 
 		tr::OwningShaderPipeline _shaderPipeline;
-		tr::ShaderBuffer _shaderGlyphBuffer;
-		tr::Texture2D _font;
-		tr::TextureUnit _textureUnit;
-		tr::VertexFormat _vertexFormat;
-		tr::VertexBuffer _vertexBuffer;
+		tr::ShaderBuffer         _shaderGlyphBuffer;
+		tr::Texture2D            _font;
+		tr::TextureUnit          _textureUnit;
+		tr::VertexFormat         _vertexFormat;
+		tr::VertexBuffer         _vertexBuffer;
 
-		std::uint8_t _columnLimit;
-		std::uint8_t _leftLine;
-		std::uint8_t _rightLine;
+		std::uint8_t             _columnLimit;
+		std::uint8_t             _leftLine;
+		std::uint8_t             _rightLine;
 		std::vector<ShaderGlyph> _shaderGlyphs;
 
 		void rightAlignLine(std::size_t begin, std::size_t end) noexcept;

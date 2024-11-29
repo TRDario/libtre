@@ -263,24 +263,24 @@ namespace tre {
 			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
 		};
 
-		using Triangle = std::array<Vertex, 3>;
+		using Triangle  = std::array<Vertex, 3>;
 		using Rectangle = std::array<Vertex, 4>;
 		using VertexFan = std::vector<Vertex>;
-		using RawData = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
+		using RawData   = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
 		using Primitive = std::variant<Triangle, Rectangle, VertexFan, RawData>;
-		using Priority = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
+		using Priority  = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
-		tr::OwningShaderPipeline _shaderPipeline;
-		tr::TextureUnit _textureUnit;
-		tr::VertexBuffer _vertexBuffer;
-		tr::IndexBuffer _indexBuffer;
-		std::vector<Vertex> _vertices;
+		tr::OwningShaderPipeline   _shaderPipeline;
+		tr::TextureUnit            _textureUnit;
+		tr::VertexBuffer           _vertexBuffer;
+		tr::IndexBuffer            _indexBuffer;
+		std::vector<Vertex>        _vertices;
 		std::vector<std::uint16_t> _indices;
-		std::map<int, Priority> _renderGraph;
+		std::map<int, Priority>    _renderGraph;
 
-		glm::vec2 _fieldSize;
+		glm::vec2     _fieldSize;
 		tr::BlendMode _blendMode;
-		tr::RectI2 _scissorBox;
+		tr::RectI2    _scissorBox;
 
 		void setupContext(tr::GLContext& glContext) noexcept;
 		void writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index);

@@ -2,10 +2,13 @@
 
 namespace tre {
 	bool skipLine(const std::string& line) noexcept;
+
 	bool validateDelimiter(std::size_t delimiter, std::size_t lineSize, std::vector<std::string>& errors,
 						   int lineNumber);
+
 	bool validateKey(std::string_view key, const LocalizationManager::Map& map, std::vector<std::string>& errors,
 					 int lineNumber);
+
 	std::string processValue(std::string_view rawValue, std::vector<std::string>& errors, int lineNumber);
 } // namespace tre
 
@@ -114,7 +117,7 @@ tre::LocalizationManager::LocalizationManager(Map map) noexcept
 
 tre::LocalizationManager::LocalizationManager(const std::filesystem::path& file)
 {
-	auto is{tr::openFileR(file)};
+	auto                     is{tr::openFileR(file)};
 	std::vector<std::string> errors;
 
 	std::string line;

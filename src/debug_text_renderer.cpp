@@ -16,14 +16,14 @@ using VtxAttrF = tr::VertexAttributeF;
 
 tre::DebugTextRenderer::DebugTextRenderer()
 	: _shaderPipeline{{tr::asBytes(DEBUG_TEXT_VERT_SPV), tr::ShaderType::VERTEX},
-					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}},
-	  _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY},
-	  _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8},
-	  _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}},
-	  _vertexBuffer{tr::asBytes(GLYPH_VERTICES)},
-	  _columnLimit{255},
-	  _leftLine{0},
-	  _rightLine{0}
+					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}}
+	, _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY}
+	, _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8}
+	, _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}}
+	, _vertexBuffer{tr::asBytes(GLYPH_VERTICES)}
+	, _columnLimit{255}
+	, _leftLine{0}
+	, _rightLine{0}
 {
 	_textureUnit.setTexture(_font);
 	_textureUnit.setSampler(nearestNeighborSampler());
@@ -54,7 +54,7 @@ void tre::DebugTextRenderer::setColumnLimit(std::uint8_t columns) noexcept
 void tre::DebugTextRenderer::clear() noexcept
 {
 	_shaderGlyphs.clear();
-	_leftLine = 0;
+	_leftLine  = 0;
 	_rightLine = 0;
 }
 
@@ -151,8 +151,8 @@ void tre::DebugTextRenderer::handleNewline(DebugTextContext& context)
 	}
 
 	context.lineLength = 0;
-	context.wordStart = _shaderGlyphs.size();
-	context.lineStart = _shaderGlyphs.size();
+	context.wordStart  = _shaderGlyphs.size();
+	context.lineStart  = _shaderGlyphs.size();
 	++context.line;
 }
 
@@ -191,8 +191,8 @@ void tre::DebugTextRenderer::handleControlSequence(std::string_view::iterator& i
 void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, tr::RGBA8 backgroundColor,
 								   std::span<tr::RGBA8> extraColors, Align alignment)
 {
-	auto& line{alignment == Align::RIGHT ? _rightLine : _leftLine};
-	const auto oldSize{_shaderGlyphs.size()};
+	auto&            line{alignment == Align::RIGHT ? _rightLine : _leftLine};
+	const auto       oldSize{_shaderGlyphs.size()};
 	DebugTextContext context{line, alignment, textColor, backgroundColor, 0, oldSize, oldSize, oldSize};
 
 	for (auto it = text.begin(); it != text.end(); ++it) {

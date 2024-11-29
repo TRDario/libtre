@@ -154,8 +154,8 @@ namespace tre {
 
 	  private:
 		std::unique_ptr<State> _state;
-		tr::Benchmark _updateBenchmark;
-		tr::Benchmark _drawBenchmark;
+		tr::Benchmark          _updateBenchmark;
+		tr::Benchmark          _drawBenchmark;
 	};
 
 	/******************************************************************************************************************

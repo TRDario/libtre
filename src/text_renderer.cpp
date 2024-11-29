@@ -5,20 +5,20 @@
 namespace tre {
 	struct TextPart {
 		tr::Bitmap bitmap;
-		int line;
+		int        line;
 	};
 
 	struct MultistyleTextContext {
-		tr::TTFont& font;
+		tr::TTFont&           font;
 		std::vector<TextPart> parts;
-		int line;
-		int lineLeft;
-		int maxWidth;
-		int outline;
-		tr::RGBA8 curTextColor;
-		tr::RGBA8 outlineColor;
-		std::span<tr::RGBA8> textColors;
-		HorizontalAlign alignment;
+		int                   line;
+		int                   lineLeft;
+		int                   maxWidth;
+		int                   outline;
+		tr::RGBA8             curTextColor;
+		tr::RGBA8             outlineColor;
+		std::span<tr::RGBA8>  textColors;
+		HorizontalAlign       alignment;
 	};
 
 	glm::ivec2 calculateFinalBitmapSize(const MultistyleTextContext& context) noexcept;
@@ -38,7 +38,7 @@ namespace tre {
 
 	std::string_view::iterator handleControlSequence(std::string_view::iterator start,
 													 std::string_view::iterator textEnd,
-													 MultistyleTextContext& context);
+													 MultistyleTextContext&     context);
 
 	int calculateXOffset(std::vector<TextPart>::iterator it, std::vector<TextPart>::iterator lineEnd,
 						 const MultistyleTextContext& context) noexcept;
@@ -136,7 +136,7 @@ std::string_view::iterator tre::handleTextBlock(std::string_view::iterator start
 												MultistyleTextContext& context)
 {
 	constexpr std::array<char, 2> DELIMITERS{'\\', '\n'};
-	const auto end{std::find_first_of(std::next(start), textEnd, DELIMITERS.begin(), DELIMITERS.end())};
+	const auto  end{std::find_first_of(std::next(start), textEnd, DELIMITERS.begin(), DELIMITERS.end())};
 	std::string copy{start, end};
 	for (auto it = copy.begin(); it != copy.end();) {
 		auto fit{context.font.measure(std::to_address(it), context.lineLeft)};
@@ -155,7 +155,7 @@ std::string_view::iterator tre::handleTextBlock(std::string_view::iterator start
 
 std::string_view::iterator tre::handleControlSequence(std::string_view::iterator start,
 													  std::string_view::iterator textEnd,
-													  MultistyleTextContext& context)
+													  MultistyleTextContext&     context)
 {
 	if (start == textEnd) {
 		return start;
@@ -484,9 +484,9 @@ void tre::DynamicTextRenderer::forward(Renderer2D& renderer)
 {
 	for (auto& [priority, textboxes] : _textboxes) {
 		for (std::size_t i = 0; i < textboxes.size(); ++i) {
-			const auto& textbox{textboxes[i]};
-			const auto name{std::format("{}x{}", priority, i)};
-			const auto texture{_atlas[name]};
+			const auto&     textbox{textboxes[i]};
+			const auto      name{std::format("{}x{}", priority, i)};
+			const auto      texture{_atlas[name]};
 			const glm::vec2 size{texture.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
 			const glm::vec2 posAnchor{calculatePosAnchor(size, textbox)};
 

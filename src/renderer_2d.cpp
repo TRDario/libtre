@@ -19,15 +19,15 @@
 using namespace tr::matrix_operators;
 
 namespace tre {
-	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
+	inline constexpr glm::vec2  UNTEXTURED_UV{-100, -100};
 	inline constexpr tr::RectI2 NO_SCISSOR_BOX{{-1, -1}, {-1, -1}};
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()
 	: _shaderPipeline{{tr::asBytes(RENDERER_2D_VERT_SPV), tr::ShaderType::VERTEX},
-					  {tr::asBytes(RENDERER_2D_FRAG_SPV), tr::ShaderType::FRAGMENT}},
-	  _blendMode{tr::ALPHA_BLENDING},
-	  _scissorBox{NO_SCISSOR_BOX}
+					  {tr::asBytes(RENDERER_2D_FRAG_SPV), tr::ShaderType::FRAGMENT}}
+	, _blendMode{tr::ALPHA_BLENDING}
+	, _scissorBox{NO_SCISSOR_BOX}
 {
 #ifndef NDEBUG
 	_shaderPipeline.setLabel("tre::Renderer2D Pipeline");
@@ -71,7 +71,7 @@ void tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2& rect, tr
 	Rectangle data;
 	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
 	for (auto& vertex : data) {
-		vertex.uv = UNTEXTURED_UV;
+		vertex.uv    = UNTEXTURED_UV;
 		vertex.color = color;
 	}
 
@@ -83,7 +83,7 @@ void tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2& rect, st
 	Rectangle data;
 	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
 	for (int i = 0; i < 4; ++i) {
-		data[i].uv = UNTEXTURED_UV;
+		data[i].uv    = UNTEXTURED_UV;
 		data[i].color = colors[i];
 	}
 
@@ -107,7 +107,7 @@ void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, Text
 	Rectangle data;
 	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
 	for (int i = 0; i < 4; i++) {
-		data[i].uv = uvs[i];
+		data[i].uv    = uvs[i];
 		data[i].color = tints[i];
 	}
 
@@ -117,12 +117,12 @@ void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, Text
 void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
 													tr::AngleF rotation, tr::RGBA8 color)
 {
-	Rectangle data;
+	Rectangle  data;
 	const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
 	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	for (auto& vertex : data) {
-		vertex.pos = transform * vertex.pos;
-		vertex.uv = UNTEXTURED_UV;
+		vertex.pos   = transform * vertex.pos;
+		vertex.uv    = UNTEXTURED_UV;
 		vertex.color = color;
 	}
 
@@ -132,12 +132,12 @@ void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos,
 void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
 													tr::AngleF rotation, std::array<tr::RGBA8, 4> colors)
 {
-	Rectangle data;
+	Rectangle  data;
 	const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
 	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	for (int i = 0; i < 4; ++i) {
-		data[i].pos = transform * data[i].pos;
-		data[i].uv = UNTEXTURED_UV;
+		data[i].pos   = transform * data[i].pos;
+		data[i].uv    = UNTEXTURED_UV;
 		data[i].color = colors[i];
 	}
 
@@ -148,12 +148,12 @@ void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, g
 												  tr::AngleF rotation, TextureRef texture, const tr::RectF2& uv,
 												  tr::RGBA8 tint)
 {
-	Rectangle data;
+	Rectangle  data;
 	const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
 	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
 	for (int i = 0; i < 4; ++i) {
-		data[i].pos = transform * data[i].pos;
+		data[i].pos   = transform * data[i].pos;
 		data[i].color = tint;
 	}
 
@@ -164,12 +164,12 @@ void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, g
 												  tr::AngleF rotation, TextureRef texture, std::array<glm::vec2, 4> uvs,
 												  std::array<tr::RGBA8, 4> tints)
 {
-	Rectangle data;
+	Rectangle  data;
 	const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
 	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	for (int i = 0; i < 4; ++i) {
-		data[i].pos = transform * data[i].pos;
-		data[i].uv = uvs[i];
+		data[i].pos   = transform * data[i].pos;
+		data[i].uv    = uvs[i];
 		data[i].color = tints[i];
 	}
 
@@ -182,7 +182,7 @@ void tre::Renderer2D::addUntexturedPolygon(int priority, const tr::CircleF& circ
 	VertexFan data(vertexCount);
 	tr::fillPolygonVertices((data | tr::positions).begin(), vertexCount, circle, rotation);
 	for (auto& vertex : data) {
-		vertex.uv = UNTEXTURED_UV;
+		vertex.uv    = UNTEXTURED_UV;
 		vertex.color = color;
 	}
 
@@ -202,8 +202,8 @@ void tre::Renderer2D::addUntexturedPolygonFan(int priority, std::span<tr::ClrVtx
 
 	VertexFan data(vertices.size());
 	for (std::size_t i = 0; i < data.size(); ++i) {
-		data[i].pos = vertices[i].pos;
-		data[i].uv = UNTEXTURED_UV;
+		data[i].pos   = vertices[i].pos;
+		data[i].uv    = UNTEXTURED_UV;
 		data[i].color = vertices[i].color;
 	}
 
