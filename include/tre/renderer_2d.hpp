@@ -282,7 +282,6 @@ namespace tre {
 		tr::BlendMode _blendMode;
 		tr::RectI2 _scissorBox;
 
-	  private:
 		void setupContext(tr::GLContext& glContext) noexcept;
 		void writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index);
 	};
