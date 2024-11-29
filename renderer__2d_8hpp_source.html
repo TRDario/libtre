@@ -183,24 +183,24 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            std::size_t operator()(<span class="keyword">const</span> std::optional&lt;TextureRef&gt;&amp; texture) <span class="keyword">const</span> <span class="keyword">noexcept</span>;</div>
 <div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        };</div>
 <div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keyword">using </span>Triangle = std::array&lt;Vertex, 3&gt;;</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keyword">using </span>Triangle  = std::array&lt;Vertex, 3&gt;;</div>
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="keyword">using </span>Rectangle = std::array&lt;Vertex, 4&gt;;</div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keyword">using </span>VertexFan = std::vector&lt;Vertex&gt;;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keyword">using </span>RawData = std::pair&lt;std::vector&lt;Vertex&gt;, std::vector&lt;std::uint16_t&gt;&gt;;</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keyword">using </span>RawData   = std::pair&lt;std::vector&lt;Vertex&gt;, std::vector&lt;std::uint16_t&gt;&gt;;</div>
 <div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        <span class="keyword">using </span>Primitive = std::variant&lt;Triangle, Rectangle, VertexFan, RawData&gt;;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keyword">using </span>Priority = std::unordered_map&lt;std::optional&lt;TextureRef&gt;, std::vector&lt;Primitive&gt;, TextureRefHash&gt;;</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        <span class="keyword">using </span>Priority  = std::unordered_map&lt;std::optional&lt;TextureRef&gt;, std::vector&lt;Primitive&gt;, TextureRefHash&gt;;</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span> </div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        tr::OwningShaderPipeline _shaderPipeline;</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        tr::TextureUnit _textureUnit;</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        tr::VertexBuffer _vertexBuffer;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        tr::IndexBuffer _indexBuffer;</div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        std::vector&lt;Vertex&gt; _vertices;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        tr::OwningShaderPipeline   _shaderPipeline;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        tr::TextureUnit            _textureUnit;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        tr::VertexBuffer           _vertexBuffer;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        tr::IndexBuffer            _indexBuffer;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        std::vector&lt;Vertex&gt;        _vertices;</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        std::vector&lt;std::uint16_t&gt; _indices;</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        std::map&lt;int, Priority&gt; _renderGraph;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        std::map&lt;int, Priority&gt;    _renderGraph;</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        glm::vec2 _fieldSize;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        glm::vec2     _fieldSize;</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        tr::BlendMode _blendMode;</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        tr::RectI2 _scissorBox;</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        tr::RectI2    _scissorBox;</div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        <span class="keywordtype">void</span> setupContext(tr::GLContext&amp; glContext) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordtype">void</span> writeToVertexIndexVectors(<span class="keyword">const</span> Primitive&amp; primitive, std::uint16_t&amp; index);</div>

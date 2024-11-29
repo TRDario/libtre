@@ -112,7 +112,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="atlas_8hpp.html#a0322a0d88432a74d37d7afb1ffdfa924">   37</a></span>    <a class="code hl_struct" href="structtre_1_1AtlasBitmap.html">AtlasBitmap</a> <a class="code hl_function" href="atlas_8hpp.html#a0322a0d88432a74d37d7afb1ffdfa924">buildAtlasBitmap</a>(<span class="keyword">const</span> tr::StringHashMap&lt;tr::Bitmap&gt;&amp; bitmaps,</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                                 tr::BitmapFormat format = tr::BitmapFormat::RGBA_8888);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                                 tr::BitmapFormat                     format = tr::BitmapFormat::RGBA_8888);</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="foldopen" id="foldopen00043" data-start="{" data-end="};">
@@ -137,7 +137,7 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classtre_1_1Atlas2D.html#a446198b2c2ca4c4dcc25a1851d0eff43">   99</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1Atlas2D.html#a446198b2c2ca4c4dcc25a1851d0eff43">setLabel</a>(std::string_view label) noexcept;</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      private:</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        tr::Texture2D _tex;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        tr::Texture2D                 _tex;</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        tr::StringHashMap&lt;tr::RectF2&gt; _entries;</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    };</div>
 </div>
@@ -177,10 +177,10 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="classtre_1_1DynAtlas2D.html#a7637f52b55e5d35226baee47fab1babd">  204</a></span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classtre_1_1Atlas2D.html#a446198b2c2ca4c4dcc25a1851d0eff43">setLabel</a>(std::<span class="keywordtype">string</span> label) noexcept;</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>      private:</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        std::optional&lt;tr::Texture2D&gt; _tex;</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        std::optional&lt;tr::Texture2D&gt;  _tex;</div>
 <div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        tr::StringHashMap&lt;tr::RectI2&gt; _entries;</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        std::forward_list&lt;tr::RectI2&gt; _freeRects;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        std::<span class="keywordtype">string</span> _label;</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        std::<span class="keywordtype">string</span>                   _label;</div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
 <div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="comment">// Does not append new free rects unlike the exposed function.</span></div>
 <div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordtype">void</span> rawReserve(glm::ivec2 capacity);</div>
