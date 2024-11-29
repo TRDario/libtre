@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['textalign_0',['textAlign',['../structtre_1_1StaticTextbox.html#a19f36b5078199139e5b686f7afc784dc',1,'tre::StaticTextbox::textAlign'],['../structtre_1_1DynamicTextbox.html#aec8e15738db97363d20c2f09e85b0f01',1,'tre::DynamicTextbox::textAlign']]],
+  ['textalignment_0',['textAlignment',['../structtre_1_1StaticTextRenderer_1_1Textbox.html#a97fd82db93de2e44699678878dfe5045',1,'tre::StaticTextRenderer::Textbox::textAlignment'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html#a172f97a7637bc8d26890cc71d2ba1584',1,'tre::DynamicTextRenderer::Textbox::textAlignment']]],
   ['thickness_1',['thickness',['../structtre_1_1TextOutline.html#ac44f1b40475f7ad58c37d8cdcd3fc68b',1,'tre::TextOutline']]],
-  ['tint_2',['tint',['../structtre_1_1StaticTextbox.html#addf64745ad1e1808bb9e5d486111cc08',1,'tre::StaticTextbox']]]
+  ['tint_2',['tint',['../structtre_1_1StaticTextRenderer_1_1Textbox.html#a3dac75e69acbbf25b8faa9558d61dab4',1,'tre::StaticTextRenderer::Textbox']]]
 ];

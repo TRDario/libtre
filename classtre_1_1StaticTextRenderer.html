@@ -91,6 +91,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1StaticTextRenderer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">tre::StaticTextRenderer Class Reference</div></div>
@@ -102,15 +103,21 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtre_1_1StaticTextRenderer_1_1Textbox.html">Textbox</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Static text textbox rectangle.  <a href="structtre_1_1StaticTextRenderer_1_1Textbox.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aebd95c4322479447bd87fe1336e85b56" id="r_aebd95c4322479447bd87fe1336e85b56"><td class="memItemLeft" align="right" valign="top"><a id="aebd95c4322479447bd87fe1336e85b56" name="aebd95c4322479447bd87fe1336e85b56"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>StaticTextRenderer</b> () noexcept</td></tr>
 <tr class="memdesc:aebd95c4322479447bd87fe1336e85b56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the static text renderer. <br /></td></tr>
 <tr class="separator:aebd95c4322479447bd87fe1336e85b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae05fc2395bbee1e3fc1b37f36691c883" id="r_ae05fc2395bbee1e3fc1b37f36691c883"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae05fc2395bbee1e3fc1b37f36691c883">addInstance</a> (int priority, std::string entry, const <a class="el" href="structtre_1_1StaticTextbox.html">StaticTextbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:ae05fc2395bbee1e3fc1b37f36691c883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an instance of a text entry.  <br /></td></tr>
-<tr class="separator:ae05fc2395bbee1e3fc1b37f36691c883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a102d0e02d48f068789944a7ffba51080" id="r_a102d0e02d48f068789944a7ffba51080"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a102d0e02d48f068789944a7ffba51080">addInstance</a> (int priority, std::string_view entry, const <a class="el" href="structtre_1_1StaticTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
+<tr class="memdesc:a102d0e02d48f068789944a7ffba51080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an instance of a text entry.  <br /></td></tr>
+<tr class="separator:a102d0e02d48f068789944a7ffba51080"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2cdf46e63ea1de5fb48847e1fa43af7f" id="r_a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cdf46e63ea1de5fb48847e1fa43af7f">forward</a> (<a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;renderer)</td></tr>
 <tr class="memdesc:a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards all of the added text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,8 +147,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Renderer for persistent text. </p>
 <p>Implemented as an abstraction layer that forwards its output to the 2D renderer. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae05fc2395bbee1e3fc1b37f36691c883" name="ae05fc2395bbee1e3fc1b37f36691c883"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae05fc2395bbee1e3fc1b37f36691c883">&#9670;&#160;</a></span>addInstance()</h2>
+<a id="a102d0e02d48f068789944a7ffba51080" name="a102d0e02d48f068789944a7ffba51080"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a102d0e02d48f068789944a7ffba51080">&#9670;&#160;</a></span>addInstance()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,12 +161,12 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>entry</em></span>, </td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>entry</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structtre_1_1StaticTextbox.html">StaticTextbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtre_1_1StaticTextRenderer_1_1Textbox.html">Textbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

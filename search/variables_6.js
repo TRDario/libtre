@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['pos_0',['pos',['../structtre_1_1StaticTextbox.html#af78de0dad3aa367e08d0f80a1a11a572',1,'tre::StaticTextbox::pos'],['../structtre_1_1DynamicTextbox.html#a4a8263fd3c2a463978ab6c199190ceb2',1,'tre::DynamicTextbox::pos']]],
-  ['posanchor_1',['posAnchor',['../structtre_1_1StaticTextbox.html#adf5a0b7f56355bb73cb431a76a096e80',1,'tre::StaticTextbox::posAnchor'],['../structtre_1_1DynamicTextbox.html#a4ae47a809a9b30e086ad79cd0cec6dfc',1,'tre::DynamicTextbox::posAnchor']]]
+  ['pos_0',['pos',['../structtre_1_1StaticTextRenderer_1_1Textbox.html#a22c0858c523a91f2a82b59eb24b271f7',1,'tre::StaticTextRenderer::Textbox::pos'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html#aaf2264647e1e380e9057e6784bef60a6',1,'tre::DynamicTextRenderer::Textbox::pos']]],
+  ['posanchor_1',['posAnchor',['../structtre_1_1StaticTextRenderer_1_1Textbox.html#a55884186fe0bf02f29d2cd4f13fe1582',1,'tre::StaticTextRenderer::Textbox::posAnchor'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html#a188f03be928ad4f484e0665a44f7d9bb',1,'tre::DynamicTextRenderer::Textbox::posAnchor']]]
 ];

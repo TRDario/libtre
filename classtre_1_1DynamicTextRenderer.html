@@ -91,6 +91,7 @@ $(function(){ initResizable(false); });
 <div id="doc-content">
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1DynamicTextRenderer-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">tre::DynamicTextRenderer Class Reference</div></div>
@@ -102,24 +103,30 @@ $(function(){ initResizable(false); });
 
 <p><code>#include &lt;<a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dynamic text textbox rectangle.  <a href="structtre_1_1DynamicTextRenderer_1_1Textbox.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a658619b606cc7d5908b9c622f608cf3d" id="r_a658619b606cc7d5908b9c622f608cf3d"><td class="memItemLeft" align="right" valign="top"><a id="a658619b606cc7d5908b9c622f608cf3d" name="a658619b606cc7d5908b9c622f608cf3d"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>DynamicTextRenderer</b> () noexcept</td></tr>
 <tr class="memdesc:a658619b606cc7d5908b9c622f608cf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the dynamic text renderer. <br /></td></tr>
 <tr class="separator:a658619b606cc7d5908b9c622f608cf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad9e70c2bc9d8a1d4fbbb3ebf78ab472" id="r_aad9e70c2bc9d8a1d4fbbb3ebf78ab472"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad9e70c2bc9d8a1d4fbbb3ebf78ab472">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:aad9e70c2bc9d8a1d4fbbb3ebf78ab472"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
-<tr class="separator:aad9e70c2bc9d8a1d4fbbb3ebf78ab472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a33dd438de33e8d467b572cea29bc190b" id="r_a33dd438de33e8d467b572cea29bc190b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a33dd438de33e8d467b572cea29bc190b">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:a33dd438de33e8d467b572cea29bc190b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
-<tr class="separator:a33dd438de33e8d467b572cea29bc190b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a818848f66d6f26801962a9c323bfb67b" id="r_a818848f66d6f26801962a9c323bfb67b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a818848f66d6f26801962a9c323bfb67b">addUnformatted</a> (int priority, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:a818848f66d6f26801962a9c323bfb67b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
-<tr class="separator:a818848f66d6f26801962a9c323bfb67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae1ce04071e5709f4445afa6430bab042" id="r_ae1ce04071e5709f4445afa6430bab042"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1ce04071e5709f4445afa6430bab042">addUnformatted</a> (int priority, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:ae1ce04071e5709f4445afa6430bab042"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
-<tr class="separator:ae1ce04071e5709f4445afa6430bab042"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9af62eea337c6637b62cff8ad12b4fd" id="r_af9af62eea337c6637b62cff8ad12b4fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9af62eea337c6637b62cff8ad12b4fd">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
+<tr class="memdesc:af9af62eea337c6637b62cff8ad12b4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
+<tr class="separator:af9af62eea337c6637b62cff8ad12b4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c39b2ebd4797a6d52a77d786fd810dd" id="r_a8c39b2ebd4797a6d52a77d786fd810dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c39b2ebd4797a6d52a77d786fd810dd">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
+<tr class="memdesc:a8c39b2ebd4797a6d52a77d786fd810dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
+<tr class="separator:a8c39b2ebd4797a6d52a77d786fd810dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40171e665ecae7c6a56d945827bccdba" id="r_a40171e665ecae7c6a56d945827bccdba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40171e665ecae7c6a56d945827bccdba">addUnformatted</a> (int priority, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
+<tr class="memdesc:a40171e665ecae7c6a56d945827bccdba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
+<tr class="separator:a40171e665ecae7c6a56d945827bccdba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf2605c5a68ed42decfd50efacbdc42f" id="r_adf2605c5a68ed42decfd50efacbdc42f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf2605c5a68ed42decfd50efacbdc42f">addUnformatted</a> (int priority, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
+<tr class="memdesc:adf2605c5a68ed42decfd50efacbdc42f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
+<tr class="separator:adf2605c5a68ed42decfd50efacbdc42f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a815ed6418dd74ff491f688ca92a241f1" id="r_a815ed6418dd74ff491f688ca92a241f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a815ed6418dd74ff491f688ca92a241f1">forward</a> (<a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;renderer)</td></tr>
 <tr class="memdesc:a815ed6418dd74ff491f688ca92a241f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards all of the added text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:a815ed6418dd74ff491f688ca92a241f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,8 +141,8 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Renderer for one-off or frequently changing text. </p>
 <p>Implemented as an abstraction layer that forwards its output to the 2D renderer. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aad9e70c2bc9d8a1d4fbbb3ebf78ab472" name="aad9e70c2bc9d8a1d4fbbb3ebf78ab472"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad9e70c2bc9d8a1d4fbbb3ebf78ab472">&#9670;&#160;</a></span>addFormatted() <span class="overload">[1/2]</span></h2>
+<a id="af9af62eea337c6637b62cff8ad12b4fd" name="af9af62eea337c6637b62cff8ad12b4fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9af62eea337c6637b62cff8ad12b4fd">&#9670;&#160;</a></span>addFormatted() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -173,7 +180,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -201,8 +208,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a33dd438de33e8d467b572cea29bc190b" name="a33dd438de33e8d467b572cea29bc190b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a33dd438de33e8d467b572cea29bc190b">&#9670;&#160;</a></span>addFormatted() <span class="overload">[2/2]</span></h2>
+<a id="a8c39b2ebd4797a6d52a77d786fd810dd" name="a8c39b2ebd4797a6d52a77d786fd810dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8c39b2ebd4797a6d52a77d786fd810dd">&#9670;&#160;</a></span>addFormatted() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -240,7 +247,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -268,8 +275,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a818848f66d6f26801962a9c323bfb67b" name="a818848f66d6f26801962a9c323bfb67b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a818848f66d6f26801962a9c323bfb67b">&#9670;&#160;</a></span>addUnformatted() <span class="overload">[1/2]</span></h2>
+<a id="a40171e665ecae7c6a56d945827bccdba" name="a40171e665ecae7c6a56d945827bccdba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40171e665ecae7c6a56d945827bccdba">&#9670;&#160;</a></span>addUnformatted() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +319,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -341,8 +348,8 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae1ce04071e5709f4445afa6430bab042" name="ae1ce04071e5709f4445afa6430bab042"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1ce04071e5709f4445afa6430bab042">&#9670;&#160;</a></span>addUnformatted() <span class="overload">[2/2]</span></h2>
+<a id="adf2605c5a68ed42decfd50efacbdc42f" name="adf2605c5a68ed42decfd50efacbdc42f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf2605c5a68ed42decfd50efacbdc42f">&#9670;&#160;</a></span>addUnformatted() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -385,7 +392,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextbox.html">DynamicTextbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
+          <td class="paramtype">const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>textbox</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

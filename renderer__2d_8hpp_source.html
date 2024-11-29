@@ -202,12 +202,11 @@ $(function(){ initResizable(false); });
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        tr::BlendMode _blendMode;</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        tr::RectI2 _scissorBox;</div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>      <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordtype">void</span> setupContext(tr::GLContext&amp; glContext) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="keywordtype">void</span> writeToVertexIndexVectors(<span class="keyword">const</span> Primitive&amp; primitive, std::uint16_t&amp; index);</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    };</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        <span class="keywordtype">void</span> setupContext(tr::GLContext&amp; glContext) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        <span class="keywordtype">void</span> writeToVertexIndexVectors(<span class="keyword">const</span> Primitive&amp; primitive, std::uint16_t&amp; index);</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>    };</div>
 </div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>} <span class="comment">// namespace tre</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>} <span class="comment">// namespace tre</span></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html"><div class="ttname"><a href="classtre_1_1Renderer2D.html">tre::Renderer2D</a></div><div class="ttdoc">Basic, optimized 2D renderer.</div><div class="ttdef"><b>Definition</b> renderer_2d.hpp:15</div></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html_a03761fb5d5dff11477416ee598ff5838"><div class="ttname"><a href="classtre_1_1Renderer2D.html#a03761fb5d5dff11477416ee598ff5838">tre::Renderer2D::drawUpToPriority</a></div><div class="ttdeci">void drawUpToPriority(tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target, int minPriority)</div><div class="ttdoc">Draws added objects of a certain priotrity or higher to a target.</div></div>
 <div class="ttc" id="aclasstre_1_1Renderer2D_html_a053e2c91fd6a63cffc664b7643fdb303"><div class="ttname"><a href="classtre_1_1Renderer2D.html#a053e2c91fd6a63cffc664b7643fdb303">tre::Renderer2D::addUntexturedCircle</a></div><div class="ttdeci">void addUntexturedCircle(int priority, const tr::CircleF &amp;circle, tr::RGBA8 color)</div><div class="ttdoc">Adds an untextured circle to the list of objects to draw in the next draw call.</div></div>
