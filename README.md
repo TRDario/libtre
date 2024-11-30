@@ -16,6 +16,10 @@ TO-DO.
 ## Dependencies ##
 libtre depends on the following external libraries:
 - [libtr](https://github.com/TRDario/libtr)
+- [qoi](https://github.com/phoboslab/qoi) (vendored)
+
+In addition, trefc depends on the following external libraries:
+- [stb_image](https://github.com/nothings/stb) (vendored)
 
 ## Building ##
 The following is required to build libtre:

@@ -404,7 +404,7 @@ build/*
 !build/tre-config.cmake
 !build/tre.pc.in
 
-# doxygen files except Doxyfile
+# Doxygen files except Doxyfile
 doxygen/*
 !doxygen/manual
 !doxygen/Doxyfile
@@ -413,3 +413,8 @@ doxygen/*
 resources/*.h
 resources/*.hpp
 resources/*.spv
+
+# Subdirectory directories
+tools/*/.cache/*
+tools/*/.vscode/*
+tools/*/build/*

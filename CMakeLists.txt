@@ -1,12 +1,11 @@
-cmake_minimum_required(VERSION 3.24.0 FATAL_ERROR)
-if(POLICY CMP0167)
-  cmake_policy(SET CMP0167 NEW)
-endif()
+cmake_minimum_required(VERSION 3.24.0...3.30.0 FATAL_ERROR)
 
 include(CMakePackageConfigHelpers)
 include(FetchContent)
 include(GNUInstallDirs)
 include(build/add_shader.cmake)
+
+option(BUILD_TOOLS "Build tools for working with tre formats" OFF)
 
 project(tre LANGUAGES C CXX VERSION 0.0.1)
 add_library(tre STATIC)
@@ -36,6 +35,10 @@ target_sources(tre PUBLIC FILE_SET HEADERS BASE_DIRS include FILES
     include/tre/atlas.hpp include/tre/debug_text_renderer.hpp include/tre/localization_manager.hpp include/tre/renderer_2d.hpp
     include/tre/renderer_base.hpp include/tre/sampler.hpp include/tre/state_manager.hpp include/tre/text_renderer.hpp
 )
+
+if (BUILD_TOOLS)
+    add_subdirectory(tools)
+endif ()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build/tre.pc.in ${CMAKE_CURRENT_BINARY_DIR}/tre.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tre.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
