@@ -26,7 +26,7 @@ using OutputImageDeleter = decltype([](void* ptr) { free(ptr); });
 
 struct OutputImage {
 	std::unique_ptr<void, OutputImageDeleter> data;
-	int size;
+	int                                       size;
 };
 
 void writeBinary(std::ostream& os, const auto& value) noexcept
@@ -42,10 +42,10 @@ ErrorCode writeToOutput(std::string_view path, const FontInfo& fontInfo, const I
 		return FILE_OPENING_FAILURE;
 	}
 
-	qoi_desc desc{.width = (unsigned int)(inputImage.width),
-				  .height = (unsigned int)(inputImage.height),
-				  .channels = (unsigned char)(inputImage.channels),
-				  .colorspace = QOI_SRGB};
+	qoi_desc    desc{.width      = (unsigned int)(inputImage.width),
+					 .height     = (unsigned int)(inputImage.height),
+					 .channels   = (unsigned char)(inputImage.channels),
+					 .colorspace = QOI_SRGB};
 	OutputImage outputImage;
 	outputImage.data.reset(qoi_encode(inputImage.data.get(), &desc, &outputImage.size));
 	if (outputImage.data == nullptr) {

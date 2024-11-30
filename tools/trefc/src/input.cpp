@@ -83,7 +83,7 @@ std::optional<int> stripCommentsWhitespace(std::string& buffer) noexcept
 
 	buffer.push_back('\n');
 	for (auto it = std::ranges::search(buffer, C_COMMENT_BEGIN).begin(); it != buffer.end();
-		 it = std::ranges::search(buffer, C_COMMENT_BEGIN).begin()) {
+		 it      = std::ranges::search(buffer, C_COMMENT_BEGIN).begin()) {
 		auto end{std::ranges::search(buffer, C_COMMENT_END).end()};
 		if (end == buffer.end()) {
 			return errorLineNumber(buffer, it);
@@ -94,7 +94,7 @@ std::optional<int> stripCommentsWhitespace(std::string& buffer) noexcept
 		buffer.insert(it, linesRemoved, '\n');
 	}
 	for (auto it = std::ranges::search(buffer, CPP_COMMENT_START).begin(); it != buffer.end();
-		 it = std::ranges::search(buffer, CPP_COMMENT_START).begin()) {
+		 it      = std::ranges::search(buffer, CPP_COMMENT_START).begin()) {
 		buffer.erase(it, std::ranges::find(buffer, '\n'));
 	}
 	for (auto it = buffer.begin(); it != buffer.end();) {
@@ -181,7 +181,7 @@ std::optional<std::uint32_t> utf8ToCodepoint(std::string_view span) noexcept
 
 // Parses a glyph codepoint (Formats: 'a', 0x20, NUL).
 std::optional<std::string::const_iterator> parseGlyphCodepoint(std::uint32_t& codepoint, const std::string& context,
-															   std::string_view filename,
+															   std::string_view            filename,
 															   std::string::const_iterator start)
 {
 	if (std::string_view{start, context.end()}.starts_with("''':")) {
@@ -190,7 +190,7 @@ std::optional<std::string::const_iterator> parseGlyphCodepoint(std::uint32_t& co
 	}
 
 	constexpr std::string_view DELIMITERS{":\n"};
-	auto end{std::find_first_of(start, context.end(), DELIMITERS.begin(), DELIMITERS.end())};
+	auto                       end{std::find_first_of(start, context.end(), DELIMITERS.begin(), DELIMITERS.end())};
 	if (*end != ':') {
 		print(std::cerr, EXPECTED_SYMBOL_MESSAGE, filename, errorLineNumber(context, start), ':');
 		return std::nullopt;
@@ -256,11 +256,11 @@ std::optional<std::string::const_iterator> parseGlyphAttribute(auto& value, std:
 
 // Parses the rest of the glyph after the codepoint.
 std::optional<std::string::const_iterator> parseGlyphAttributes(Glyph& glyph, const std::string& context,
-																std::string_view filename,
+																std::string_view            filename,
 																std::string::const_iterator start)
 {
 	std::optional<std::string::const_iterator> it = start;
-	it = parseGlyphAttribute(glyph.x, "x", ',', context, filename, *it);
+	it                                            = parseGlyphAttribute(glyph.x, "x", ',', context, filename, *it);
 	if (!it.has_value()) {
 		return std::nullopt;
 	}
@@ -300,13 +300,13 @@ Expected<FontInfo, ErrorCode> loadFontInfo(std::string_view path)
 	}
 
 	std::string buffer{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}};
-	const auto stripResult{stripCommentsWhitespace(buffer)};
+	const auto  stripResult{stripCommentsWhitespace(buffer)};
 	if (stripResult.has_value()) {
 		print(std::cerr, UNTERMINATED_COMMENT_MESSAGE, path, *stripResult);
 		return PARSING_FAILURE;
 	}
 
-	FontInfo fontInfo;
+	FontInfo                                   fontInfo;
 	std::optional<std::string::const_iterator> it;
 	it = parseNamedInteger(fontInfo.lineSkip, buffer, "line_skip", path, buffer.begin(),
 						   std::ranges::find(buffer, '\n'));

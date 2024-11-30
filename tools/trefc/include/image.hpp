@@ -8,9 +8,9 @@ struct InputImageDeleter {
 
 struct InputImage {
 	std::unique_ptr<unsigned char, InputImageDeleter> data;
-	int width;
-	int height;
-	int channels;
+	int                                               width;
+	int                                               height;
+	int                                               channels;
 };
 
 Expected<InputImage, ErrorCode> loadImage(std::string_view path);
