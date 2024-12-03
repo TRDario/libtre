@@ -31,7 +31,7 @@ namespace tre {
 		 * @return
 		 * @parblock
 		 * When used inside a state manager, the return value of this function can dictate the progression to a new
-		 *state.
+		 * state.
 		 *
 		 * Returning a non-nullptr state pointer will cause the manager to switch from the current state to the state
 		 * that was returned from this function.
@@ -49,7 +49,7 @@ namespace tre {
 		 * @return
 		 * @parblock
 		 * When used inside a state manager, the return value of this function can dictate the progression to a new
-		 *state.
+		 * state.
 		 *
 		 * Returning a non-nullptr state pointer will cause the manager to switch from the current state to the state
 		 * that was returned from this function.
