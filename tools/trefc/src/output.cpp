@@ -54,6 +54,7 @@ ErrorCode writeToOutput(std::string_view path, const FontInfo& fontInfo, const I
 	}
 
 	writeBinary(file, fontInfo.lineSkip);
+	writeBinary(file, std::uint32_t(fontInfo.glyphs.size()));
 	for (auto& [codepoint, glyph] : fontInfo.glyphs) {
 		writeBinary(file, codepoint);
 		writeBinary(file, glyph);
