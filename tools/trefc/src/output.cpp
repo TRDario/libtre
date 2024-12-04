@@ -53,6 +53,7 @@ ErrorCode writeToOutput(std::string_view path, const FontInfo& fontInfo, const I
 		return IMAGE_FAILURE;
 	}
 
+	file.write("TREF", 4);
 	writeBinary(file, fontInfo.lineSkip);
 	writeBinary(file, std::uint32_t(fontInfo.glyphs.size()));
 	for (auto& [codepoint, glyph] : fontInfo.glyphs) {
