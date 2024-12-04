@@ -142,6 +142,13 @@ namespace tre {
 		bool contains(std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
+		 * Gets the number of entries in the atlas.
+		 *
+		 * @return The number of entries in the atlas.
+		 **************************************************************************************************************/
+		std::size_t size() const noexcept;
+
+		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
 		 *
 		 * @param[in] name The name of the entry. A failed assertion may be triggered if no entry with this name is

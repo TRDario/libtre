@@ -200,6 +200,11 @@ bool tre::DynAtlas2D::contains(std::string_view name) const noexcept
 	return _entries.contains(name);
 }
 
+std::size_t tre::DynAtlas2D::size() const noexcept
+{
+	return _entries.size();
+}
+
 tr::RectF2 tre::DynAtlas2D::operator[](std::string_view name) const noexcept
 {
 	assert(contains(name));
