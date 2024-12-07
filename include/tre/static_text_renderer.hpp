@@ -3,14 +3,16 @@
 #include "text.hpp"
 
 namespace tre {
+	/** @addtogroup text
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Renderer for persistent text.
 	 *
 	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
 	 *
 	 * Only one instance of the static text renderer is allowed to exist at a time.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	class StaticTextRenderer {
 	  public:
@@ -183,8 +185,6 @@ namespace tre {
 	 * Gets whether the static text renderer was initialized.
 	 *
 	 * @return True if the static text renderer was initialized, and false otherwise.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	bool staticTextRendererActive() noexcept;
 
@@ -193,8 +193,8 @@ namespace tre {
 	 * This function cannot be called if the static text renderer wasn't initialized.
 	 *
 	 * @return A reference to the static text renderer.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	StaticTextRenderer& staticTextRenderer() noexcept;
+
+	/// @}
 } // namespace tre

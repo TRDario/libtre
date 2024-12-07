@@ -4,31 +4,9 @@
 #include <tref.hpp>
 
 namespace tre {
-	/******************************************************************************************************************
-	 * Error thrown when loading a bitmap font fails.
-	 *
-	 * @ingroup renderer text
-	 ******************************************************************************************************************/
-	class BitmapFontLoadError : public tr::FileError {
-	  public:
-		/**************************************************************************************************************
-		 * Constructs a bitmap font loading error.
-		 *
-		 * @param path The path to the file that failed to load.
-		 * @param message The error message.
-		 **************************************************************************************************************/
-		BitmapFontLoadError(std::string path, const char* message) noexcept;
-
-		/**************************************************************************************************************
-		 * Gets an error message.
-		 *
-		 * @return An explanatory error message.
-		 **************************************************************************************************************/
-		virtual const char* what() const noexcept;
-
-	  private:
-		const char* _message;
-	};
+	/** @addtogroup text
+	 *  @{
+	 */
 
 	/******************************************************************************************************************
 	 * Renderer for text using glyphs from a bitmap.
@@ -36,8 +14,6 @@ namespace tre {
 	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
 	 *
 	 * Only one instance of the bitmap text renderer is allowed to exist at a time.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	class BitmapTextRenderer {
 	  public:
@@ -109,18 +85,18 @@ namespace tre {
 		 * @param[in] name The name of the font. A font with this name cannot already exist.
 		 * @param[in] texture The texture used by the font.
 		 * @param[in] lineSkip The distance between two consecutive lines.
-		 * @param[in] glyph A map between unicode codepoints and glyph information.
+		 * @param[in] glyphs A map between unicode codepoints and glyph information.
 		 **************************************************************************************************************/
 		void addFont(std::string name, tr::SubBitmap texture, std::int32_t lineSkip, GlyphMap glyphs);
 
 		/**************************************************************************************************************
 		 * Loads a font file and adds the font to the renderer.
 		 *
-		 * Font files are stored in the .tref format, see @ref trefc for informati0on about compiling font files.
+		 * Font files are stored in the .tref format, see @ref tref for information about compiling font files.
 		 *
 		 * @exception tr::FileNotFound If the file was not found.
 		 * @exception tr::FileOpenError If opening the file fails.
-		 * @exception BitmapFontLoadError If loading the font fails (invalid file, decoding error...).
+		 * @exception tref::DecodingError If decoding the file fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 * @exception tr::BitmapBadAlloc if an internal allocation fails.
 		 *
@@ -189,7 +165,7 @@ namespace tre {
 		 *                 format.
 		 * @param[in] font The name of the font to use. If the font isn't found, no text is drawn.
 		 * @param[in] scale The scale of the text.
-		 * @param[in] tint The tint of the text.
+		 * @param[in] colors The available text colors. By default, a white tint not in the span is used.
 		 * @param[in] textbox The textbox to frame the text around.
 		 **************************************************************************************************************/
 		void addFormatted(int priority, std::string_view text, std::string_view font, glm::vec2 scale,
@@ -212,8 +188,6 @@ namespace tre {
 	 * Gets whether the bitmap text renderer was initialized.
 	 *
 	 * @return True if the bitmap text renderer was initialized, and false otherwise.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	bool bitmapTextRendererActive() noexcept;
 
@@ -222,9 +196,8 @@ namespace tre {
 	 * This function cannot be called if the bitmap text renderer wasn't initialized.
 	 *
 	 * @return A reference to the bitmap text renderer.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	BitmapTextRenderer& bitmapTextRenderer() noexcept;
 
+	/// @}
 } // namespace tre

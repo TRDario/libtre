@@ -3,14 +3,16 @@
 #include "text.hpp"
 
 namespace tre {
+	/** @addtogroup text
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Renderer for one-off or frequently changing text.
 	 *
 	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
 	 *
 	 * Only one instance of the dynamic text renderer is allowed to exist at a time.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	class DynamicTextRenderer {
 	  public:
@@ -155,8 +157,6 @@ namespace tre {
 	 * Gets whether the dynamic text renderer was initialized.
 	 *
 	 * @return True if the dynamic text renderer was initialized, and false otherwise.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	bool dynamicTextRendererActive() noexcept;
 
@@ -165,8 +165,8 @@ namespace tre {
 	 * This function cannot be called if the dynamic text renderer wasn't initialized.
 	 *
 	 * @return A reference to the dynamic text renderer.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	DynamicTextRenderer& dynamicTextRenderer() noexcept;
+
+	/// @}
 } // namespace tre

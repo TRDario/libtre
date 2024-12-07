@@ -2,6 +2,10 @@
 #include <tr/tr.hpp>
 
 namespace tre {
+	/** @addtogroup text
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Debug text renderer.
 	 *
@@ -9,8 +13,6 @@ namespace tre {
 	 * sequentially. Writing uses special text formatting, the specifics of which you can see at @ref debformat.
 	 *
 	 * Only one instance of the debug text renderer is allowed to exist at a time.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	class DebugTextRenderer {
 	  public:
@@ -148,8 +150,6 @@ namespace tre {
 	 * Gets whether the debug text renderer was initialized.
 	 *
 	 * @return True if the debug text renderer was initialized, and false otherwise.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	bool debugTextRendererActive() noexcept;
 
@@ -158,8 +158,8 @@ namespace tre {
 	 * This function cannot be called if the debug text renderer wasn't initialized.
 	 *
 	 * @return A reference to the debug text renderer.
-	 *
-	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	DebugTextRenderer& debugTextRenderer() noexcept;
+
+	/// @}
 } // namespace tre

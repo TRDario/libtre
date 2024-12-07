@@ -1,0 +1,41 @@
+/**********************************************************************************************************************
+ * @page tref tre Bitmap Font Format (tref)
+ * 
+ * libtre uses a custom bitmap font format called @em tref: files of this type can be loaded with BitmapTextFormat.
+ *
+ * To create a tref file, the @em trefc compiler is provided alongside the libtre source code. It is used as follows:
+ *
+ * <code>trefc [path to font information file] [path to image file] [path to output file]</code>
+ *
+ * @section font_information FONT INFORMATION
+ * The information file is a UTF-8 encoded text file consisting of the following:
+ *
+ * - A line skip definition: <code>line_skip: [integer]</code>
+ *
+ * - A newline-separated list of glyph definitions: <code>[codepoint]: x: [integer], y: [integer], width: [integer],
+ *   height: [integer], xoffset: [integer], yoffset: [integer], advance: [integer]</code>
+ *   - Where <code>[codepoint]</code> is one of: <code>NUL, 0x[codepoint hex], '[codepoint char]'</code>
+ *   - <code>line_skip</code> is limited to a signed 32-bit integer value, <code>x, y, width, height</code> are limited
+ *     to 16-bit unsigned integer values, and <code>xoffset, yoffset, advance</code> are limited to 16-bit signed
+ *	   integer values.
+ * - Any amount of empty lines and whitespace in between.
+ *
+ * @section image_file IMAGE FILE
+ * trefc supports BMP, PNG, and JPEG image files.
+ *
+ * @section exit_codes EXIT CODES
+ * 0 - Success
+ *
+ * 1 - Invalid argument count
+ *
+ * 2 - File opening failure
+ *
+ * 3 - Parsing failure
+ *
+ * 4 - Image failure
+ *
+ * 5 - Writing failure
+ *
+ * -1 - Unhandled exception
+ *
+ **********************************************************************************************************************/
