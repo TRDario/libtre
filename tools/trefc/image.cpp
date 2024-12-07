@@ -12,6 +12,11 @@ constexpr auto IMAGE_LOADING_FAILURE_MESSAGE{
 #endif
 	" failed to load image from '{}' ({})\n"};
 
+Bitmap::Bitmap(const void* data, unsigned int width, unsigned int height) noexcept
+	: InputBitmap{data, width, height}
+{
+}
+
 Bitmap::~Bitmap() noexcept
 {
 	stbi_image_free((void*)(data));
@@ -31,6 +36,6 @@ Expected<Bitmap, ErrorCode> loadBitmap(std::string_view path)
 		return IMAGE_FAILURE;
 	}
 	else {
-		return Bitmap{bitmapData, (unsigned int)(width), (unsigned int)(height)};
+		return Expected<Bitmap, ErrorCode>{std::in_place_type<Bitmap>, bitmapData, width, height};
 	}
 }

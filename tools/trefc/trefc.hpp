@@ -39,6 +39,8 @@ Expected<FontInfo, ErrorCode> loadFontInfo(std::string_view path);
 ///
 
 struct Bitmap : tref::InputBitmap {
+	Bitmap(const void* data, unsigned int width, unsigned int height) noexcept;
+
 	~Bitmap() noexcept;
 };
 
