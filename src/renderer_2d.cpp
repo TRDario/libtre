@@ -21,6 +21,8 @@ using namespace tr::matrix_operators;
 namespace tre {
 	inline constexpr glm::vec2  UNTEXTURED_UV{-100, -100};
 	inline constexpr tr::RectI2 NO_SCISSOR_BOX{{-1, -1}, {-1, -1}};
+
+	Renderer2D* _renderer2D{nullptr};
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()
@@ -29,6 +31,9 @@ tre::Renderer2D::Renderer2D()
 	, _blendMode{tr::ALPHA_BLENDING}
 	, _scissorBox{NO_SCISSOR_BOX}
 {
+	assert(!renderer2DActive());
+	_renderer2D = this;
+
 #ifndef NDEBUG
 	_shaderPipeline.setLabel("tre::Renderer2D Pipeline");
 	_shaderPipeline.vertexShader().setLabel("tre::Renderer2D Vertex Shader");
@@ -37,6 +42,11 @@ tre::Renderer2D::Renderer2D()
 	_indexBuffer.setLabel("tre::Renderer2D Index Buffer");
 #endif
 	setFieldSize({1, 1});
+}
+
+tre::Renderer2D::~Renderer2D() noexcept
+{
+	_renderer2D = nullptr;
 }
 
 glm::vec2 tre::Renderer2D::fieldSize() const noexcept
@@ -219,26 +229,28 @@ void tre::Renderer2D::addTexturedPolygonFan(int priority, std::vector<Vertex> ve
 	_renderGraph[priority][texture].emplace_back(std::move(vertices));
 }
 
-void tre::Renderer2D::setupContext(tr::GLContext& glContext) noexcept
+void tre::Renderer2D::setupContext() noexcept
 {
-	glContext.useDepthTest(false);
-	glContext.useFaceCulling(false);
+	auto& context{tr::window().glContext()};
 
-	glContext.useBlending(true);
-	glContext.setBlendingMode(_blendMode);
+	context.useDepthTest(false);
+	context.useFaceCulling(false);
+
+	context.useBlending(true);
+	context.setBlendingMode(_blendMode);
 
 	if (_scissorBox != NO_SCISSOR_BOX) {
-		glContext.useScissorTest(true);
-		glContext.setScissorBox(_scissorBox);
+		context.useScissorTest(true);
+		context.setScissorBox(_scissorBox);
 	}
 	else {
-		glContext.useScissorTest(false);
+		context.useScissorTest(false);
 	}
 
-	glContext.useStencilTest(false);
+	context.useStencilTest(false);
 
-	glContext.setShaderPipeline(_shaderPipeline);
-	glContext.setVertexFormat(tr::TintVtx2::vertexFormat());
+	context.setShaderPipeline(_shaderPipeline);
+	context.setVertexFormat(tr::TintVtx2::vertexFormat());
 }
 
 void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index)
@@ -265,18 +277,20 @@ void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std:
 		index += data.first.size();
 	}};
 
-	std::visit(tr::overloaded{triangle, rectangle, fan, data}, primitive);
+	std::visit(tr::Overloaded{triangle, rectangle, fan, data}, primitive);
 }
 
-void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFramebuffer& target, int minPriority)
+void tre::Renderer2D::drawUpToPriority(int maxPriority, tr::BasicFramebuffer& target)
 {
+	auto& glContext{tr::window().glContext()};
+
 	if (lastRendererID() != ID) {
-		setupContext(glContext);
+		setupContext();
 		setLastRendererID(ID);
 	}
 	glContext.setFramebuffer(target);
 
-	const std::ranges::subrange range{_renderGraph.lower_bound(minPriority), _renderGraph.end()};
+	const std::ranges::subrange range{_renderGraph.begin(), _renderGraph.lower_bound(maxPriority)};
 	for (auto& priority : range | std::views::values) {
 		for (auto& [texture, primitives] : priority) {
 			_vertices.clear();
@@ -301,9 +315,9 @@ void tre::Renderer2D::drawUpToPriority(tr::GLContext& glContext, tr::BasicFrameb
 	_renderGraph.erase(range.begin(), range.end());
 }
 
-void tre::Renderer2D::draw(tr::GLContext& glContext, tr::BasicFramebuffer& target)
+void tre::Renderer2D::draw(tr::BasicFramebuffer& target)
 {
-	drawUpToPriority(glContext, target, std::numeric_limits<int>::min());
+	drawUpToPriority(std::numeric_limits<int>::max(), target);
 }
 
 std::size_t tre::Renderer2D::TextureRefHash::operator()(const std::optional<TextureRef>& texture) const noexcept
@@ -317,4 +331,15 @@ std::size_t tre::Renderer2D::TextureRefHash::operator()(const std::optional<Text
 		result ^= std::hash<tr::Sampler>{}(texture->second) + 0x9e'37'79'b9 + (result << 6) + (result >> 2);
 		return result;
 	}
+}
+
+bool tre::renderer2DActive() noexcept
+{
+	return _renderer2D != nullptr;
+}
+
+tre::Renderer2D& tre::renderer2D() noexcept
+{
+	assert(renderer2DActive());
+	return *_renderer2D;
 }
