@@ -1,6 +1,9 @@
 #include "tref.hpp"
 #include <array>
+#include <cstring>
+#include <lz4.h>
 #include <qoi.h>
+#include <sstream>
 #include <vector>
 
 tref::OutputBitmap::OutputBitmap(std::byte* data, unsigned int width, unsigned int height) noexcept
@@ -28,6 +31,14 @@ unsigned int tref::OutputBitmap::height() const noexcept
 	return _height;
 }
 
+template <class T> T readBinary(char*& ptr) noexcept
+{
+	T value;
+	std::memcpy(&value, ptr, sizeof(T));
+	ptr += sizeof(T);
+	return value;
+}
+
 tref::DecodingResult tref::decode(std::istream& is)
 {
 	std::array<char, 4> magic;
@@ -36,24 +47,29 @@ tref::DecodingResult tref::decode(std::istream& is)
 		throw DecodingError{"Invalid .tref file header."};
 	}
 
-	std::int32_t  lineSkip;
-	std::uint32_t nglyphs;
-	is.read((char*)(&lineSkip), sizeof(lineSkip));
-	is.read((char*)(&nglyphs), sizeof(nglyphs));
+	std::uint32_t uncompressedSize;
+	is.read((char*)(&uncompressedSize), sizeof(uncompressedSize));
+
+	std::vector<char> compressedData;
+	std::copy(std::istreambuf_iterator<char>{is}, std::istreambuf_iterator<char>{}, std::back_inserter(compressedData));
+
+	std::vector<char> uncompressedData(uncompressedSize);
+	const auto        reportedUncompressedSize{LZ4_decompress_safe(compressedData.data(), uncompressedData.data(),
+																   compressedData.size(), uncompressedData.size())};
+	if (reportedUncompressedSize != uncompressedSize) {
+		throw DecodingError{"LZ4 decompression of tref file failed."};
+	}
+	char* ptr{uncompressedData.data()};
+
+	auto     lineSkip{readBinary<std::int32_t>(ptr)};
+	auto     nglyphs{readBinary<std::uint32_t>(ptr)};
 	GlyphMap glyphs;
 	for (std::uint32_t i = 0; i < nglyphs; ++i) {
-		std::uint32_t codepoint;
-		Glyph         glyph;
-
-		is.read((char*)(&codepoint), sizeof(codepoint));
-		is.read((char*)(&glyph), sizeof(glyph));
-		glyphs.emplace(codepoint, glyph);
+		glyphs.emplace(readBinary<Codepoint>(ptr), readBinary<Glyph>(ptr));
 	}
-	std::vector<char> qoiImage;
-	std::copy(std::istreambuf_iterator<char>{is}, std::istreambuf_iterator<char>{}, std::back_inserter(qoiImage));
 
 	qoi_desc desc;
-	auto     decodedImage{qoi_decode(qoiImage.data(), qoiImage.size(), &desc, 4)};
+	auto     decodedImage{qoi_decode(ptr, uncompressedData.size() - (ptr - uncompressedData.data()), &desc, 4)};
 	if (decodedImage == nullptr) {
 		throw DecodingError{"Failed to decode QOI data."};
 	}
@@ -69,13 +85,21 @@ void tref::encode(std::ostream& os, std::int32_t lineSkip, GlyphMap glyphs, Inpu
 		throw EncodingError{"Failed to encode QOI data."};
 	}
 
-	os.write("TREF", 4);
-	os.write((const char*)(&lineSkip), sizeof(lineSkip));
+	std::stringstream bufferStream;
+	bufferStream.write((const char*)(&lineSkip), sizeof(lineSkip));
 	auto nglyphs{std::uint32_t(glyphs.size())};
-	os.write((const char*)(&nglyphs), sizeof(nglyphs));
+	bufferStream.write((const char*)(&nglyphs), sizeof(nglyphs));
 	for (auto& [codepoint, glyph] : glyphs) {
-		os.write((const char*)(&codepoint), sizeof(codepoint));
-		os.write((const char*)(&glyph), sizeof(glyph));
+		bufferStream.write((const char*)(&codepoint), sizeof(codepoint));
+		bufferStream.write((const char*)(&glyph), sizeof(glyph));
 	}
-	os.write((const char*)(qoiImage), qoiImageSize);
+	bufferStream.write((const char*)(qoiImage), qoiImageSize);
+	auto data{std::move(bufferStream).str()};
+	auto uncompressedSize{std::uint32_t(data.size())};
+
+	std::vector<char> buffer(LZ4_compressBound(data.size()));
+	buffer.resize(LZ4_compress_default(data.c_str(), buffer.data(), data.size(), buffer.size()));
+	os.write("TREF", 4);
+	os.write((const char*)(&uncompressedSize), sizeof(uncompressedSize));
+	os.write(buffer.data(), buffer.size());
 }
