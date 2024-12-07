@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.24.0...3.30.0 FATAL_ERROR)
 
-include(CMakePackageConfigHelpers)
-include(FetchContent)
-include(GNUInstallDirs)
-include(build/add_shader.cmake)
-
 option(BUILD_TOOLS "Build tools for working with tre formats" OFF)
 
 project(tre LANGUAGES C CXX VERSION 0.0.1)
 add_library(tre STATIC)
+
+include(CMakePackageConfigHelpers)
+include(FetchContent)
+include(GNUInstallDirs)
+include(build/add_shader.cmake)
 
 target_compile_features(tre PRIVATE cxx_std_20)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
