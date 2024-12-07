@@ -1,8 +1,7 @@
 #include "trefc.hpp"
 
-constexpr auto TREFC_HELP_MESSAGE{
-	"tre Font Compiler (trefc) by TRDario.\n"
-	"Usage: trefc [input file] [image file (JPG, PNG, TGA, BMP, PSD, GIF, HDR, PIC)] [output file]\n"};
+constexpr auto TREFC_HELP_MESSAGE{"tre Font Compiler (trefc) by TRDario.\n"
+								  "Usage: trefc [input file] [image file (BMP, PNG, JPEG)] [output file]\n"};
 
 constexpr auto INVALID_ARGUMENT_COUNT_MESSAGE{
 #ifdef TREFC_ANSI_COLORS
