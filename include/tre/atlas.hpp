@@ -1,13 +1,15 @@
-/**********************************************************************************************************************
- * @file atlas.hpp
- * @brief Provides texture atlases.
- **********************************************************************************************************************/
-
 #pragma once
 #include <forward_list>
 #include <tr/tr.hpp>
 
 namespace tre {
+	/** @defgroup atlas Atlases
+	 *  Texture atlas functionality.
+	 *
+	 *  An instance of tr::Window must be created before any functionality from this section can be used.
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Atlas bitmap with named entries.
 	 ******************************************************************************************************************/
@@ -26,8 +28,8 @@ namespace tre {
 	/******************************************************************************************************************
 	 * Builds an atlas bitmap.
 	 *
-	 * @exception tr::BitmapBadAlloc If allocating the bitmap failed.
-	 * @exception std::bad_alloc If allocating the entry map failed.
+	 * @exception tr::BitmapBadAlloc If allocating the bitmap fails.
+	 * @exception std::bad_alloc If allocating the entry map fails.
 	 *
 	 * @param[in] bitmaps A list of named bitmaps.
 	 * @param[in] format The format of the atlas bitmap.
@@ -45,8 +47,8 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Uploads a pre-made atlas bitmap.
 		 *
-		 * @exception tr::TextureBadAlloc If allocating the texture failed.
-		 * @exception std::bad_alloc If allocating the texture entries failed.
+		 * @exception tr::TextureBadAlloc If allocating the texture fails.
+		 * @exception std::bad_alloc If allocating the texture entries fails.
 		 *
 		 * @param[in] atlasBitmap The atlas to upload to a texture.
 		 **************************************************************************************************************/
@@ -57,9 +59,9 @@ namespace tre {
 		 *
 		 * Equivalent to `Atlas2D(buildAtlasBitmap(bitmaps))`.
 		 *
-		 * @exception tr::BitmapBadAlloc If allocating the bitmap failed.
-		 * @exception tr::TextureBadAlloc If allocating the texture failed.
-		 * @exception std::bad_alloc If allocating a entry map failed.
+		 * @exception tr::BitmapBadAlloc If allocating the bitmap fails.
+		 * @exception tr::TextureBadAlloc If allocating the texture fails.
+		 * @exception std::bad_alloc If allocating a entry map fails.
 		 *
 		 * @param[in] bitmaps A list of named bitmaps to upload.
 		 **************************************************************************************************************/
@@ -84,8 +86,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
 		 *
-		 * @param[in] name The name of the entry. A failed assertion may be triggered if no entry with this name is
-		 *                 contained in the atlas.
+		 * @param[in] name The name of the entry. The entry must exist in the atlas.
 		 *
 		 * @return The entry rect with normalized size and coordinates.
 		 **************************************************************************************************************/
@@ -116,17 +117,17 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Creates an empty atlas with an initial capacity.
 		 *
-		 * @exception tr::TextureBadAlloc If allocating the atlas texture failed.
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception tr::TextureBadAlloc If allocating the atlas texture fails.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param capacity The initial capacity of the atlas.
+		 * @param[in] capacity The initial capacity of the atlas.
 		 **************************************************************************************************************/
 		DynAtlas2D(glm::ivec2 capacity);
 
 		/**************************************************************************************************************
 		 * Gets the atlas texture.
 		 *
-		 * Calling this function for an empty atlas may trigger a failed assertion.
+		 * This function cannot be called with an empty atlas.
 		 *
 		 * @return An immutable reference to the atlas texture.
 		 **************************************************************************************************************/
@@ -151,8 +152,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
 		 *
-		 * @param[in] name The name of the entry. A failed assertion may be triggered if no entry with this name is
-		 *                 contained in the atlas.
+		 * @param[in] name The name of the entry. The entry must exist in the atlas.
 		 *
 		 * @return The entry rect with normalized size and coordinates.
 		 **************************************************************************************************************/
@@ -166,8 +166,8 @@ namespace tre {
 		 * @warning Calling this function invalidates any previous atlas texture bindings, the atlas texture must be
 		 *          rebound to any texture units it was bound to.
 		 *
-		 * @exception tr::TextureBadAlloc If a texture reallocation happened and failed.
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception tr::TextureBadAlloc If a texture reallocation happens and fails.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] capacity The new capacity of the atlas.
 		 **************************************************************************************************************/
@@ -179,8 +179,8 @@ namespace tre {
 		 * @warning Calling this function invalidates any previous atlas texture bindings, the atlas texture must be
 		 *          rebound to any texture units it was bound to.
 		 *
-		 * @exception tr::TextureBadAlloc If a texture reallocation happened and failed.
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception tr::TextureBadAlloc If a texture reallocation happens and fails.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] name The name of the new entry.
 		 * @param[in] bitmap The entry's bitmap data.
@@ -190,7 +190,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Removes an entry from the atlas.
 		 *
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] name The name of the entry to remove.
 		 **************************************************************************************************************/
@@ -199,7 +199,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Removes all entries from the atlas.
 		 *
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 **************************************************************************************************************/
 		void clear();
 
@@ -222,4 +222,6 @@ namespace tre {
 		// is available.
 		std::forward_list<tr::RectI2>::iterator findFreeRectPrev(glm::ivec2 size);
 	};
+
+	/// @}
 } // namespace tre

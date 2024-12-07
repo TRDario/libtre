@@ -1,12 +1,12 @@
-/**********************************************************************************************************************
- * @file localization_manager.hpp
- * @brief Provides a localization manager class.
- **********************************************************************************************************************/
-
 #pragma once
 #include <tr/tr.hpp>
 
 namespace tre {
+	/** @defgroup localization Localization
+	 *  Localization functionality.
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Localization string manager.
 	 ******************************************************************************************************************/
@@ -34,8 +34,8 @@ namespace tre {
 		 *
 		 * For specifics of the localization file format see @ref locformat.
 		 *
-		 * @exception tr::FileNotFound If the file was not found.
-		 * @exception tr::FileOpenError If opening the file failed.
+		 * @exception tr::FileNotFound If the file is not found.
+		 * @exception tr::FileOpenError If opening the file fails.
 		 * @exception std::bad_alloc If any internal allocations fail.
 		 * @exception LocFileParseWithErrors
 		 * @parblock
@@ -112,4 +112,6 @@ namespace tre {
 		std::vector<std::string> _errors;
 		LocalizationManager      _manager;
 	};
+
+	/// @}
 } // namespace tre

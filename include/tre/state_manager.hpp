@@ -1,19 +1,16 @@
-/**********************************************************************************************************************
- * @file state_manager.hpp
- * @brief Provides a game state management framework.
- **********************************************************************************************************************/
-
 #pragma once
 #include <tr/tr.hpp>
 
 namespace tre {
+	/** @defgroup state_management Staet Management
+	 *  State management functionality.
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * Abstract game state interface.
 	 ******************************************************************************************************************/
 	struct State {
-		/**************************************************************************************************************
-		 * Virtual destructor.
-		 **************************************************************************************************************/
 		virtual ~State() = default;
 
 		/**************************************************************************************************************
@@ -92,7 +89,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Gets the held state.
 		 *
-		 * If the manager is not holding a state, a failed assertion may be triggered.
+		 * This function cannot be called if the manager is not holding a state.
 		 *
 		 * @return A mutable reference to the held state.
 		 **************************************************************************************************************/
@@ -101,7 +98,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Gets the held state.
 		 *
-		 * If the manager is not holding a state, a failed assertion may be triggered.
+		 * This function cannot be called if the manager is not holding a state.
 		 *
 		 * @return An immutable reference to the held state.
 		 **************************************************************************************************************/
@@ -164,4 +161,6 @@ namespace tre {
 	 * @return An unused state tpye ID.
 	 ******************************************************************************************************************/
 	std::uint32_t generateStateType() noexcept;
+
+	/// @}
 } // namespace tre
