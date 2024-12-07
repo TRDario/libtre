@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.23.0...3.30.0 FATAL_ERROR)
 
-find_package(qoi PATHS ../)
-
 project(tref LANGUAGES C CXX VERSION 1.0.0)
 add_library(tref STATIC tref.cpp)
 target_sources(tref PUBLIC FILE_SET HEADERS FILES tref.hpp)

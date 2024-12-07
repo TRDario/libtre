@@ -1,8 +1,5 @@
 cmake_minimum_required(VERSION 3.23.0...3.30.0 FATAL_ERROR)
 
-find_package(tref PATHS ../)
-find_package(stb_image PATHS ../)
-
 if (WIN32)
     option(ANSI_COLORED_TEXT "Enable the use of ANSI escape sequences for colored text output" OFF)
 else ()
