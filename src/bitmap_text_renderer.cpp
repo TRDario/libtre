@@ -201,22 +201,12 @@ void tre::BitmapTextRenderer::addFont(std::string name, tr::SubBitmap texture, s
 
 void tre::BitmapTextRenderer::loadFont(std::string name, const std::filesystem::path& path)
 {
-	auto file{tr::openFileR(path, std::ios::binary)};
-
-	auto magic{tr::readBinary<std::array<char, 4>>(file)};
-	if (std::string_view{magic.data(), 4} != "TREF") {
-		throw BitmapFontLoadError{path.string(), "invalid font file"};
-	}
-
-	auto     lineSkip{tr::readBinary<std::int32_t>(file)};
-	auto     nglyphs{tr::readBinary<std::uint32_t>(file)};
-	GlyphMap glyphs;
-	for (std::uint32_t i = 0; i < nglyphs; ++i) {
-		glyphs.emplace(tr::readBinary<std::uint32_t>(file), tr::readBinary<Glyph>(file));
-	}
-	auto       imageData{tr::flushBinary<std::vector<char>>(file)};
-	tr::Bitmap image{tr::rangeBytes(imageData)};
-	addFont(name, image, lineSkip, std::move(glyphs));
+	auto           file{tr::openFileR(path, std::ios::binary)};
+	auto           decodingResult{tref::decode(file)};
+	tr::BitmapView image{decodingResult.bitmap.data(),
+						 {decodingResult.bitmap.width(), decodingResult.bitmap.height()},
+						 tr::BitmapFormat::RGBA_8888};
+	addFont(name, image, decodingResult.lineSkip, std::move(decodingResult.glyphs));
 }
 
 void tre::BitmapTextRenderer::removeFont(std::string_view name)
@@ -239,10 +229,10 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 									   tr::AngleF rotation)
 {
 	const auto&      glyph{font.glyphs.at(codepoint)};
-	const auto       size{glm::vec2(glyph.size) * scale};
-	const tr::RectF2 uv{fontUV.tl + glm::vec2(glyph.tl) / glm::vec2(_atlas.texture().size()),
-						glm::vec2(glyph.size) / glm::vec2(_atlas.texture().size())};
-	const auto       offset{glm::vec2(glyph.offset) * scale};
+	const auto       size{glm::vec2(glyph.width, glyph.height) * scale};
+	const tr::RectF2 uv{fontUV.tl + glm::vec2(glyph.x, glyph.y) / glm::vec2(_atlas.texture().size()),
+						glm::vec2(glyph.width, glyph.height) / glm::vec2(_atlas.texture().size())};
+	const auto       offset{glm::vec2(glyph.xOffset, glyph.yOffset) * scale};
 
 	if (style == Style::ITALIC) {
 		constexpr double TAN_12_5_DEG{0.22169466264};
@@ -291,7 +281,7 @@ void tre::BitmapTextRenderer::addUnformatted(int priority, std::string_view text
 		auto xOffset{initialUnformattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
 		for (auto chr : tr::utf8Range(line)) {
 			auto& glyph{fontIt->second.glyphs.at(chr)};
-			if (glyph.size != glm::u16vec2{0, 0}) {
+			if (glyph.width != 0 && glyph.height != 0) {
 				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
 						 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
 			}
@@ -350,7 +340,7 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 			}
 			else {
 				auto& glyph{fontIt->second.glyphs.at(*it)};
-				if (glyph.size != glm::u16vec2{0, 0}) {
+				if (glyph.width != 0 && glyph.height != 0) {
 					addGlyph(priority, *it, fontIt->second, fontUV, style, scale, tint, textbox.pos,
 							 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
 				}

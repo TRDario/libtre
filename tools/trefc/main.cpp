@@ -1,4 +1,4 @@
-#include "../include/output.hpp"
+#include "trefc.hpp"
 
 constexpr auto TREFC_HELP_MESSAGE{
 	"tre Font Compiler (trefc) by TRDario.\n"
@@ -42,11 +42,11 @@ int main(int argc, char* argv[])
 		if (holds_alternative<ErrorCode>(fontInfo)) {
 			return get<ErrorCode>(fontInfo);
 		}
-		const auto inputImage{loadImage(argv[2])};
+		const auto inputImage{loadBitmap(argv[2])};
 		if (holds_alternative<ErrorCode>(inputImage)) {
 			return get<ErrorCode>(inputImage);
 		}
-		return writeToOutput(argv[3], get<FontInfo>(fontInfo), get<InputImage>(inputImage));
+		return writeToOutput(argv[3], get<FontInfo>(fontInfo), get<Bitmap>(inputImage));
 	}
 	catch (std::exception& err) {
 		print(std::cerr, UNHANDLED_EXCEPTION_MESSAGE, err.what());

@@ -1,4 +1,4 @@
-#include "../include/input.hpp"
+#include "trefc.hpp"
 #include <filesystem>
 #include <fstream>
 
@@ -255,7 +255,7 @@ std::optional<std::string::const_iterator> parseGlyphAttribute(auto& value, std:
 }
 
 // Parses the rest of the glyph after the codepoint.
-std::optional<std::string::const_iterator> parseGlyphAttributes(Glyph& glyph, const std::string& context,
+std::optional<std::string::const_iterator> parseGlyphAttributes(tref::Glyph& glyph, const std::string& context,
 																std::string_view            filename,
 																std::string::const_iterator start)
 {
@@ -330,7 +330,7 @@ Expected<FontInfo, ErrorCode> loadFontInfo(std::string_view path)
 			return PARSING_FAILURE;
 		}
 
-		Glyph glyph;
+		tref::Glyph glyph;
 		it = parseGlyphAttributes(glyph, buffer, path, *it);
 		if (!it.has_value()) {
 			return PARSING_FAILURE;

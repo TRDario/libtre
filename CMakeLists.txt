@@ -19,7 +19,7 @@ endif()
 
 FetchContent_Declare(tr GIT_REPOSITORY https://github.com/TRDario/libtr.git GIT_TAG main FIND_PACKAGE_ARGS NAMES tr)
 FetchContent_MakeAvailable(tr)
-target_link_libraries(tre PRIVATE tr)
+target_link_libraries(tre PUBLIC tr)
 
 add_shader(tre resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
 add_shader(tre resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)
@@ -41,7 +41,11 @@ target_sources(tre PUBLIC FILE_SET HEADERS BASE_DIRS include FILES
 
 if (BUILD_TOOLS)
     add_subdirectory(tools)
+else ()
+    add_subdirectory(tools/qoi)
+    add_subdirectory(tools/tref)
 endif ()
+target_link_libraries(tre PUBLIC tref)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build/tre.pc.in ${CMAKE_CURRENT_BINARY_DIR}/tre.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/tre.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)

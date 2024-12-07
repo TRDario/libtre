@@ -418,3 +418,7 @@ resources/*.spv
 tools/*/.cache/*
 tools/*/.vscode/*
 tools/*/build/*
+!tools/qoi/build/qoi-config.cmake
+!tools/qoi/build/qoi.pc.in
+!tools/tref/build/tref-config.cmake
+!tools/tref/build/tref.pc.in
