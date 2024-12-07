@@ -94,14 +94,14 @@ $(function(){ initResizable(false); });
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1StaticTextRenderer-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::StaticTextRenderer Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::StaticTextRenderer Class Reference<div class="ingroups"><a class="el" href="group__renderer.html">Renderers</a> &#124; <a class="el" href="group__text.html">Text Rendering</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Renderer for persistent text.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="static__text__renderer_8hpp_source.html">static_text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -116,21 +116,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aebd95c4322479447bd87fe1336e85b56"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the static text renderer. <br /></td></tr>
 <tr class="separator:aebd95c4322479447bd87fe1336e85b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a102d0e02d48f068789944a7ffba51080" id="r_a102d0e02d48f068789944a7ffba51080"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a102d0e02d48f068789944a7ffba51080">addInstance</a> (int priority, std::string_view entry, const <a class="el" href="structtre_1_1StaticTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:a102d0e02d48f068789944a7ffba51080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an instance of a text entry.  <br /></td></tr>
+<tr class="memdesc:a102d0e02d48f068789944a7ffba51080"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an instance of a text entry to the 2D renderer.  <br /></td></tr>
 <tr class="separator:a102d0e02d48f068789944a7ffba51080"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cdf46e63ea1de5fb48847e1fa43af7f" id="r_a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2cdf46e63ea1de5fb48847e1fa43af7f">forward</a> (<a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;renderer)</td></tr>
-<tr class="memdesc:a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards all of the added text to the 2D renderer.  <br /></td></tr>
-<tr class="separator:a2cdf46e63ea1de5fb48847e1fa43af7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8211c9b29ca98ac968ea5164c6a40736" id="r_a8211c9b29ca98ac968ea5164c6a40736"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8211c9b29ca98ac968ea5164c6a40736">newFormattedEntry</a> (std::string name, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
+<tr class="memitem:a8211c9b29ca98ac968ea5164c6a40736" id="r_a8211c9b29ca98ac968ea5164c6a40736"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8211c9b29ca98ac968ea5164c6a40736">newFormattedEntry</a> (std::string name, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
 <tr class="memdesc:a8211c9b29ca98ac968ea5164c6a40736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a formatted, multistyle text entry.  <br /></td></tr>
 <tr class="separator:a8211c9b29ca98ac968ea5164c6a40736"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7d81a3fc0b284ded5e376770ed9f855f" id="r_a7d81a3fc0b284ded5e376770ed9f855f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d81a3fc0b284ded5e376770ed9f855f">newFormattedEntry</a> (std::string name, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
+<tr class="memitem:a7d81a3fc0b284ded5e376770ed9f855f" id="r_a7d81a3fc0b284ded5e376770ed9f855f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7d81a3fc0b284ded5e376770ed9f855f">newFormattedEntry</a> (std::string name, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
 <tr class="memdesc:a7d81a3fc0b284ded5e376770ed9f855f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a formatted, multistyle text entry.  <br /></td></tr>
 <tr class="separator:a7d81a3fc0b284ded5e376770ed9f855f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7719f6347613e6e82d59ff60ac54bd5b" id="r_a7719f6347613e6e82d59ff60ac54bd5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7719f6347613e6e82d59ff60ac54bd5b">newUnformattedEntry</a> (std::string name, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
+<tr class="memitem:a7719f6347613e6e82d59ff60ac54bd5b" id="r_a7719f6347613e6e82d59ff60ac54bd5b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7719f6347613e6e82d59ff60ac54bd5b">newUnformattedEntry</a> (std::string name, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
 <tr class="memdesc:a7719f6347613e6e82d59ff60ac54bd5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an unformatted, single-style text entry.  <br /></td></tr>
 <tr class="separator:a7719f6347613e6e82d59ff60ac54bd5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a929a61f01897a729b93f1701f1839fae" id="r_a929a61f01897a729b93f1701f1839fae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a929a61f01897a729b93f1701f1839fae">newUnformattedEntry</a> (std::string name, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
+<tr class="memitem:a929a61f01897a729b93f1701f1839fae" id="r_a929a61f01897a729b93f1701f1839fae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a929a61f01897a729b93f1701f1839fae">newUnformattedEntry</a> (std::string name, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, int maxWidth, <a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a> alignment)</td></tr>
 <tr class="memdesc:a929a61f01897a729b93f1701f1839fae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an unformatted, single-style text entry.  <br /></td></tr>
 <tr class="separator:a929a61f01897a729b93f1701f1839fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeebf5f83a17d299b599241a4029abae5" id="r_aeebf5f83a17d299b599241a4029abae5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeebf5f83a17d299b599241a4029abae5">removeEntry</a> (std::string_view name) noexcept</td></tr>
@@ -145,7 +142,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Renderer for persistent text. </p>
-<p>Implemented as an abstraction layer that forwards its output to the 2D renderer. </p>
+<p>Implemented as an abstraction layer that forwards its output to the 2D renderer.</p>
+<p>Only one instance of the static text renderer is allowed to exist at a time. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a102d0e02d48f068789944a7ffba51080" name="a102d0e02d48f068789944a7ffba51080"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a102d0e02d48f068789944a7ffba51080">&#9670;&#160;</a></span>addInstance()</h2>
@@ -171,43 +169,18 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds an instance of a text entry. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">entry</td><td>The name of the text entry to use. If no such entry exists, no instances will be added. </td></tr>
-    <tr><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a2cdf46e63ea1de5fb48847e1fa43af7f" name="a2cdf46e63ea1de5fb48847e1fa43af7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cdf46e63ea1de5fb48847e1fa43af7f">&#9670;&#160;</a></span>forward()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tre::StaticTextRenderer::forward </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>renderer</em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Forwards all of the added text to the 2D renderer. </p>
+<p>Adds an instance of a text entry to the 2D renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">renderer</td><td>The renderer to forward to. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">entry</td><td>The name of the text entry to use. If no such entry exists, no instances will be added. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
   </table>
   </dd>
 </dl>
@@ -258,7 +231,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -266,21 +239,21 @@ Public Member Functions</h2></td></tr>
 <p>Adds a formatted, multistyle text entry. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">textColors</td><td>The available text colors. By default, the color at index 0 is used. Must not be empty, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
-    <tr><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColors</td><td>The available text colors. By default, the color at index 0 is used. Must not be empty. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
   </table>
   </dd>
 </dl>
@@ -331,7 +304,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -339,21 +312,21 @@ Public Member Functions</h2></td></tr>
 <p>Adds a formatted, multistyle text entry. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
-    <tr><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
   </table>
   </dd>
 </dl>
@@ -409,7 +382,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -417,22 +390,22 @@ Public Member Functions</h2></td></tr>
 <p>Adds an unformatted, single-style text entry. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
-    <tr><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
   </table>
   </dd>
 </dl>
@@ -488,7 +461,7 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="group__text.html#ga36e8a7b9092bac4482958403ac5f7862">HorizontalAlign</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -496,22 +469,22 @@ Public Member Functions</h2></td></tr>
 <p>Adds an unformatted, single-style text entry. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
-    <tr><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the text entry. An entry of the same name must not exist already. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxWidth</td><td>The maximum width of the entry. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>The horizontal alignment of the entry. </td></tr>
   </table>
   </dd>
 </dl>
@@ -544,7 +517,7 @@ Public Member Functions</h2></td></tr>
 <p>Removes a text entry from the renderer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">name</td><td>The name of the entry to remove. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the entry to remove. </td></tr>
   </table>
   </dd>
 </dl>
@@ -578,7 +551,7 @@ Public Member Functions</h2></td></tr>
 <p>This function clears all existing entries unless the DPI matches the previous DPI.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dpi</td><td>The new text DPI, by default it is {72, 72}. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dpi</td><td>The new text DPI, by default it is {72, 72}. </td></tr>
   </table>
   </dd>
 </dl>
@@ -609,10 +582,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the DPI of the renderer. </p>
-<p>This function cannot be called if any text has been added, but not forwarded to the 2D renderer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dpi</td><td>The new text DPI, by default it is 72. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dpi</td><td>The new text DPI, by default it is 72. </td></tr>
   </table>
   </dd>
 </dl>
@@ -620,7 +592,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a></li>
+<li><a class="el" href="static__text__renderer_8hpp_source.html">static_text_renderer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

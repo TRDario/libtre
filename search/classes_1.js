@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['debugtextrenderer_0',['DebugTextRenderer',['../classtre_1_1DebugTextRenderer.html',1,'tre']]],
-  ['dynamictextrenderer_1',['DynamicTextRenderer',['../classtre_1_1DynamicTextRenderer.html',1,'tre']]],
-  ['dynatlas2d_2',['DynAtlas2D',['../classtre_1_1DynAtlas2D.html',1,'tre']]]
+  ['bitmapfontloaderror_0',['BitmapFontLoadError',['../classtre_1_1BitmapFontLoadError.html',1,'tre']]],
+  ['bitmaptextrenderer_1',['BitmapTextRenderer',['../classtre_1_1BitmapTextRenderer.html',1,'tre']]]
 ];

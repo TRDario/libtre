@@ -95,7 +95,7 @@ $(function(){ initResizable(false); });
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classtre_1_1DebugTextRenderer-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::DebugTextRenderer Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::DebugTextRenderer Class Reference<div class="ingroups"><a class="el" href="group__renderer.html">Renderers</a> &#124; <a class="el" href="group__text.html">Text Rendering</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -121,9 +121,9 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>clear</b> () noexcept</td></tr>
 <tr class="memdesc:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears any written text. <br /></td></tr>
 <tr class="separator:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab60ed31995cfcb1be031296c8ecb276a" id="r_ab60ed31995cfcb1be031296c8ecb276a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab60ed31995cfcb1be031296c8ecb276a">draw</a> (tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target)</td></tr>
-<tr class="memdesc:ab60ed31995cfcb1be031296c8ecb276a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all written text to a target.  <br /></td></tr>
-<tr class="separator:ab60ed31995cfcb1be031296c8ecb276a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae44b92bcef0346b96777f9868754fb27" id="r_ae44b92bcef0346b96777f9868754fb27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae44b92bcef0346b96777f9868754fb27">draw</a> ()</td></tr>
+<tr class="memdesc:ae44b92bcef0346b96777f9868754fb27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all written text to the screren.  <br /></td></tr>
+<tr class="separator:ae44b92bcef0346b96777f9868754fb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b737daeaf3f1d2717fba3f4efb081f4" id="r_a8b737daeaf3f1d2717fba3f4efb081f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b737daeaf3f1d2717fba3f4efb081f4">setColumnLimit</a> (std::uint8_t columns) noexcept</td></tr>
 <tr class="memdesc:a8b737daeaf3f1d2717fba3f4efb081f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text's column limit.  <br /></td></tr>
 <tr class="separator:a8b737daeaf3f1d2717fba3f4efb081f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -151,7 +151,8 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Debug text renderer. </p>
-<p>The renderer is conceptualized around two independent "pens", a left-aligned and right-aligned one, writing text sequentially. Writing uses special text formatting, the specifics of which you can see at <a class="el" href="debformat.html">Formatted Debug Text Format</a>. </p>
+<p>The renderer is conceptualized around two independent "pens", a left-aligned and right-aligned one, writing text sequentially. Writing uses special text formatting, the specifics of which you can see at <a class="el" href="debformat.html">Formatted Debug Text Format</a>.</p>
+<p>Only one instance of the debug text renderer is allowed to exist at a time. </p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="afa3e64e2edce696275bc804deadd1608" name="afa3e64e2edce696275bc804deadd1608"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afa3e64e2edce696275bc804deadd1608">&#9670;&#160;</a></span>Align</h2>
@@ -202,7 +203,7 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 <p>Constructs the debug text renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed. </td></tr>
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation fails. </td></tr>
   </table>
   </dd>
 </dl>
@@ -210,8 +211,8 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab60ed31995cfcb1be031296c8ecb276a" name="ab60ed31995cfcb1be031296c8ecb276a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab60ed31995cfcb1be031296c8ecb276a">&#9670;&#160;</a></span>draw()</h2>
+<a id="ae44b92bcef0346b96777f9868754fb27" name="ae44b92bcef0346b96777f9868754fb27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae44b92bcef0346b96777f9868754fb27">&#9670;&#160;</a></span>draw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,28 +220,17 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
         <tr>
           <td class="memname">void tre::DebugTextRenderer::draw </td>
           <td>(</td>
-          <td class="paramtype">tr::GLContext &amp;</td>          <td class="paramname"><span class="paramname"><em>glContext</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
-          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Draws all written text to a target. </p>
+<p>Draws all written text to the screren. </p>
 <p>The text will remain drawable until a call to <a class="el" href="#af02a3dfe9f1098b9b4ce33bdf35bd0e8" title="Clears any written text.">clear()</a>.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">glContext</td><td>The OpenGL context to manipulate. </td></tr>
-    <tr><td class="paramname">target</td><td>The drawing target. </td></tr>
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation fails. </td></tr>
   </table>
   </dd>
 </dl>
@@ -274,7 +264,7 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 <p>Setting this in the middle of writing will leave any existing text as-is.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">columns</td><td>The maximum allowed number of columns tolerated before a break is needed. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">columns</td><td>The maximum allowed number of columns tolerated before a break is needed. </td></tr>
   </table>
   </dd>
 </dl>
@@ -307,7 +297,7 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 <p>Sets the text's drawing scale. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">scale</td><td>The scale of the text. Glyphs are 8x8 on x1.0 scale. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scale</td><td>The scale of the text. Glyphs are 8x8 on x1.0 scale. </td></tr>
   </table>
   </dd>
 </dl>
@@ -352,17 +342,17 @@ static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><b
 <p>For specifics of the text format, see <a class="el" href="debformat.html">Formatted Debug Text Format</a>.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">text</td><td>The text to write. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The default text color. </td></tr>
-    <tr><td class="paramname">backgroundColor</td><td>The default background color. </td></tr>
-    <tr><td class="paramname">extraColors</td><td>Additional colors used by the text. </td></tr>
-    <tr><td class="paramname">alignment</td><td>Whether to draw the text left- or right-aligned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text to write. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The default text color. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">backgroundColor</td><td>The default background color. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">extraColors</td><td>Additional colors used by the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>Whether to draw the text left- or right-aligned. </td></tr>
   </table>
   </dd>
 </dl>

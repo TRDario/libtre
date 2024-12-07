@@ -89,24 +89,27 @@ $(function(){ initResizable(false); });
   <div class="headertitle"><div class="title">Formatted Rendered Text Format</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="el" href="text__renderer_8hpp.html" title="Provides text rendering support.">text_renderer.hpp</a> features an option to render formatted, multistyle text. The following formatting escape sequences are supported for manipulation of the text style:</p>
+<div class="textblock"><p>text_renderering.hpp features an option to render formatted, multistyle text. The following formatting escape sequences are supported for manipulation of the text style:</p>
 <p><code>\\</code></p><ul>
 <li>Escape sequence for outputting '\'.</li>
 </ul>
 <p><code>\c[i]</code> (where <em>i</em> is 0-9)</p><ul>
 <li>Sets the text color to color at index <em>n</em> of the span of colors passed to the function. If <em>i</em> is an invalid index, nothing happens.</li>
 </ul>
+<p><code>\!</code></p><ul>
+<li>Resets the text color to the default. For the bitmap text renderer, this means a completely white tint, while on the other renderers it's equivalent to <code>\c0</code>.</li>
+</ul>
 <p><code>\b</code></p><ul>
-<li>Toggles whether the text is drawn bold.</li>
+<li>Toggles whether the text is drawn bold (not available for the bitmap text renderer).</li>
 </ul>
 <p><code>\i</code></p><ul>
 <li>Toggles whether the text is drawn italic.</li>
 </ul>
 <p><code>\u</code></p><ul>
-<li>Toggles whether the text is drawn underlined.</li>
+<li>Toggles whether the text is drawn underlined (not available for the bitmap text renderer).</li>
 </ul>
 <p><code>\s</code></p><ul>
-<li>Toggles whether the text is drawn striked out.</li>
+<li>Toggles whether the text is drawn striked out (not available for the bitmap text renderer).</li>
 </ul>
 <p>Unknown escape sequences are ignored. </p>
 </div></div><!-- contents -->

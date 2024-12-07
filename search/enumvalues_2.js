@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['left_0',['LEFT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758',1,'tre::DebugTextRenderer::LEFT'],['../text__renderer_8hpp.html#a36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758',1,'LEFTtre']]]
+  ['italic_0',['ITALIC',['../classtre_1_1BitmapTextRenderer.html#a12d180220ec3fc9f683b97fc289214eba25093123b8943308104129e1d762f3b7',1,'tre::BitmapTextRenderer']]]
 ];

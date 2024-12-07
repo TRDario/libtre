@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['map_0',['Map',['../classtre_1_1LocalizationManager.html#ac15434883516ee5d4da6668db6614bec',1,'tre::LocalizationManager']]]
+  ['glyphmap_0',['GlyphMap',['../classtre_1_1BitmapTextRenderer.html#a12c19c1d442ce85688cacef21dd00e40',1,'tre::BitmapTextRenderer']]]
 ];

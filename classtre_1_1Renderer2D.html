@@ -95,11 +95,11 @@ $(function(){ initResizable(false); });
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classtre_1_1Renderer2D-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::Renderer2D Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::Renderer2D Class Reference<div class="ingroups"><a class="el" href="group__renderer.html">Renderers</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Basic, optimized 2D renderer.  
+<p>General-purpose batched 2D renderer.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="renderer__2d_8hpp_source.html">renderer_2d.hpp</a>&gt;</code></p>
@@ -156,12 +156,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a291dc97286bee6d8ff1e8f963d0f9421" id="r_a291dc97286bee6d8ff1e8f963d0f9421"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a291dc97286bee6d8ff1e8f963d0f9421">addUntexturedRotatedRectangle</a> (int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, tr::RGBA8 color)</td></tr>
 <tr class="memdesc:a291dc97286bee6d8ff1e8f963d0f9421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a291dc97286bee6d8ff1e8f963d0f9421"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac5921b6a0910daa8de54d8c539283487" id="r_ac5921b6a0910daa8de54d8c539283487"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac5921b6a0910daa8de54d8c539283487">draw</a> (tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target)</td></tr>
-<tr class="memdesc:ac5921b6a0910daa8de54d8c539283487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all added objects to a target.  <br /></td></tr>
-<tr class="separator:ac5921b6a0910daa8de54d8c539283487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03761fb5d5dff11477416ee598ff5838" id="r_a03761fb5d5dff11477416ee598ff5838"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03761fb5d5dff11477416ee598ff5838">drawUpToPriority</a> (tr::GLContext &amp;glContext, tr::BasicFramebuffer &amp;target, int minPriority)</td></tr>
-<tr class="memdesc:a03761fb5d5dff11477416ee598ff5838"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws added objects of a certain priotrity or higher to a target.  <br /></td></tr>
-<tr class="separator:a03761fb5d5dff11477416ee598ff5838"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a9af46390b4fc535e9e080c762f96dc" id="r_a7a9af46390b4fc535e9e080c762f96dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a9af46390b4fc535e9e080c762f96dc">draw</a> (tr::BasicFramebuffer &amp;target=tr::window().backbuffer())</td></tr>
+<tr class="memdesc:a7a9af46390b4fc535e9e080c762f96dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all added objects to a target.  <br /></td></tr>
+<tr class="separator:a7a9af46390b4fc535e9e080c762f96dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a851617385c0395b38d25e22e0295bad0" id="r_a851617385c0395b38d25e22e0295bad0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a851617385c0395b38d25e22e0295bad0">drawUpToPriority</a> (int maxPriority, tr::BasicFramebuffer &amp;target=tr::window().backbuffer())</td></tr>
+<tr class="memdesc:a851617385c0395b38d25e22e0295bad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws added objects of a certain priotrity or lower to a target.  <br /></td></tr>
+<tr class="separator:a851617385c0395b38d25e22e0295bad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a075482316a076366df2dcbc5cdc156c4" id="r_a075482316a076366df2dcbc5cdc156c4"><td class="memItemLeft" align="right" valign="top">glm::vec2&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a075482316a076366df2dcbc5cdc156c4">fieldSize</a> () const noexcept</td></tr>
 <tr class="memdesc:a075482316a076366df2dcbc5cdc156c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the size of the rendered field.  <br /></td></tr>
 <tr class="separator:a075482316a076366df2dcbc5cdc156c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,7 +183,8 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <tr class="separator:a4581af5aaec4b15b87bb228098cc75ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Basic, optimized 2D renderer. </p>
+<div class="textblock"><p>General-purpose batched 2D renderer. </p>
+<p>Only one instance of the 2D renderer is allowed to exist at a time. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8189edba8ce1badffdd82849c14375e5" name="a8189edba8ce1badffdd82849c14375e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8189edba8ce1badffdd82849c14375e5">&#9670;&#160;</a></span>Renderer2D()</h2>
@@ -233,15 +234,15 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured polygon fan to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture and sampler used for the polygon fan. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the polygon fan. </td></tr>
   </table>
   </dd>
 </dl>
@@ -285,17 +286,17 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds a textured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
-    <tr><td class="paramname">uv</td><td>The UV values used for the rectangle (normalized). </td></tr>
-    <tr><td class="paramname">tint</td><td>The tint of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uv</td><td>The UV values used for the rectangle (normalized). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tint</td><td>The tint of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -339,17 +340,17 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds a textured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
-    <tr><td class="paramname">uvs</td><td>The UV values used for the rectangle (normalized), sampled counterclockwise starting from the top-left. </td></tr>
-    <tr><td class="paramname">tints</td><td>The tint of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uvs</td><td>The UV values used for the rectangle (normalized), sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tints</td><td>The tint of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -408,20 +409,20 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
-    <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
-    <tr><td class="paramname">uv</td><td>The UV values used for the rectangle (normalized). </td></tr>
-    <tr><td class="paramname">tint</td><td>The tint of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uv</td><td>The UV values used for the rectangle (normalized). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tint</td><td>The tint of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -480,20 +481,20 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
-    <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
-    <tr><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
-    <tr><td class="paramname">uvs</td><td>The UV values used for the rectangle (normalized), sampled counterclockwise starting from the top-left. </td></tr>
-    <tr><td class="paramname">tints</td><td>The tint of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">uvs</td><td>The UV values used for the rectangle (normalized), sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">tints</td><td>The tint of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -527,15 +528,15 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured circle to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">circle</td><td>The circle to draw. </td></tr>
-    <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">circle</td><td>The circle to draw. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -579,17 +580,17 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured regular polygon to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">circle</td><td>The polygon circle. </td></tr>
-    <tr><td class="paramname">vertexCount</td><td>The number of vertices in the polygon. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The rotation of the polygon. </td></tr>
-    <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">circle</td><td>The polygon circle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vertexCount</td><td>The number of vertices in the polygon. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the polygon. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -618,14 +619,14 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured polygon fan to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
   </table>
   </dd>
 </dl>
@@ -659,15 +660,15 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
-    <tr><td class="paramname">colors</td><td>The colors of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">colors</td><td>The colors of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -701,15 +702,15 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured rect to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
-    <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rect</td><td>The rectangle to draw. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -758,18 +759,18 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
-    <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
-    <tr><td class="paramname">colors</td><td>The colors of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">colors</td><td>The colors of the rectangle, sampled counterclockwise starting from the top-left. </td></tr>
   </table>
   </dd>
 </dl>
@@ -818,26 +819,26 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
-    <tr><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
-    <tr><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
-    <tr><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
-    <tr><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position of the posAnchor. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">posAnchor</td><td>The position of the position/rotation anchor within the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="ac5921b6a0910daa8de54d8c539283487" name="ac5921b6a0910daa8de54d8c539283487"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac5921b6a0910daa8de54d8c539283487">&#9670;&#160;</a></span>draw()</h2>
+<a id="a7a9af46390b4fc535e9e080c762f96dc" name="a7a9af46390b4fc535e9e080c762f96dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a9af46390b4fc535e9e080c762f96dc">&#9670;&#160;</a></span>draw()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -845,12 +846,8 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
         <tr>
           <td class="memname">void tre::Renderer2D::draw </td>
           <td>(</td>
-          <td class="paramtype">tr::GLContext &amp;</td>          <td class="paramname"><span class="paramname"><em>glContext</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span><span class="paramdefsep"> = </span><span class="paramdefval">tr::window().backbuffer()</span></td><td>)</td>
           <td></td>
-          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -860,23 +857,22 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Equivalent to drawUpToPriority(glContext, target, INT_MIN).</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">glContext</td><td>The OpenGL context to manipulate. </td></tr>
-    <tr><td class="paramname">target</td><td>The drawing target. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">target</td><td>The drawing target. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a03761fb5d5dff11477416ee598ff5838" name="a03761fb5d5dff11477416ee598ff5838"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a03761fb5d5dff11477416ee598ff5838">&#9670;&#160;</a></span>drawUpToPriority()</h2>
+<a id="a851617385c0395b38d25e22e0295bad0" name="a851617385c0395b38d25e22e0295bad0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a851617385c0395b38d25e22e0295bad0">&#9670;&#160;</a></span>drawUpToPriority()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -884,35 +880,29 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
         <tr>
           <td class="memname">void tre::Renderer2D::drawUpToPriority </td>
           <td>(</td>
-          <td class="paramtype">tr::GLContext &amp;</td>          <td class="paramname"><span class="paramname"><em>glContext</em></span>, </td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>maxPriority</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>minPriority</em></span>&#160;)</td>
+          <td class="paramtype">tr::BasicFramebuffer &amp;</td>          <td class="paramname"><span class="paramname"><em>target</em></span><span class="paramdefsep"> = </span><span class="paramdefval">tr::window().backbuffer()</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Draws added objects of a certain priotrity or higher to a target. </p>
+<p>Draws added objects of a certain priotrity or lower to a target. </p>
 <p>The render graph is cleared of these objects afterwards.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">glContext</td><td>The OpenGL context to manipulate. </td></tr>
-    <tr><td class="paramname">target</td><td>The drawing target. </td></tr>
-    <tr><td class="paramname">minPriority</td><td>The minimum drawn priority. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">maxPriority</td><td>The maximum drawn priority. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">target</td><td>The drawing target. </td></tr>
   </table>
   </dd>
 </dl>
@@ -973,7 +963,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Sets the blending mode used by the renderer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">blendMode</td><td>The blending mode used by the renderer. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">blendMode</td><td>The blending mode used by the renderer. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1006,7 +996,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Sets the size of the rendered field. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">size</td><td>The new size of the rendered field. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The new size of the rendered field. </td></tr>
   </table>
   </dd>
 </dl>
@@ -1039,7 +1029,7 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 <p>Sets the scissor box used by the renderer. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">scissorBox</td><td>The scissor box to use, or std::nullopt to disable the scissor test. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">scissorBox</td><td>The scissor box to use, or std::nullopt to disable the scissor test. </td></tr>
   </table>
   </dd>
 </dl>

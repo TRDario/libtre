@@ -94,14 +94,14 @@ $(function(){ initResizable(false); });
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1DynamicTextRenderer-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::DynamicTextRenderer Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::DynamicTextRenderer Class Reference<div class="ingroups"><a class="el" href="group__renderer.html">Renderers</a> &#124; <a class="el" href="group__text.html">Text Rendering</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Renderer for one-off or frequently changing text.  
  <a href="#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="dynamic__text__renderer_8hpp_source.html">dynamic_text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -116,20 +116,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a658619b606cc7d5908b9c622f608cf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the dynamic text renderer. <br /></td></tr>
 <tr class="separator:a658619b606cc7d5908b9c622f608cf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9af62eea337c6637b62cff8ad12b4fd" id="r_af9af62eea337c6637b62cff8ad12b4fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9af62eea337c6637b62cff8ad12b4fd">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:af9af62eea337c6637b62cff8ad12b4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
+<tr class="memdesc:af9af62eea337c6637b62cff8ad12b4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:af9af62eea337c6637b62cff8ad12b4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c39b2ebd4797a6d52a77d786fd810dd" id="r_a8c39b2ebd4797a6d52a77d786fd810dd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8c39b2ebd4797a6d52a77d786fd810dd">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:a8c39b2ebd4797a6d52a77d786fd810dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text.  <br /></td></tr>
+<tr class="memdesc:a8c39b2ebd4797a6d52a77d786fd810dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:a8c39b2ebd4797a6d52a77d786fd810dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40171e665ecae7c6a56d945827bccdba" id="r_a40171e665ecae7c6a56d945827bccdba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a40171e665ecae7c6a56d945827bccdba">addUnformatted</a> (int priority, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:a40171e665ecae7c6a56d945827bccdba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
+<tr class="memdesc:a40171e665ecae7c6a56d945827bccdba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:a40171e665ecae7c6a56d945827bccdba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf2605c5a68ed42decfd50efacbdc42f" id="r_adf2605c5a68ed42decfd50efacbdc42f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf2605c5a68ed42decfd50efacbdc42f">addUnformatted</a> (int priority, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
-<tr class="memdesc:adf2605c5a68ed42decfd50efacbdc42f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text.  <br /></td></tr>
+<tr class="memdesc:adf2605c5a68ed42decfd50efacbdc42f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds unformatted, single-style text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:adf2605c5a68ed42decfd50efacbdc42f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a815ed6418dd74ff491f688ca92a241f1" id="r_a815ed6418dd74ff491f688ca92a241f1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a815ed6418dd74ff491f688ca92a241f1">forward</a> (<a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;renderer)</td></tr>
-<tr class="memdesc:a815ed6418dd74ff491f688ca92a241f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forwards all of the added text to the 2D renderer.  <br /></td></tr>
-<tr class="separator:a815ed6418dd74ff491f688ca92a241f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a009d5ff9a381af4020b2d4443598a2b9" id="r_a009d5ff9a381af4020b2d4443598a2b9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a009d5ff9a381af4020b2d4443598a2b9">newFrame</a> ()</td></tr>
+<tr class="memdesc:a009d5ff9a381af4020b2d4443598a2b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepares the renderer for a new frame.  <br /></td></tr>
+<tr class="separator:a009d5ff9a381af4020b2d4443598a2b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45364ec20ad1519c51647c9a98c22201" id="r_a45364ec20ad1519c51647c9a98c22201"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45364ec20ad1519c51647c9a98c22201">setDPI</a> (glm::uvec2 dpi) noexcept</td></tr>
 <tr class="memdesc:a45364ec20ad1519c51647c9a98c22201"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the DPI of the renderer.  <br /></td></tr>
 <tr class="separator:a45364ec20ad1519c51647c9a98c22201"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -139,7 +139,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Renderer for one-off or frequently changing text. </p>
-<p>Implemented as an abstraction layer that forwards its output to the 2D renderer. </p>
+<p>Implemented as an abstraction layer that forwards its output to the 2D renderer.</p>
+<p>Only one instance of the dynamic text renderer is allowed to exist at a time. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af9af62eea337c6637b62cff8ad12b4fd" name="af9af62eea337c6637b62cff8ad12b4fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9af62eea337c6637b62cff8ad12b4fd">&#9670;&#160;</a></span>addFormatted() <span class="overload">[1/2]</span></h2>
@@ -185,23 +186,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds formatted, multistyle text. </p>
+<p>Adds formatted, multistyle text to the 2D renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">textColors</td><td>The available text colors. By default, the color at index 0 is used. Must not be empty, otherwise a failed assertion may be triggered. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColors</td><td>The available text colors. By default, the color at index 0 is used. Must not be empty. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
   </table>
   </dd>
 </dl>
@@ -252,23 +253,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds formatted, multistyle text. </p>
+<p>Adds formatted, multistyle text to the 2D renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. See <a class="el" href="renderformat.html">Formatted Rendered Text Format</a> for the specifics of the text format. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
   </table>
   </dd>
 </dl>
@@ -324,24 +325,24 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds unformatted, single-style text. </p>
+<p>Adds unformatted, single-style text to the 2D renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
   </table>
   </dd>
 </dl>
@@ -397,55 +398,50 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Adds unformatted, single-style text. </p>
+<p>Adds unformatted, single-style text to the 2D renderer. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If an internal allocation fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
-    <tr><td class="paramname">text</td><td>The text string. </td></tr>
-    <tr><td class="paramname">font</td><td>The font to use for the text. </td></tr>
-    <tr><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
-    <tr><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
-    <tr><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
-    <tr><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
-    <tr><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the text (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">text</td><td>The text string. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">font</td><td>The font to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">fontSize</td><td>The font size to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">style</td><td>The font style to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The color to use for the text. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">outline</td><td>The outline parameters to use for the text, or NO_OUTLINE. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textbox</td><td>The textbox to frame the text around. </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a id="a815ed6418dd74ff491f688ca92a241f1" name="a815ed6418dd74ff491f688ca92a241f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a815ed6418dd74ff491f688ca92a241f1">&#9670;&#160;</a></span>forward()</h2>
+<a id="a009d5ff9a381af4020b2d4443598a2b9" name="a009d5ff9a381af4020b2d4443598a2b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a009d5ff9a381af4020b2d4443598a2b9">&#9670;&#160;</a></span>newFrame()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void tre::DynamicTextRenderer::forward </td>
+          <td class="memname">void tre::DynamicTextRenderer::newFrame </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>renderer</em></span></td><td>)</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Forwards all of the added text to the 2D renderer. </p>
+<p>Prepares the renderer for a new frame. </p>
+<dl class="section warning"><dt>Warning</dt><dd>This function should only be called after all previously outputted text was rendered!</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">renderer</td><td>The renderer to forward to. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails. </td></tr>
   </table>
   </dd>
 </dl>
@@ -476,10 +472,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the DPI of the renderer. </p>
-<p>This function cannot be called if any text has been added, but not forwarded to the 2D renderer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dpi</td><td>The new text DPI, by default it is {72, 72}. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dpi</td><td>The new text DPI, by default it is {72, 72}. </td></tr>
   </table>
   </dd>
 </dl>
@@ -510,10 +505,9 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Sets the DPI of the renderer. </p>
-<p>This function cannot be called if any text has been added, but not forwarded to the 2D renderer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">dpi</td><td>The new text DPI, by default it is 72. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dpi</td><td>The new text DPI, by default it is 72. </td></tr>
   </table>
   </dd>
 </dl>
@@ -521,7 +515,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="text__renderer_8hpp_source.html">text_renderer.hpp</a></li>
+<li><a class="el" href="dynamic__text__renderer_8hpp_source.html">dynamic_text_renderer.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

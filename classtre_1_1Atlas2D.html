@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1Atlas2D-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::Atlas2D Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::Atlas2D Class Reference<div class="ingroups"><a class="el" href="group__atlas.html">Atlases</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -144,8 +144,8 @@ Public Member Functions</h2></td></tr>
 <p>Uploads a pre-made atlas bitmap. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the texture failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If allocating the texture entries failed.</td></tr>
+    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the texture fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If allocating the texture entries fails.</td></tr>
   </table>
   </dd>
 </dl>
@@ -177,9 +177,9 @@ Public Member Functions</h2></td></tr>
 <p>Equivalent to <code>Atlas2D(buildAtlasBitmap(bitmaps))</code>.</p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If allocating the bitmap failed. </td></tr>
-    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the texture failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If allocating a entry map failed.</td></tr>
+    <tr><td class="paramname">tr::BitmapBadAlloc</td><td>If allocating the bitmap fails. </td></tr>
+    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the texture fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If allocating a entry map fails.</td></tr>
   </table>
   </dd>
 </dl>
@@ -253,7 +253,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the rect associated with an entry. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the entry. A failed assertion may be triggered if no entry with this name is contained in the atlas.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the entry. The entry must exist in the atlas.</td></tr>
   </table>
   </dd>
 </dl>

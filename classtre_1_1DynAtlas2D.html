@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1DynAtlas2D-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::DynAtlas2D Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::DynAtlas2D Class Reference<div class="ingroups"><a class="el" href="group__atlas.html">Atlases</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -132,6 +132,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a7637f52b55e5d35226baee47fab1babd" id="r_a7637f52b55e5d35226baee47fab1babd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7637f52b55e5d35226baee47fab1babd">setLabel</a> (std::string label) noexcept</td></tr>
 <tr class="memdesc:a7637f52b55e5d35226baee47fab1babd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the debug label of the atlas texture.  <br /></td></tr>
 <tr class="separator:a7637f52b55e5d35226baee47fab1babd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07499453933304ef3975ee02433c8de1" id="r_a07499453933304ef3975ee02433c8de1"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a07499453933304ef3975ee02433c8de1">size</a> () const noexcept</td></tr>
+<tr class="memdesc:a07499453933304ef3975ee02433c8de1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the number of entries in the atlas.  <br /></td></tr>
+<tr class="separator:a07499453933304ef3975ee02433c8de1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9cdf0785cba3bb1ba4333fe59c471ee2" id="r_a9cdf0785cba3bb1ba4333fe59c471ee2"><td class="memItemLeft" align="right" valign="top">const tr::Texture2D &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9cdf0785cba3bb1ba4333fe59c471ee2">texture</a> () const noexcept</td></tr>
 <tr class="memdesc:a9cdf0785cba3bb1ba4333fe59c471ee2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the atlas texture.  <br /></td></tr>
 <tr class="separator:a9cdf0785cba3bb1ba4333fe59c471ee2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -157,14 +160,14 @@ Public Member Functions</h2></td></tr>
 <p>Creates an empty atlas with an initial capacity. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the atlas texture failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If allocating the atlas texture fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">capacity</td><td>The initial capacity of the atlas. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">capacity</td><td>The initial capacity of the atlas. </td></tr>
   </table>
   </dd>
 </dl>
@@ -195,8 +198,8 @@ Public Member Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>Calling this function invalidates any previous atlas texture bindings, the atlas texture must be rebound to any texture units it was bound to.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If a texture reallocation happened and failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If a texture reallocation happens and fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
@@ -228,7 +231,7 @@ Public Member Functions</h2></td></tr>
 <p>Removes all entries from the atlas. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails. </td></tr>
   </table>
   </dd>
 </dl>
@@ -295,7 +298,7 @@ Public Member Functions</h2></td></tr>
 <p>Returns the rect associated with an entry. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the entry. A failed assertion may be triggered if no entry with this name is contained in the atlas.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the entry. The entry must exist in the atlas.</td></tr>
   </table>
   </dd>
 </dl>
@@ -321,7 +324,7 @@ Public Member Functions</h2></td></tr>
 <p>Removes an entry from the atlas. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
@@ -354,8 +357,8 @@ Public Member Functions</h2></td></tr>
 <dl class="section warning"><dt>Warning</dt><dd>Calling this function invalidates any previous atlas texture bindings, the atlas texture must be rebound to any texture units it was bound to.</dd></dl>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
-    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If a texture reallocation happened and failed. </td></tr>
-    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation failed.</td></tr>
+    <tr><td class="paramname">tr::TextureBadAlloc</td><td>If a texture reallocation happens and fails. </td></tr>
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
   </table>
   </dd>
 </dl>
@@ -401,6 +404,34 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a07499453933304ef3975ee02433c8de1" name="a07499453933304ef3975ee02433c8de1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07499453933304ef3975ee02433c8de1">&#9670;&#160;</a></span>size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t tre::DynAtlas2D::size </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Gets the number of entries in the atlas. </p>
+<dl class="section return"><dt>Returns</dt><dd>The number of entries in the atlas. </dd></dl>
+
+</div>
+</div>
 <a id="a9cdf0785cba3bb1ba4333fe59c471ee2" name="a9cdf0785cba3bb1ba4333fe59c471ee2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9cdf0785cba3bb1ba4333fe59c471ee2">&#9670;&#160;</a></span>texture()</h2>
 
@@ -425,7 +456,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the atlas texture. </p>
-<p>Calling this function for an empty atlas may trigger a failed assertion.</p>
+<p>This function cannot be called with an empty atlas.</p>
 <dl class="section return"><dt>Returns</dt><dd>An immutable reference to the atlas texture. </dd></dl>
 
 </div>

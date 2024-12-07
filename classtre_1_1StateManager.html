@@ -93,7 +93,7 @@ $(function(){ initResizable(false); });
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1StateManager-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::StateManager Class Reference</div></div>
+  <div class="headertitle"><div class="title">tre::StateManager Class Reference<div class="ingroups"><a class="el" href="group__state__management.html">Staet Management</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -301,7 +301,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the held state. </p>
-<p>If the manager is not holding a state, a failed assertion may be triggered.</p>
+<p>This function cannot be called if the manager is not holding a state.</p>
 <dl class="section return"><dt>Returns</dt><dd>An immutable reference to the held state. </dd></dl>
 
 </div>
@@ -330,7 +330,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Gets the held state. </p>
-<p>If the manager is not holding a state, a failed assertion may be triggered.</p>
+<p>This function cannot be called if the manager is not holding a state.</p>
 <dl class="section return"><dt>Returns</dt><dd>A mutable reference to the held state. </dd></dl>
 
 </div>

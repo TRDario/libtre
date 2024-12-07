@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['localizationmanager_0',['LocalizationManager',['../classtre_1_1LocalizationManager.html',1,'tre']]],
-  ['locfileparsewitherrors_1',['LocFileParseWithErrors',['../classtre_1_1LocFileParseWithErrors.html',1,'tre']]]
+  ['debugtextrenderer_0',['DebugTextRenderer',['../classtre_1_1DebugTextRenderer.html',1,'tre']]],
+  ['dynamictextrenderer_1',['DynamicTextRenderer',['../classtre_1_1DynamicTextRenderer.html',1,'tre']]],
+  ['dynatlas2d_2',['DynAtlas2D',['../classtre_1_1DynAtlas2D.html',1,'tre']]]
 ];
