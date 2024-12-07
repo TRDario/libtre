@@ -42,7 +42,7 @@ std::string_view tre::measureUnformatted(std::string_view text, const BitmapText
 			return {text.begin(), (const char*)(it)};
 		}
 
-		lineWidth += font.at(*it).advance * scale;
+		lineWidth += font.at(font.contains(*it) ? *it : '\0').advance * scale;
 		if (it != text.begin() && lineWidth > maxWidth) {
 			return {text.begin(), (const char*)(it)};
 		}
@@ -60,11 +60,11 @@ std::string_view tre::measureFormatted(std::string_view text, const BitmapTextRe
 		}
 		else if (*it == '\\') {
 			if (++it != text.end() && *it == '\\') {
-				lineWidth += font.at('\\').advance * scale;
+				lineWidth += font.at(font.contains('\\') ? '\\' : '\0').advance * scale;
 			}
 		}
 		else {
-			lineWidth += font.at(*it).advance * scale;
+			lineWidth += font.at(font.contains(*it) ? *it : '\0').advance * scale;
 			if (it != text.begin() && lineWidth > maxWidth) {
 				return {text.begin(), (const char*)(it)};
 			}
@@ -123,7 +123,9 @@ float tre::initialUnformattedOffsetX(std::string_view line, const BitmapTextRend
 									 const BitmapTextRenderer::Textbox& textbox) noexcept
 {
 	const float textboxLeft{textbox.pos.x - textbox.posAnchor.x};
-	const auto  pred{[&](float sum, std::uint32_t chr) { return sum + font.at(chr).advance * scale; }};
+	const auto  pred{[&](float sum, std::uint32_t codepoint) {
+        return sum + font.at(font.contains(codepoint) ? codepoint : '\0').advance * scale;
+    }};
 
 	switch (HorizontalAlign(textbox.textAlignment)) {
 	case HorizontalAlign::LEFT:
@@ -144,11 +146,11 @@ float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextRender
         for (auto it = line.begin(); it != line.end(); ++it) {
             if (*it == '\\') {
                 if (++it != line.end() && *it == '\\') {
-                    width += font.at('\\').advance * scale;
+                    width += font.at(font.contains('\\') ? '\\' : '\0').advance * scale;
                 }
             }
             else {
-                width += font.at(*it).advance;
+                width += font.at(font.contains(*it) ? *it : '\0').advance;
             }
         }
         return width;
@@ -162,18 +164,6 @@ float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextRender
 	case HorizontalAlign::RIGHT:
 		return textboxLeft + lineWidth(line, font, scale);
 	}
-}
-
-tre::BitmapFontLoadError::BitmapFontLoadError(std::string path, const char* message) noexcept
-	: FileError{std::move(path)}, _message{message}
-{
-}
-
-const char* tre::BitmapFontLoadError::what() const noexcept
-{
-	static std::string str;
-	str = std::format("Failed to bitmap font ({}): {}", _message, path());
-	return str.c_str();
 }
 
 tre::BitmapTextRenderer::BitmapTextRenderer() noexcept
@@ -228,7 +218,7 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 									   Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
 									   tr::AngleF rotation)
 {
-	const auto&      glyph{font.glyphs.at(codepoint)};
+	const auto&      glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
 	const auto       size{glm::vec2(glyph.width, glyph.height) * scale};
 	const tr::RectF2 uv{fontUV.tl + glm::vec2(glyph.x, glyph.y) / glm::vec2(_atlas.texture().size()),
 						glm::vec2(glyph.width, glyph.height) / glm::vec2(_atlas.texture().size())};
@@ -280,7 +270,7 @@ void tre::BitmapTextRenderer::addUnformatted(int priority, std::string_view text
 	for (auto& line : lines) {
 		auto xOffset{initialUnformattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
 		for (auto chr : tr::utf8Range(line)) {
-			auto& glyph{fontIt->second.glyphs.at(chr)};
+			auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(chr) ? chr : '\0')};
 			if (glyph.width != 0 && glyph.height != 0) {
 				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
 						 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
@@ -295,8 +285,6 @@ void tre::BitmapTextRenderer::addUnformatted(int priority, std::string_view text
 void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, std::string_view font, glm::vec2 scale,
 										   std::span<tr::RGBA8> colors, const Textbox& textbox)
 {
-	assert(!colors.empty());
-
 	auto fontIt{_fonts.find(font)};
 	if (fontIt == _fonts.end()) {
 		return;
@@ -315,11 +303,14 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 					goto line_end;
 				}
 				switch (*it) {
-				case '\\':
-					addGlyph(priority, '\\', fontIt->second, fontUV, style, scale, tint, textbox.pos,
-							 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
-					xOffset += fontIt->second.glyphs.at('\\').advance;
-					break;
+				case '\\': {
+					auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains('\\') ? '\\' : '\0')};
+					if (glyph.width != 0 && glyph.height != 0) {
+						addGlyph(priority, '\\', fontIt->second, fontUV, style, scale, tint, textbox.pos,
+								 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
+					}
+					xOffset += glyph.advance;
+				} break;
 				case '!':
 					tint = {255, 255, 255, 255};
 					break;
@@ -339,7 +330,7 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 				}
 			}
 			else {
-				auto& glyph{fontIt->second.glyphs.at(*it)};
+				auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(*it) ? *it : '\0')};
 				if (glyph.width != 0 && glyph.height != 0) {
 					addGlyph(priority, *it, fontIt->second, fontUV, style, scale, tint, textbox.pos,
 							 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
