@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['rendered_20text_20format_0',['Formatted Rendered Text Format',['../renderformat.html',1,'']]]
+  ['localization_20file_20format_0',['Localization File Format',['../locformat.html',1,'']]]
 ];

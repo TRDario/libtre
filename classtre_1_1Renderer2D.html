@@ -85,7 +85,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tre</b></li><li class="navelem"><a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacetre.html">tre</a></li><li class="navelem"><a class="el" href="classtre_1_1Renderer2D.html">Renderer2D</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -101,18 +101,14 @@ $(function(){ initResizable(false); });
 
 <p>General-purpose batched 2D renderer.  
  <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="renderer__2d_8hpp_source.html">renderer_2d.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a08cc0b709b4bbc3eba30d161e4ed635a" id="r_a08cc0b709b4bbc3eba30d161e4ed635a"><td class="memItemLeft" align="right" valign="top"><a id="a08cc0b709b4bbc3eba30d161e4ed635a" name="a08cc0b709b4bbc3eba30d161e4ed635a"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>TextureRef</b> = std::pair&lt;const tr::Texture2D&amp;, const tr::Sampler&amp;&gt;</td></tr>
-<tr class="memdesc:a08cc0b709b4bbc3eba30d161e4ed635a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The combination of texture and sampler used when drawing an object. <br /></td></tr>
+<tr class="memitem:a08cc0b709b4bbc3eba30d161e4ed635a" id="r_a08cc0b709b4bbc3eba30d161e4ed635a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> = std::pair&lt;const tr::Texture2D&amp;, const tr::Sampler&amp;&gt;</td></tr>
+<tr class="memdesc:a08cc0b709b4bbc3eba30d161e4ed635a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The combination of texture and sampler used when drawing an object.  <br /></td></tr>
 <tr class="separator:a08cc0b709b4bbc3eba30d161e4ed635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20655d6147cdc554afa52bf4f9e9cedf" id="r_a20655d6147cdc554afa52bf4f9e9cedf"><td class="memItemLeft" align="right" valign="top"><a id="a20655d6147cdc554afa52bf4f9e9cedf" name="a20655d6147cdc554afa52bf4f9e9cedf"></a>
-using&#160;</td><td class="memItemRight" valign="bottom"><b>Vertex</b> = tr::TintVtx2</td></tr>
-<tr class="memdesc:a20655d6147cdc554afa52bf4f9e9cedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the vertex type used by the renderer. <br /></td></tr>
+<tr class="memitem:a20655d6147cdc554afa52bf4f9e9cedf" id="r_a20655d6147cdc554afa52bf4f9e9cedf"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> = tr::TintVtx2</td></tr>
+<tr class="memdesc:a20655d6147cdc554afa52bf4f9e9cedf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the vertex type used by the renderer.  <br /></td></tr>
 <tr class="separator:a20655d6147cdc554afa52bf4f9e9cedf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -120,6 +116,8 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8189edba8ce1badffdd82849c14375e5" id="r_a8189edba8ce1badffdd82849c14375e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8189edba8ce1badffdd82849c14375e5">Renderer2D</a> ()</td></tr>
 <tr class="memdesc:a8189edba8ce1badffdd82849c14375e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the 2D renderer.  <br /></td></tr>
 <tr class="separator:a8189edba8ce1badffdd82849c14375e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181d00893dbb12e6a9ec592beb3238d5" id="r_a181d00893dbb12e6a9ec592beb3238d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a181d00893dbb12e6a9ec592beb3238d5">~Renderer2D</a> () noexcept</td></tr>
+<tr class="separator:a181d00893dbb12e6a9ec592beb3238d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67a59e318f00087b9c11ca2d88a59c5f" id="r_a67a59e318f00087b9c11ca2d88a59c5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67a59e318f00087b9c11ca2d88a59c5f">addTexturedPolygonFan</a> (int priority, std::vector&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt; vertices, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
 <tr class="memdesc:a67a59e318f00087b9c11ca2d88a59c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured polygon fan to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a67a59e318f00087b9c11ca2d88a59c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -177,15 +175,47 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a4581af5aaec4b15b87bb228098cc75ce" id="r_a4581af5aaec4b15b87bb228098cc75ce"><td class="memItemLeft" align="right" valign="top"><a id="a4581af5aaec4b15b87bb228098cc75ce" name="a4581af5aaec4b15b87bb228098cc75ce"></a>
-static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>ID</b> {-2U}</td></tr>
-<tr class="memdesc:a4581af5aaec4b15b87bb228098cc75ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique renderer ID of this renderer. <br /></td></tr>
+<tr class="memitem:a4581af5aaec4b15b87bb228098cc75ce" id="r_a4581af5aaec4b15b87bb228098cc75ce"><td class="memItemLeft" align="right" valign="top">static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4581af5aaec4b15b87bb228098cc75ce">ID</a> {-2U}</td></tr>
+<tr class="memdesc:a4581af5aaec4b15b87bb228098cc75ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique renderer ID of this renderer.  <br /></td></tr>
 <tr class="separator:a4581af5aaec4b15b87bb228098cc75ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>General-purpose batched 2D renderer. </p>
 <p>Only one instance of the 2D renderer is allowed to exist at a time. </p>
-</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a08cc0b709b4bbc3eba30d161e4ed635a" name="a08cc0b709b4bbc3eba30d161e4ed635a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08cc0b709b4bbc3eba30d161e4ed635a">&#9670;&#160;</a></span>TextureRef</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">tre::Renderer2D::TextureRef</a> = std::pair&lt;const tr::Texture2D&amp;, const tr::Sampler&amp;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The combination of texture and sampler used when drawing an object. </p>
+
+</div>
+</div>
+<a id="a20655d6147cdc554afa52bf4f9e9cedf" name="a20655d6147cdc554afa52bf4f9e9cedf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20655d6147cdc554afa52bf4f9e9cedf">&#9670;&#160;</a></span>Vertex</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">tre::Renderer2D::Vertex</a> = tr::TintVtx2</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shorthand for the vertex type used by the renderer. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a8189edba8ce1badffdd82849c14375e5" name="a8189edba8ce1badffdd82849c14375e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8189edba8ce1badffdd82849c14375e5">&#9670;&#160;</a></span>Renderer2D()</h2>
 
@@ -203,6 +233,31 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 
 <p>Creates the 2D renderer. </p>
 <p>Only one of these should be created at a time. This class can only be instantiated after an OpenGL context is opened. </p>
+
+</div>
+</div>
+<a id="a181d00893dbb12e6a9ec592beb3238d5" name="a181d00893dbb12e6a9ec592beb3238d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a181d00893dbb12e6a9ec592beb3238d5">&#9670;&#160;</a></span>~Renderer2D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tre::Renderer2D::~Renderer2D </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1036,9 +1091,31 @@ static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="renderer__2d_8hpp_source.html">renderer_2d.hpp</a></li>
-</ul>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a4581af5aaec4b15b87bb228098cc75ce" name="a4581af5aaec4b15b87bb228098cc75ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4581af5aaec4b15b87bb228098cc75ce">&#9670;&#160;</a></span>ID</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t tre::Renderer2D::ID {-2U}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The unique renderer ID of this renderer. </p>
+
+</div>
+</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

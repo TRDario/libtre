@@ -96,11 +96,11 @@ $(function(){ initResizable(false); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;tr/tr.hpp&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>tre {</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacetre.html">tre</a> {</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="structtre_1_1State.html">   13</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structtre_1_1State.html">State</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keyword">virtual</span> <a class="code hl_struct" href="structtre_1_1State.html">~State</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">   14</a></span>        <span class="keyword">virtual</span> <a class="code hl_function" href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">~State</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">   21</a></span>        <span class="keyword">virtual</span> std::uint32_t <a class="code hl_function" href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">type</a>() const noexcept = 0;</div>
@@ -164,11 +164,13 @@ $(function(){ initResizable(false); });
 <div class="ttc" id="aclasstre_1_1StateManager_html"><div class="ttname"><a href="classtre_1_1StateManager.html">tre::StateManager</a></div><div class="ttdoc">Game state manager.</div><div class="ttdef"><b>Definition</b> state_manager.hpp:68</div></div>
 <div class="ttc" id="aclasstre_1_1StateManager_html_a2f76a4e51a3a58ebb4bb4499810b9314"><div class="ttname"><a href="classtre_1_1StateManager.html#a2f76a4e51a3a58ebb4bb4499810b9314">tre::StateManager::StateManager</a></div><div class="ttdeci">StateManager() noexcept=default</div><div class="ttdoc">Constructs a manager with no held state.</div></div>
 <div class="ttc" id="agroup__state__management_html_gafb2b556cf93aa8a8a4b9f4f29c1479c8"><div class="ttname"><a href="group__state__management.html#gafb2b556cf93aa8a8a4b9f4f29c1479c8">tre::generateStateType</a></div><div class="ttdeci">std::uint32_t generateStateType() noexcept</div><div class="ttdoc">Generates a new valid state type ID.</div></div>
+<div class="ttc" id="anamespacetre_html"><div class="ttname"><a href="namespacetre.html">tre</a></div><div class="ttdef"><b>Definition</b> atlas.hpp:5</div></div>
 <div class="ttc" id="astructtre_1_1State_html"><div class="ttname"><a href="structtre_1_1State.html">tre::State</a></div><div class="ttdoc">Abstract game state interface.</div><div class="ttdef"><b>Definition</b> state_manager.hpp:13</div></div>
 <div class="ttc" id="astructtre_1_1State_html_a04fd7739162a973aa236b5030d3767da"><div class="ttname"><a href="structtre_1_1State.html#a04fd7739162a973aa236b5030d3767da">tre::State::handleEvent</a></div><div class="ttdeci">virtual std::unique_ptr&lt; State &gt; handleEvent(const tr::Event &amp;event)=0</div><div class="ttdoc">Handles an event.</div></div>
 <div class="ttc" id="astructtre_1_1State_html_a1771d8ddc65847d502c841f3b5caaf38"><div class="ttname"><a href="structtre_1_1State.html#a1771d8ddc65847d502c841f3b5caaf38">tre::State::update</a></div><div class="ttdeci">virtual std::unique_ptr&lt; State &gt; update(tr::Duration delta)=0</div><div class="ttdoc">Updates the state.</div></div>
 <div class="ttc" id="astructtre_1_1State_html_a99dabcfb47db25b7e87b2a3a14ebf2be"><div class="ttname"><a href="structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be">tre::State::type</a></div><div class="ttdeci">virtual std::uint32_t type() const noexcept=0</div><div class="ttdoc">Gets the type of the state.</div></div>
 <div class="ttc" id="astructtre_1_1State_html_ab14d402cd568aa9e5119a03502a1b7a0"><div class="ttname"><a href="structtre_1_1State.html#ab14d402cd568aa9e5119a03502a1b7a0">tre::State::draw</a></div><div class="ttdeci">virtual void draw()=0</div><div class="ttdoc">Draws the state to the screen.</div></div>
+<div class="ttc" id="astructtre_1_1State_html_aba3ab44215c2aca3cca5e57256abb37d"><div class="ttname"><a href="structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d">tre::State::~State</a></div><div class="ttdeci">virtual ~State()=default</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,7 +1,7 @@
 var searchData=
 [
   ['lastrendererid_0',['lastRendererID',['../group__renderer.html#ga0dbe63558529372aab66d7d3c261bc77',1,'tre']]],
-  ['left_1',['LEFT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758',1,'tre::DebugTextRenderer::LEFT'],['../group__text.html#gga36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758',1,'LEFTtre']]],
+  ['left_1',['LEFT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758',1,'tre::DebugTextRenderer::LEFT'],['../group__text.html#gga36e8a7b9092bac4482958403ac5f7862a684d325a7303f52e64011467ff5c5758',1,'tre::LEFT']]],
   ['loadfont_2',['loadFont',['../classtre_1_1BitmapTextRenderer.html#a554e073de855cbb34e825034d2f690c5',1,'tre::BitmapTextRenderer']]],
   ['localization_3',['Localization',['../group__localization.html',1,'']]],
   ['localization_20file_20format_4',['Localization File Format',['../locformat.html',1,'']]],

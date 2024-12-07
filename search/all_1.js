@@ -2,7 +2,7 @@ var searchData=
 [
   ['bilinearsampler_0',['bilinearSampler',['../group__sampler__presets.html#gab67312ba32d8551b3700a0249afaf897',1,'tre']]],
   ['bitmap_1',['bitmap',['../structtre_1_1AtlasBitmap.html#ab4698ff2573cefb720e974369a959fa5',1,'tre::AtlasBitmap']]],
-  ['bitmapfontloaderror_2',['BitmapFontLoadError',['../classtre_1_1BitmapFontLoadError.html',1,'tre::BitmapFontLoadError'],['../classtre_1_1BitmapFontLoadError.html#a6d73d5ce1150205907db90f076dda8d8',1,'tre::BitmapFontLoadError::BitmapFontLoadError()']]],
+  ['bitmap_20font_20format_20tref_2',['tre Bitmap Font Format (tref)',['../tref.html',1,'']]],
   ['bitmaptextrenderer_3',['BitmapTextRenderer',['../classtre_1_1BitmapTextRenderer.html',1,'tre::BitmapTextRenderer'],['../classtre_1_1BitmapTextRenderer.html#a774fb0eb6589e56fdc34e821be28ea9c',1,'tre::BitmapTextRenderer::BitmapTextRenderer()']]],
   ['bitmaptextrenderer_4',['bitmapTextRenderer',['../group__text.html#gac73191b47143bfa47c766d44f1af5292',1,'tre']]],
   ['bitmaptextrendereractive_5',['bitmapTextRendererActive',['../group__text.html#gab9ee513997953b7519b9efaa36008e00',1,'tre']]],

@@ -85,7 +85,7 @@ $(function(){ initResizable(false); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>tre</b></li><li class="navelem"><a class="el" href="classtre_1_1DynamicTextRenderer.html">DynamicTextRenderer</a></li>  </ul>
+<li class="navelem"><a class="el" href="namespacetre.html">tre</a></li><li class="navelem"><a class="el" href="classtre_1_1DynamicTextRenderer.html">DynamicTextRenderer</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div id="doc-content">
@@ -94,14 +94,12 @@ $(function(){ initResizable(false); });
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classtre_1_1DynamicTextRenderer-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">tre::DynamicTextRenderer Class Reference<div class="ingroups"><a class="el" href="group__renderer.html">Renderers</a> &#124; <a class="el" href="group__text.html">Text Rendering</a></div></div></div>
+  <div class="headertitle"><div class="title">tre::DynamicTextRenderer Class Reference<div class="ingroups"><a class="el" href="group__text.html">Text Rendering</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>Renderer for one-off or frequently changing text.  
  <a href="#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="dynamic__text__renderer_8hpp_source.html">dynamic_text_renderer.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -111,10 +109,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a658619b606cc7d5908b9c622f608cf3d" id="r_a658619b606cc7d5908b9c622f608cf3d"><td class="memItemLeft" align="right" valign="top"><a id="a658619b606cc7d5908b9c622f608cf3d" name="a658619b606cc7d5908b9c622f608cf3d"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>DynamicTextRenderer</b> () noexcept</td></tr>
-<tr class="memdesc:a658619b606cc7d5908b9c622f608cf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the dynamic text renderer. <br /></td></tr>
+<tr class="memitem:a658619b606cc7d5908b9c622f608cf3d" id="r_a658619b606cc7d5908b9c622f608cf3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a658619b606cc7d5908b9c622f608cf3d">DynamicTextRenderer</a> () noexcept</td></tr>
+<tr class="memdesc:a658619b606cc7d5908b9c622f608cf3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs the dynamic text renderer.  <br /></td></tr>
 <tr class="separator:a658619b606cc7d5908b9c622f608cf3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed3392b4c1e8e3cfa3e4a3cdc1f01478" id="r_aed3392b4c1e8e3cfa3e4a3cdc1f01478"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed3392b4c1e8e3cfa3e4a3cdc1f01478">~DynamicTextRenderer</a> () noexcept</td></tr>
+<tr class="separator:aed3392b4c1e8e3cfa3e4a3cdc1f01478"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af9af62eea337c6637b62cff8ad12b4fd" id="r_af9af62eea337c6637b62cff8ad12b4fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9af62eea337c6637b62cff8ad12b4fd">addFormatted</a> (int priority, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, <a class="el" href="structtre_1_1TextOutline.html">TextOutline</a> outline, const <a class="el" href="structtre_1_1DynamicTextRenderer_1_1Textbox.html">Textbox</a> &amp;textbox)</td></tr>
 <tr class="memdesc:af9af62eea337c6637b62cff8ad12b4fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds formatted, multistyle text to the 2D renderer.  <br /></td></tr>
 <tr class="separator:af9af62eea337c6637b62cff8ad12b4fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -141,7 +140,60 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Renderer for one-off or frequently changing text. </p>
 <p>Implemented as an abstraction layer that forwards its output to the 2D renderer.</p>
 <p>Only one instance of the dynamic text renderer is allowed to exist at a time. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a658619b606cc7d5908b9c622f608cf3d" name="a658619b606cc7d5908b9c622f608cf3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a658619b606cc7d5908b9c622f608cf3d">&#9670;&#160;</a></span>DynamicTextRenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tre::DynamicTextRenderer::DynamicTextRenderer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructs the dynamic text renderer. </p>
+
+</div>
+</div>
+<a id="aed3392b4c1e8e3cfa3e4a3cdc1f01478" name="aed3392b4c1e8e3cfa3e4a3cdc1f01478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed3392b4c1e8e3cfa3e4a3cdc1f01478">&#9670;&#160;</a></span>~DynamicTextRenderer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tre::DynamicTextRenderer::~DynamicTextRenderer </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
 <a id="af9af62eea337c6637b62cff8ad12b4fd" name="af9af62eea337c6637b62cff8ad12b4fd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af9af62eea337c6637b62cff8ad12b4fd">&#9670;&#160;</a></span>addFormatted() <span class="overload">[1/2]</span></h2>
 
@@ -514,9 +566,6 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li><a class="el" href="dynamic__text__renderer_8hpp_source.html">dynamic_text_renderer.hpp</a></li>
-</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

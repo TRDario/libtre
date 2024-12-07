@@ -13,6 +13,9 @@ var searchData=
   ['top_5fcenter_10',['TOP_CENTER',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eeae4e8367937db13de78dd9a710df92164',1,'tre']]],
   ['top_5fleft_11',['TOP_LEFT',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eea747385047b85ae751f83adb36435a3c1',1,'tre']]],
   ['top_5fright_12',['TOP_RIGHT',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eea901d87dedda8db733f5e6d34c4eb5fe0',1,'tre']]],
-  ['trilinearsampler_13',['trilinearSampler',['../group__sampler__presets.html#gade7cc21b7df7e1857a547593add62b49',1,'tre']]],
-  ['type_14',['type',['../structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be',1,'tre::State']]]
+  ['tre_13',['tre',['../namespacetre.html',1,'']]],
+  ['tre_20bitmap_20font_20format_20tref_14',['tre Bitmap Font Format (tref)',['../tref.html',1,'']]],
+  ['tref_15',['tre Bitmap Font Format (tref)',['../tref.html',1,'']]],
+  ['trilinearsampler_16',['trilinearSampler',['../group__sampler__presets.html#gade7cc21b7df7e1857a547593add62b49',1,'tre']]],
+  ['type_17',['type',['../structtre_1_1State.html#a99dabcfb47db25b7e87b2a3a14ebf2be',1,'tre::State']]]
 ];

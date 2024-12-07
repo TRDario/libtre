@@ -11,6 +11,6 @@ var searchData=
   ['rendering_8',['Text Rendering',['../group__text.html',1,'']]],
   ['rendermultistyletext_9',['renderMultistyleText',['../group__text.html#ga6700b5c540de2c71b3749b10796e1286',1,'tre']]],
   ['reserve_10',['reserve',['../classtre_1_1DynAtlas2D.html#ad68e9a70d3056d112febf33a509cbfa4',1,'tre::DynAtlas2D']]],
-  ['right_11',['RIGHT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403',1,'tre::DebugTextRenderer::RIGHT'],['../group__text.html#gga36e8a7b9092bac4482958403ac5f7862a21507b40c80068eda19865706fdc2403',1,'RIGHTtre']]],
+  ['right_11',['RIGHT',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403',1,'tre::DebugTextRenderer::RIGHT'],['../group__text.html#gga36e8a7b9092bac4482958403ac5f7862a21507b40c80068eda19865706fdc2403',1,'tre::RIGHT']]],
   ['rotation_12',['rotation',['../structtre_1_1BitmapTextRenderer_1_1Textbox.html#a16f82b47703b97f00fc5cf1459344a0a',1,'tre::BitmapTextRenderer::Textbox::rotation'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html#a7b1c1f1afe0ca938c7c40107d5e66d69',1,'tre::DynamicTextRenderer::Textbox::rotation'],['../structtre_1_1StaticTextRenderer_1_1Textbox.html#aad74c22f952a6f5fc050ad2e985a222a',1,'tre::StaticTextRenderer::Textbox::rotation']]]
 ];
