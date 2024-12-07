@@ -1,7 +1,7 @@
 /**********************************************************************************************************************
  * @page renderformat Formatted Rendered Text Format
  * 
- * text_renderer.hpp features an option to render formatted, multistyle text. The following formatting escape sequences
+ * text_renderering.hpp features an option to render formatted, multistyle text. The following formatting escape sequences
  * are supported for manipulation of the text style:
  *
  * <code>\\\\</code>
@@ -11,17 +11,21 @@
  * - Sets the text color to color at index @em n of the span of colors passed to the function.
  *   If @em i is an invalid index, nothing happens.
  *
+ * <code>\\!</code>
+ * - Resets the text color to the default. For the bitmap text renderer, this means a completely white tint, while on the
+ *   other renderers it's equivalent to <code>\\c0</code>.
+ *
  * <code>\\b</code>
- * - Toggles whether the text is drawn bold.
+ * - Toggles whether the text is drawn bold (not available for the bitmap text renderer).
  *
  * <code>\\i</code>
  * - Toggles whether the text is drawn italic.
  *
  * <code>\\u</code>
- * - Toggles whether the text is drawn underlined.
+ * - Toggles whether the text is drawn underlined (not available for the bitmap text renderer).
  *
  * <code>\\s</code>
- * - Toggles whether the text is drawn striked out.
+ * - Toggles whether the text is drawn striked out (not available for the bitmap text renderer).
  *
  * Unknown escape sequences are ignored.
  **********************************************************************************************************************/

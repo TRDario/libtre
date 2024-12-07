@@ -1,8 +1,3 @@
-/**********************************************************************************************************************
- * @file debug_text_renderer.hpp
- * @brief Provides a debug text renderer.
- **********************************************************************************************************************/
-
 #pragma once
 #include <tr/tr.hpp>
 
@@ -12,6 +7,10 @@ namespace tre {
 	 *
 	 * The renderer is conceptualized around two independent "pens", a left-aligned and right-aligned one, writing text
 	 * sequentially. Writing uses special text formatting, the specifics of which you can see at @ref debformat.
+	 *
+	 * Only one instance of the debug text renderer is allowed to exist at a time.
+	 *
+	 * @ingroup renderer text
 	 ******************************************************************************************************************/
 	class DebugTextRenderer {
 	  public:
@@ -48,14 +47,16 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Constructs the debug text renderer.
 		 *
-		 * @exception tr::GLBufferBadAlloc If an internal allocation failed.
+		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 **************************************************************************************************************/
 		DebugTextRenderer();
+
+		~DebugTextRenderer() noexcept;
 
 		/**************************************************************************************************************
 		 * Sets the text's drawing scale.
 		 *
-		 * @param scale The scale of the text. Glyphs are 8x8 on x1.0 scale.
+		 * @param[in] scale The scale of the text. Glyphs are 8x8 on x1.0 scale.
 		 **************************************************************************************************************/
 		void setScale(float scale) noexcept;
 
@@ -64,7 +65,7 @@ namespace tre {
 		 *
 		 * Setting this in the middle of writing will leave any existing text as-is.
 		 *
-		 * @param columns The maximum allowed number of columns tolerated before a break is needed.
+		 * @param[in] columns The maximum allowed number of columns tolerated before a break is needed.
 		 **************************************************************************************************************/
 		void setColumnLimit(std::uint8_t columns) noexcept;
 
@@ -78,31 +79,27 @@ namespace tre {
 		 *
 		 * For specifics of the text format, see @ref debformat.
 		 *
-		 * @exception std::bad_alloc If an internal allocation failed.
+		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param text The text to write.
-		 * @param textColor The default text color.
-		 * @param backgroundColor The default background color.
-		 * @param extraColors Additional colors used by the text.
-		 * @param alignment Whether to draw the text left- or right-aligned.
+		 * @param[in] text The text to write.
+		 * @param[in] textColor The default text color.
+		 * @param[in] backgroundColor The default background color.
+		 * @param[in] extraColors Additional colors used by the text.
+		 * @param[in] alignment Whether to draw the text left- or right-aligned.
 		 **************************************************************************************************************/
 		void write(std::string_view text, tr::RGBA8 textColor = WHITE, tr::RGBA8 backgroundColor = NONE,
 				   std::span<tr::RGBA8> extraColors = {}, Align alignment = Align::LEFT);
 
 		/**************************************************************************************************************
-		 * Draws all written text to a target.
+		 * Draws all written text to the screren.
 		 *
 		 * The text will remain drawable until a call to clear().
 		 *
-		 * @exception tr::GLBufferBadAlloc If an internal allocation failed.
-		 *
-		 * @param glContext The OpenGL context to manipulate.
-		 * @param target The drawing target.
+		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 **************************************************************************************************************/
-		void draw(tr::GLContext& glContext, tr::BasicFramebuffer& target);
+		void draw();
 
 	  private:
-		/// @cond IMPLEMENTATION
 		struct ShaderGlyph {
 			glm::u8vec2 pos;
 			bool        alignRight;
@@ -120,7 +117,6 @@ namespace tre {
 			std::size_t   lineStart;
 			std::size_t   wordStart;
 		};
-		/// @endcond
 
 		tr::OwningShaderPipeline _shaderPipeline;
 		tr::ShaderBuffer         _shaderGlyphBuffer;
@@ -145,6 +141,25 @@ namespace tre {
 		void handleControlSequence(std::string_view::iterator& it, std::string_view::iterator end,
 								   DebugTextContext& context, tr::RGBA8 textColor, tr::RGBA8 backgroundColor,
 								   std::span<tr::RGBA8> extraColors);
-		void setupContext(tr::GLContext& glContext) noexcept;
+		void setupContext() noexcept;
 	};
+
+	/******************************************************************************************************************
+	 * Gets whether the debug text renderer was initialized.
+	 *
+	 * @return True if the debug text renderer was initialized, and false otherwise.
+	 *
+	 * @ingroup renderer text
+	 ******************************************************************************************************************/
+	bool debugTextRendererActive() noexcept;
+
+	/******************************************************************************************************************
+	 * Gets a reference to the debug text renderer.
+	 * This function cannot be called if the debug text renderer wasn't initialized.
+	 *
+	 * @return A reference to the debug text renderer.
+	 *
+	 * @ingroup renderer text
+	 ******************************************************************************************************************/
+	DebugTextRenderer& debugTextRenderer() noexcept;
 } // namespace tre

@@ -10,6 +10,8 @@ namespace tre {
 #include "../resources/debug_text_font.bmp.hpp"
 
 	constexpr std::array<glm::u8vec2, 4> GLYPH_VERTICES{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}};
+
+	DebugTextRenderer* _debugTextRenderer{nullptr};
 } // namespace tre
 
 using VtxAttrF = tr::VertexAttributeF;
@@ -25,6 +27,9 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	, _leftLine{0}
 	, _rightLine{0}
 {
+	assert(!debugTextRendererActive());
+	_debugTextRenderer = this;
+
 	_textureUnit.setTexture(_font);
 	_textureUnit.setSampler(nearestNeighborSampler());
 	_shaderPipeline.fragmentShader().setUniform(2, _textureUnit);
@@ -39,6 +44,11 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	_vertexBuffer.setLabel("tre::DebugTextRenderer Vertex Buffer");
 	_vertexFormat.setLabel("tre::DebugTextRenderer Vertex Format");
 #endif
+}
+
+tre::DebugTextRenderer::~DebugTextRenderer() noexcept
+{
+	_debugTextRenderer = nullptr;
 }
 
 void tre::DebugTextRenderer::setScale(float scale) noexcept
@@ -208,11 +218,14 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 	handleNewline(context);
 }
 
-void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer& target)
+void tre::DebugTextRenderer::draw()
 {
+	auto& glContext{tr::window().glContext()};
+	auto& target{tr::window().backbuffer()};
+
 	if (!_shaderGlyphs.empty()) {
 		if (lastRendererID() != ID) {
-			setupContext(glContext);
+			setupContext();
 			setLastRendererID(ID);
 		}
 		glContext.setFramebuffer(target);
@@ -231,8 +244,10 @@ void tre::DebugTextRenderer::draw(tr::GLContext& glContext, tr::BasicFramebuffer
 	}
 }
 
-void tre::DebugTextRenderer::setupContext(tr::GLContext& glContext) noexcept
+void tre::DebugTextRenderer::setupContext() noexcept
 {
+	auto& glContext{tr::window().glContext()};
+
 	glContext.useDepthTest(false);
 	glContext.useScissorTest(false);
 	glContext.useStencilTest(false);
@@ -244,4 +259,15 @@ void tre::DebugTextRenderer::setupContext(tr::GLContext& glContext) noexcept
 	glContext.setShaderPipeline(_shaderPipeline);
 	glContext.setVertexFormat(_vertexFormat);
 	glContext.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
+}
+
+bool tre::debugTextRendererActive() noexcept
+{
+	return _debugTextRenderer != nullptr;
+}
+
+tre::DebugTextRenderer& tre::debugTextRenderer() noexcept
+{
+	assert(debugTextRendererActive());
+	return *_debugTextRenderer;
 }
