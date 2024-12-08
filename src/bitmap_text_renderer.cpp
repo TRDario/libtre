@@ -274,7 +274,7 @@ void tre::BitmapTextRenderer::addUnformatted(int priority, std::string_view text
 			auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(chr) ? chr : '\0')};
 			if (glyph.width != 0 && glyph.height != 0) {
 				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-						 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
+						 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
 			}
 			xOffset += glyph.advance;
 		}
@@ -308,7 +308,7 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 					auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains('\\') ? '\\' : '\0')};
 					if (glyph.width != 0 && glyph.height != 0) {
 						addGlyph(priority, '\\', fontIt->second, fontUV, style, scale, tint, textbox.pos,
-								 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
+								 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
 					}
 					xOffset += glyph.advance;
 				} break;
@@ -334,7 +334,7 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 				auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(*it) ? *it : '\0')};
 				if (glyph.width != 0 && glyph.height != 0) {
 					addGlyph(priority, *it, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-							 textbox.pos - glm::vec2(xOffset, yOffset), tr::degs(0));
+							 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
 				}
 				xOffset += glyph.advance;
 			}
