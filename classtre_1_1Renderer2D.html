@@ -104,6 +104,15 @@ $(function(){ initResizable(false); });
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:abcb4d483afa162522e6ea9d7a2b379c1" id="r_abcb4d483afa162522e6ea9d7a2b379c1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcb4d483afa162522e6ea9d7a2b379c1">TexturedQuad</a> = std::array&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>, 4&gt;</td></tr>
+<tr class="memdesc:abcb4d483afa162522e6ea9d7a2b379c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for a textured quad used by the renderer.  <br /></td></tr>
+<tr class="separator:abcb4d483afa162522e6ea9d7a2b379c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a292a32d1b2776cba7d9601bc53b95e91" id="r_a292a32d1b2776cba7d9601bc53b95e91"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a292a32d1b2776cba7d9601bc53b95e91">TexturedTriangle</a> = std::array&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>, 3&gt;</td></tr>
+<tr class="memdesc:a292a32d1b2776cba7d9601bc53b95e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for a textured triangle used by the renderer.  <br /></td></tr>
+<tr class="separator:a292a32d1b2776cba7d9601bc53b95e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac77775e6fa11bf5fadde76a167390341" id="r_ac77775e6fa11bf5fadde76a167390341"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac77775e6fa11bf5fadde76a167390341">TexturedVertexFan</a> = std::vector&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>&gt;</td></tr>
+<tr class="memdesc:ac77775e6fa11bf5fadde76a167390341"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for a textured vertex fan used by the renderer.  <br /></td></tr>
+<tr class="separator:ac77775e6fa11bf5fadde76a167390341"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08cc0b709b4bbc3eba30d161e4ed635a" id="r_a08cc0b709b4bbc3eba30d161e4ed635a"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> = std::pair&lt;const tr::Texture2D&amp;, const tr::Sampler&amp;&gt;</td></tr>
 <tr class="memdesc:a08cc0b709b4bbc3eba30d161e4ed635a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The combination of texture and sampler used when drawing an object.  <br /></td></tr>
 <tr class="separator:a08cc0b709b4bbc3eba30d161e4ed635a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -121,6 +130,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a67a59e318f00087b9c11ca2d88a59c5f" id="r_a67a59e318f00087b9c11ca2d88a59c5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67a59e318f00087b9c11ca2d88a59c5f">addTexturedPolygonFan</a> (int priority, std::vector&lt; <a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a> &gt; vertices, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
 <tr class="memdesc:a67a59e318f00087b9c11ca2d88a59c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured polygon fan to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a67a59e318f00087b9c11ca2d88a59c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa04ecdbba292f586c2b0e9dd4bf877b2" id="r_aa04ecdbba292f586c2b0e9dd4bf877b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa04ecdbba292f586c2b0e9dd4bf877b2">addTexturedQuad</a> (int priority, <a class="el" href="#abcb4d483afa162522e6ea9d7a2b379c1">TexturedQuad</a> quad, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
+<tr class="memdesc:aa04ecdbba292f586c2b0e9dd4bf877b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a textured quad to the list of objects to draw in the next draw call.  <br /></td></tr>
+<tr class="separator:aa04ecdbba292f586c2b0e9dd4bf877b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72f690cbf0b8bcba24bdb7ca50538644" id="r_a72f690cbf0b8bcba24bdb7ca50538644"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72f690cbf0b8bcba24bdb7ca50538644">addTexturedRect</a> (int priority, const tr::RectF2 &amp;rect, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture, const tr::RectF2 &amp;uv, tr::RGBA8 tint)</td></tr>
 <tr class="memdesc:a72f690cbf0b8bcba24bdb7ca50538644"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a textured rect to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a72f690cbf0b8bcba24bdb7ca50538644"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,6 +145,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:aeaea73a5e25184ebf5d7368777da8990" id="r_aeaea73a5e25184ebf5d7368777da8990"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaea73a5e25184ebf5d7368777da8990">addTexturedRotatedRectangle</a> (int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture, std::array&lt; glm::vec2, 4 &gt; uvs, std::array&lt; tr::RGBA8, 4 &gt; tints)</td></tr>
 <tr class="memdesc:aeaea73a5e25184ebf5d7368777da8990"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:aeaea73a5e25184ebf5d7368777da8990"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2f6a63894e1051c0e70bcfd1c8c79cb" id="r_af2f6a63894e1051c0e70bcfd1c8c79cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af2f6a63894e1051c0e70bcfd1c8c79cb">addTexturedTriangle</a> (int priority, <a class="el" href="#a292a32d1b2776cba7d9601bc53b95e91">TexturedTriangle</a> triangle, <a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a> texture)</td></tr>
+<tr class="memdesc:af2f6a63894e1051c0e70bcfd1c8c79cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds a textured triangle to the list of objects to draw in the next draw call.  <br /></td></tr>
+<tr class="separator:af2f6a63894e1051c0e70bcfd1c8c79cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a053e2c91fd6a63cffc664b7643fdb303" id="r_a053e2c91fd6a63cffc664b7643fdb303"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a053e2c91fd6a63cffc664b7643fdb303">addUntexturedCircle</a> (int priority, const tr::CircleF &amp;circle, tr::RGBA8 color)</td></tr>
 <tr class="memdesc:a053e2c91fd6a63cffc664b7643fdb303"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured circle to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a053e2c91fd6a63cffc664b7643fdb303"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -142,6 +157,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a15d100e6211aa5aadf593f7e602f371a" id="r_a15d100e6211aa5aadf593f7e602f371a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15d100e6211aa5aadf593f7e602f371a">addUntexturedPolygonFan</a> (int priority, std::span&lt; tr::ClrVtx2 &gt; vertices)</td></tr>
 <tr class="memdesc:a15d100e6211aa5aadf593f7e602f371a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured polygon fan to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a15d100e6211aa5aadf593f7e602f371a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a36d42e9dabf82ab5a90e056e15137b72" id="r_a36d42e9dabf82ab5a90e056e15137b72"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a36d42e9dabf82ab5a90e056e15137b72">addUntexturedQuad</a> (int priority, std::span&lt; tr::ClrVtx2, 4 &gt; quad)</td></tr>
+<tr class="memdesc:a36d42e9dabf82ab5a90e056e15137b72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured quad to the list of objects to draw in the next draw call.  <br /></td></tr>
+<tr class="separator:a36d42e9dabf82ab5a90e056e15137b72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1ff19265ab404720fc2656dfeb683b2" id="r_ae1ff19265ab404720fc2656dfeb683b2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1ff19265ab404720fc2656dfeb683b2">addUntexturedRect</a> (int priority, const tr::RectF2 &amp;rect, std::array&lt; tr::RGBA8, 4 &gt; colors)</td></tr>
 <tr class="memdesc:ae1ff19265ab404720fc2656dfeb683b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured rect to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:ae1ff19265ab404720fc2656dfeb683b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -154,6 +172,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a291dc97286bee6d8ff1e8f963d0f9421" id="r_a291dc97286bee6d8ff1e8f963d0f9421"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a291dc97286bee6d8ff1e8f963d0f9421">addUntexturedRotatedRectangle</a> (int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size, tr::AngleF rotation, tr::RGBA8 color)</td></tr>
 <tr class="memdesc:a291dc97286bee6d8ff1e8f963d0f9421"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.  <br /></td></tr>
 <tr class="separator:a291dc97286bee6d8ff1e8f963d0f9421"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae596ae4707af29a6fd741a89c3ff7092" id="r_ae596ae4707af29a6fd741a89c3ff7092"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae596ae4707af29a6fd741a89c3ff7092">addUntexturedTriangle</a> (int priority, std::span&lt; tr::ClrVtx2, 3 &gt; triangle)</td></tr>
+<tr class="memdesc:ae596ae4707af29a6fd741a89c3ff7092"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds an untextured triangle to the list of objects to draw in the next draw call.  <br /></td></tr>
+<tr class="separator:ae596ae4707af29a6fd741a89c3ff7092"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7a9af46390b4fc535e9e080c762f96dc" id="r_a7a9af46390b4fc535e9e080c762f96dc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7a9af46390b4fc535e9e080c762f96dc">draw</a> (tr::BasicFramebuffer &amp;target=tr::window().backbuffer())</td></tr>
 <tr class="memdesc:a7a9af46390b4fc535e9e080c762f96dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all added objects to a target.  <br /></td></tr>
 <tr class="separator:a7a9af46390b4fc535e9e080c762f96dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -183,6 +204,54 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><p>General-purpose batched 2D renderer. </p>
 <p>Only one instance of the 2D renderer is allowed to exist at a time. </p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="abcb4d483afa162522e6ea9d7a2b379c1" name="abcb4d483afa162522e6ea9d7a2b379c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcb4d483afa162522e6ea9d7a2b379c1">&#9670;&#160;</a></span>TexturedQuad</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#abcb4d483afa162522e6ea9d7a2b379c1">tre::Renderer2D::TexturedQuad</a> = std::array&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>, 4&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shorthand for a textured quad used by the renderer. </p>
+
+</div>
+</div>
+<a id="a292a32d1b2776cba7d9601bc53b95e91" name="a292a32d1b2776cba7d9601bc53b95e91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a292a32d1b2776cba7d9601bc53b95e91">&#9670;&#160;</a></span>TexturedTriangle</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a292a32d1b2776cba7d9601bc53b95e91">tre::Renderer2D::TexturedTriangle</a> = std::array&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>, 3&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shorthand for a textured triangle used by the renderer. </p>
+
+</div>
+</div>
+<a id="ac77775e6fa11bf5fadde76a167390341" name="ac77775e6fa11bf5fadde76a167390341"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac77775e6fa11bf5fadde76a167390341">&#9670;&#160;</a></span>TexturedVertexFan</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#ac77775e6fa11bf5fadde76a167390341">tre::Renderer2D::TexturedVertexFan</a> = std::vector&lt;<a class="el" href="#a20655d6147cdc554afa52bf4f9e9cedf">Vertex</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Shorthand for a textured vertex fan used by the renderer. </p>
+
+</div>
+</div>
 <a id="a08cc0b709b4bbc3eba30d161e4ed635a" name="a08cc0b709b4bbc3eba30d161e4ed635a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08cc0b709b4bbc3eba30d161e4ed635a">&#9670;&#160;</a></span>TextureRef</h2>
 
@@ -298,6 +367,48 @@ Static Public Attributes</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the polygon fan. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aa04ecdbba292f586c2b0e9dd4bf877b2" name="aa04ecdbba292f586c2b0e9dd4bf877b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa04ecdbba292f586c2b0e9dd4bf877b2">&#9670;&#160;</a></span>addTexturedQuad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::addTexturedQuad </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#abcb4d483afa162522e6ea9d7a2b379c1">TexturedQuad</a></td>          <td class="paramname"><span class="paramname"><em>quad</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a></td>          <td class="paramname"><span class="paramname"><em>texture</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a textured quad to the list of objects to draw in the next draw call. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">quad</td><td>The quad vertices. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the quad. </td></tr>
   </table>
   </dd>
 </dl>
@@ -556,6 +667,48 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
+<a id="af2f6a63894e1051c0e70bcfd1c8c79cb" name="af2f6a63894e1051c0e70bcfd1c8c79cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2f6a63894e1051c0e70bcfd1c8c79cb">&#9670;&#160;</a></span>addTexturedTriangle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::addTexturedTriangle </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a292a32d1b2776cba7d9601bc53b95e91">TexturedTriangle</a></td>          <td class="paramname"><span class="paramname"><em>triangle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#a08cc0b709b4bbc3eba30d161e4ed635a">TextureRef</a></td>          <td class="paramname"><span class="paramname"><em>texture</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds a textured triangle to the list of objects to draw in the next draw call. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">triangle</td><td>The triangle vertices. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">texture</td><td>The texture and sampler used for the triangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="a053e2c91fd6a63cffc664b7643fdb303" name="a053e2c91fd6a63cffc664b7643fdb303"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a053e2c91fd6a63cffc664b7643fdb303">&#9670;&#160;</a></span>addUntexturedCircle()</h2>
 
@@ -591,7 +744,7 @@ Static Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">circle</td><td>The circle to draw. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the circle. </td></tr>
   </table>
   </dd>
 </dl>
@@ -645,7 +798,7 @@ Static Public Attributes</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">circle</td><td>The polygon circle. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vertexCount</td><td>The number of vertices in the polygon. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the polygon. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the polygon. </td></tr>
   </table>
   </dd>
 </dl>
@@ -682,6 +835,42 @@ Static Public Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">vertices</td><td>The vertices of the polygon fan. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a36d42e9dabf82ab5a90e056e15137b72" name="a36d42e9dabf82ab5a90e056e15137b72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36d42e9dabf82ab5a90e056e15137b72">&#9670;&#160;</a></span>addUntexturedQuad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::addUntexturedQuad </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; tr::ClrVtx2, 4 &gt;</td>          <td class="paramname"><span class="paramname"><em>quad</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds an untextured quad to the list of objects to draw in the next draw call. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">quad</td><td>The quad vertices. </td></tr>
   </table>
   </dd>
 </dl>
@@ -886,6 +1075,42 @@ Static Public Attributes</h2></td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">size</td><td>The size of the rectangle. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">rotation</td><td>The rotation of the rectangle. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">color</td><td>The color of the rectangle. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ae596ae4707af29a6fd741a89c3ff7092" name="ae596ae4707af29a6fd741a89c3ff7092"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae596ae4707af29a6fd741a89c3ff7092">&#9670;&#160;</a></span>addUntexturedTriangle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::Renderer2D::addUntexturedTriangle </td>
+          <td>(</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>priority</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; tr::ClrVtx2, 3 &gt;</td>          <td class="paramname"><span class="paramname"><em>triangle</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds an untextured triangle to the list of objects to draw in the next draw call. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">priority</td><td>The drawing priority of the object (higher is drawn on top). </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">triangle</td><td>The triangle vertices. </td></tr>
   </table>
   </dd>
 </dl>
