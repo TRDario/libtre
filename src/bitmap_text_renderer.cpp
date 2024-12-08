@@ -184,8 +184,8 @@ tre::BitmapTextRenderer::~BitmapTextRenderer() noexcept
 void tre::BitmapTextRenderer::addFont(std::string name, tr::SubBitmap texture, std::int32_t lineSkip, GlyphMap glyphs)
 {
 	if (!_fonts.contains(name)) {
-		_fonts.emplace(std::move(name), Font{lineSkip, std::move(glyphs)});
 		_atlas.add(name, texture);
+		_fonts.emplace(std::move(name), Font{lineSkip, std::move(glyphs)});
 	}
 }
 
