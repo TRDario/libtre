@@ -30,6 +30,21 @@ namespace tre {
 		using TextureRef = std::pair<const tr::Texture2D&, const tr::Sampler&>;
 
 		/**************************************************************************************************************
+		 * Shorthand for a textured triangle used by the renderer.
+		 **************************************************************************************************************/
+		using TexturedTriangle = std::array<Vertex, 3>;
+
+		/**************************************************************************************************************
+		 * Shorthand for a textured quad used by the renderer.
+		 **************************************************************************************************************/
+		using TexturedQuad = std::array<Vertex, 4>;
+
+		/**************************************************************************************************************
+		 * Shorthand for a textured vertex fan used by the renderer.
+		 **************************************************************************************************************/
+		using TexturedVertexFan = std::vector<Vertex>;
+
+		/**************************************************************************************************************
 		 * Creates the 2D renderer.
 		 *
 		 * Only one of these should be created at a time. This class can only be instantiated after an OpenGL context
@@ -185,6 +200,48 @@ namespace tre {
 										 std::array<tr::RGBA8, 4> tints);
 
 		/**************************************************************************************************************
+		 * Adds an untextured triangle to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] triangle The triangle vertices.
+		 **************************************************************************************************************/
+		void addUntexturedTriangle(int priority, std::span<tr::ClrVtx2, 3> triangle);
+
+		/**************************************************************************************************************
+		 * Adds a textured triangle to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] triangle The triangle vertices.
+		 * @param[in] texture The texture and sampler used for the triangle.
+		 **************************************************************************************************************/
+		void addTexturedTriangle(int priority, TexturedTriangle triangle, TextureRef texture);
+
+		/**************************************************************************************************************
+		 * Adds an untextured quad to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] quad The quad vertices.
+		 **************************************************************************************************************/
+		void addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> quad);
+
+		/**************************************************************************************************************
+		 * Adds a textured quad to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] quad The quad vertices.
+		 * @param[in] texture The texture and sampler used for the quad.
+		 **************************************************************************************************************/
+		void addTexturedQuad(int priority, TexturedQuad quad, TextureRef texture);
+
+		/**************************************************************************************************************
 		 * Adds an untextured regular polygon to the list of objects to draw in the next draw call.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
@@ -193,7 +250,7 @@ namespace tre {
 		 * @param[in] circle The polygon circle.
 		 * @param[in] vertexCount The number of vertices in the polygon.
 		 * @param[in] rotation The rotation of the polygon.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] color The color of the polygon.
 		 **************************************************************************************************************/
 		void addUntexturedPolygon(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
 								  tr::RGBA8 color);
@@ -205,7 +262,7 @@ namespace tre {
 		 *
 		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
 		 * @param[in] circle The circle to draw.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] color The color of the circle.
 		 **************************************************************************************************************/
 		void addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color);
 
@@ -262,11 +319,8 @@ namespace tre {
 			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
 		};
 
-		using Triangle  = std::array<Vertex, 3>;
-		using Rectangle = std::array<Vertex, 4>;
-		using VertexFan = std::vector<Vertex>;
 		using RawData   = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
-		using Primitive = std::variant<Triangle, Rectangle, VertexFan, RawData>;
+		using Primitive = std::variant<TexturedTriangle, TexturedQuad, TexturedVertexFan, RawData>;
 		using Priority  = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
 		tr::OwningShaderPipeline   _shaderPipeline;
