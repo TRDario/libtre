@@ -3,6 +3,7 @@
 #include "../include/tre/sampler.hpp"
 #include <numeric>
 
+using namespace tr::angle_literals;
 using namespace tr::matrix_operators;
 
 namespace tre {
@@ -219,32 +220,40 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 									   Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
 									   tr::AngleF rotation)
 {
-	const auto&      glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
+	const auto& glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
+	if (glyph.width == 0 || glyph.height == 0) {
+		return;
+	}
+
 	const auto       size{glm::vec2(glyph.width, glyph.height) * scale};
 	const tr::RectF2 uv{fontUV.tl + glm::vec2(glyph.x, glyph.y) / glm::vec2(_atlas.texture().size()),
 						glm::vec2(glyph.width, glyph.height) / glm::vec2(_atlas.texture().size())};
 	const auto       offset{glm::vec2(glyph.xOffset, glyph.yOffset) * scale};
 
+	Renderer2D::TexturedQuad quad;
+	tr::fillRectVertices((quad | tr::positions).begin(), pos - posAnchor + offset, size);
+	tr::fillRectVertices((quad | tr::uvs).begin(), uv.tl, uv.size);
+	if (rotation == 0_degf) {
+		std::ranges::fill(quad | tr::colors, tint);
+	}
+	else {
+		if (pos != _cachedRotationTransform.pos || rotation != _cachedRotationTransform.rotation) {
+			_cachedRotationTransform.pos       = pos;
+			_cachedRotationTransform.rotation  = rotation;
+			_cachedRotationTransform.transform = tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation);
+		}
+		for (auto& vertex : quad) {
+			vertex.pos   = _cachedRotationTransform.transform * vertex.pos;
+			vertex.color = tint;
+		}
+	}
 	if (style == Style::ITALIC) {
 		constexpr double TAN_12_5_DEG{0.22169466264};
 		const auto       skewOffset{size.y * TAN_12_5_DEG};
-
-		std::vector<Renderer2D::Vertex> data(4);
-		const auto                      transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor + offset, size);
-		tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
-		for (int i = 0; i < 4; ++i) {
-			data[i].pos   = transform * data[i].pos;
-			data[i].color = tint;
-		}
-		data[0].pos.x += skewOffset;
-		data[3].pos.x += skewOffset;
-		renderer2D().addTexturedPolygonFan(priority, std::move(data), {_atlas.texture(), bilinearSampler()});
+		quad[0].pos.x += skewOffset;
+		quad[3].pos.x += skewOffset;
 	}
-	else {
-		renderer2D().addTexturedRotatedRectangle(priority, pos, posAnchor, size, rotation,
-												 {_atlas.texture(), bilinearSampler()}, uv, tint);
-	}
+	renderer2D().addTexturedQuad(priority, quad, {_atlas.texture(), bilinearSampler()});
 }
 
 void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, std::string_view font, Style style,
@@ -271,12 +280,12 @@ void tre::BitmapTextRenderer::addUnformatted(int priority, std::string_view text
 	for (auto& line : lines) {
 		auto xOffset{initialUnformattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
 		for (auto chr : tr::utf8Range(line)) {
-			auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(chr) ? chr : '\0')};
-			if (glyph.width != 0 && glyph.height != 0) {
-				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-						 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+			if (!fontIt->second.glyphs.contains(chr)) {
+				chr = '\0';
 			}
-			xOffset += glyph.advance;
+			addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+					 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+			xOffset += fontIt->second.glyphs.at(chr).advance;
 		}
 
 		yOffset += fontIt->second.lineSkip;
@@ -305,12 +314,10 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 				}
 				switch (*it) {
 				case '\\': {
-					auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains('\\') ? '\\' : '\0')};
-					if (glyph.width != 0 && glyph.height != 0) {
-						addGlyph(priority, '\\', fontIt->second, fontUV, style, scale, tint, textbox.pos,
-								 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
-					}
-					xOffset += glyph.advance;
+					auto chr{fontIt->second.glyphs.contains('\\') ? '\\' : '\0'};
+					addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+							 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+					xOffset += fontIt->second.glyphs.at(chr).advance;
 				} break;
 				case '!':
 					tint = {255, 255, 255, 255};
@@ -331,12 +338,10 @@ void tre::BitmapTextRenderer::addFormatted(int priority, std::string_view text, 
 				}
 			}
 			else {
-				auto& glyph{fontIt->second.glyphs.at(fontIt->second.glyphs.contains(*it) ? *it : '\0')};
-				if (glyph.width != 0 && glyph.height != 0) {
-					addGlyph(priority, *it, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-							 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
-				}
-				xOffset += glyph.advance;
+				auto chr{fontIt->second.glyphs.contains(*it) ? *it : '\0'};
+				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+						 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+				xOffset += fontIt->second.glyphs.at(chr).advance;
 			}
 		}
 	line_end:

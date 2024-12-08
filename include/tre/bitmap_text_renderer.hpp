@@ -176,9 +176,15 @@ namespace tre {
 			std::int32_t lineSkip;
 			GlyphMap     glyphs;
 		};
+		struct CachedRotationTransform {
+			glm::vec2  pos{};
+			tr::AngleF rotation{};
+			glm::mat4  transform{};
+		};
 
 		DynAtlas2D              _atlas;
 		tr::StringHashMap<Font> _fonts;
+		CachedRotationTransform _cachedRotationTransform;
 
 		void addGlyph(int priority, std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV, Style style,
 					  glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation);
