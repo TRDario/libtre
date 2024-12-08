@@ -79,18 +79,19 @@ std::vector<std::string_view> tre::splitText(std::string_view text, const Bitmap
 	std::vector<std::string_view> lines;
 
 	for (auto it = text.begin(); it != text.end();) {
-		auto fit{formatted ? measureFormatted(text, font, scale, maxWidth)
-						   : measureUnformatted(text, font, scale, maxWidth)};
+		auto fit{formatted ? measureFormatted({it, text.end()}, font, scale, maxWidth)
+						   : measureUnformatted({it, text.end()}, font, scale, maxWidth)};
 		if (fit.end() == text.end()) {
 			lines.push_back(fit);
 			return lines;
 		}
 		else {
-			fit = {fit.begin(), std::next(fit.end())};
-			auto end{std::ranges::find_first_of(fit | std::views::reverse, " \t\n")};
-			if (end != fit.rend()) {
-				lines.push_back({it, end.base()});
-				it = std::next(end.base());
+			const auto whitespaceSearchRange{std::ranges::subrange{fit.begin(), std::next(fit.end())} |
+											 std::views::reverse};
+			const auto lastWhitespace{std::ranges::find_first_of(whitespaceSearchRange, " \t\n")};
+			if (lastWhitespace != whitespaceSearchRange.end()) {
+				lines.push_back({it, lastWhitespace.base()});
+				it = std::next(lastWhitespace.base());
 			}
 			else {
 				lines.push_back(fit);
@@ -195,7 +196,7 @@ void tre::BitmapTextRenderer::loadFont(std::string name, const std::filesystem::
 	auto           decodingResult{tref::decode(file)};
 	tr::BitmapView image{decodingResult.bitmap.data(),
 						 {decodingResult.bitmap.width(), decodingResult.bitmap.height()},
-						 tr::BitmapFormat::RGBA_8888};
+						 tr::BitmapFormat::ARGB_8888};
 	addFont(name, image, decodingResult.lineSkip, std::move(decodingResult.glyphs));
 }
 
@@ -228,7 +229,7 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 		constexpr double TAN_12_5_DEG{0.22169466264};
 		const auto       skewOffset{size.y * TAN_12_5_DEG};
 
-		std::vector<Renderer2D::Vertex> data;
+		std::vector<Renderer2D::Vertex> data(4);
 		const auto                      transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
 		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor + offset, size);
 		tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
