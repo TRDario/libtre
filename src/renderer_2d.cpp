@@ -226,7 +226,7 @@ void tre::Renderer2D::addUntexturedTriangle(int priority, std::span<tr::ClrVtx2,
 
 void tre::Renderer2D::addTexturedTriangle(int priority, TexturedTriangle triangle, TextureRef texture)
 {
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedTriangle>, triangle);
+	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedTriangle>, triangle);
 }
 
 void tre::Renderer2D::addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> quad)
@@ -240,7 +240,7 @@ void tre::Renderer2D::addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> 
 
 void tre::Renderer2D::addTexturedQuad(int priority, TexturedQuad quad, TextureRef texture)
 {
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, quad);
+	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, quad);
 }
 
 void tre::Renderer2D::addUntexturedPolygon(int priority, const tr::CircleF& circle, int vertexCount,
