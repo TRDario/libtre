@@ -88,12 +88,16 @@ $(function(){ initResizable(false); });
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">tre Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Namespace containing all libtre functionality.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
@@ -102,6 +106,15 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtre_1_1AtlasBitmap.html">AtlasBitmap</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Atlas bitmap with named entries.  <a href="structtre_1_1AtlasBitmap.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtre_1_1AudioManager.html">AudioManager</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio system manager with support for streaming and gradual transitions.  <a href="classtre_1_1AudioManager.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtre_1_1AudioSource.html">AudioSource</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Audio source.  <a href="classtre_1_1AudioSource.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtre_1_1AudioStream.html">AudioStream</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Helper class for reading and managing audio data streaming.  <a href="classtre_1_1AudioStream.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtre_1_1BitmapTextRenderer.html">BitmapTextRenderer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Renderer for text using glyphs from a bitmap.  <a href="classtre_1_1BitmapTextRenderer.html#details">More...</a><br /></td></tr>
@@ -137,6 +150,12 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Text outline settings.  <a href="structtre_1_1TextOutline.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concepttre_1_1AudioStreamOutputIterator.html">AudioStreamOutputIterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept denoting an iterator suitable for AudioStream::read. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
 <tr class="memitem:gac40fb74cd776e32fe1dd9687076f15ee" id="r_gac40fb74cd776e32fe1dd9687076f15ee"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__text.html#gac40fb74cd776e32fe1dd9687076f15ee">Align</a> : std::uint8_t { <br />
@@ -170,6 +189,12 @@ Enumerations</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ga8152bc1fb266fdd6bb7c593b3a19523d" id="r_ga8152bc1fb266fdd6bb7c593b3a19523d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classtre_1_1AudioManager.html">AudioManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__audio.html#ga8152bc1fb266fdd6bb7c593b3a19523d">audioManager</a> () noexcept</td></tr>
+<tr class="memdesc:ga8152bc1fb266fdd6bb7c593b3a19523d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets a reference to the active audio manager.  <br /></td></tr>
+<tr class="separator:ga8152bc1fb266fdd6bb7c593b3a19523d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaaefd49b5cfa32db920193ddbc4281e77" id="r_gaaefd49b5cfa32db920193ddbc4281e77"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__audio.html#gaaefd49b5cfa32db920193ddbc4281e77">audioManagerActive</a> () noexcept</td></tr>
+<tr class="memdesc:gaaefd49b5cfa32db920193ddbc4281e77"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets whether the audio manager is active.  <br /></td></tr>
+<tr class="separator:gaaefd49b5cfa32db920193ddbc4281e77"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab67312ba32d8551b3700a0249afaf897" id="r_gab67312ba32d8551b3700a0249afaf897"><td class="memItemLeft" align="right" valign="top">const tr::Sampler &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sampler__presets.html#gab67312ba32d8551b3700a0249afaf897">bilinearSampler</a> () noexcept</td></tr>
 <tr class="memdesc:gab67312ba32d8551b3700a0249afaf897"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gives access to a bilinear sampler.  <br /></td></tr>
 <tr class="separator:gab67312ba32d8551b3700a0249afaf897"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -237,7 +262,9 @@ Variables</h2></td></tr>
 <tr class="memdesc:gabd73f8bf412d03e9687ba67907b9a4ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Special ID indicating that rendering without a specific renderer was being done.  <br /></td></tr>
 <tr class="separator:gabd73f8bf412d03e9687ba67907b9a4ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-</div><!-- contents -->
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Namespace containing all libtre functionality. </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0

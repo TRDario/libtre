@@ -21,5 +21,11 @@ var searchData=
   ['align_18',['Align',['../classtre_1_1DebugTextRenderer.html#afa3e64e2edce696275bc804deadd1608',1,'tre::DebugTextRenderer::Align'],['../group__text.html#gac40fb74cd776e32fe1dd9687076f15ee',1,'tre::Align']]],
   ['atlas2d_19',['Atlas2D',['../classtre_1_1Atlas2D.html',1,'tre::Atlas2D'],['../classtre_1_1Atlas2D.html#a34bb260c1b42de743956c772e69042cb',1,'tre::Atlas2D::Atlas2D(AtlasBitmap atlasBitmap)'],['../classtre_1_1Atlas2D.html#a9592a0ce6929e9d0914dc6953565c78a',1,'tre::Atlas2D::Atlas2D(const tr::StringHashMap&lt; tr::Bitmap &gt; &amp;bitmaps)']]],
   ['atlasbitmap_20',['AtlasBitmap',['../structtre_1_1AtlasBitmap.html',1,'tre']]],
-  ['atlases_21',['Atlases',['../group__atlas.html',1,'']]]
+  ['atlases_21',['Atlases',['../group__atlas.html',1,'']]],
+  ['audio_22',['Audio',['../group__audio.html',1,'']]],
+  ['audiomanager_23',['AudioManager',['../classtre_1_1AudioManager.html',1,'tre::AudioManager'],['../classtre_1_1AudioManager.html#a62e3bb9bbaa1f9c75c632c5c0912cd26',1,'tre::AudioManager::AudioManager()']]],
+  ['audiomanager_24',['audioManager',['../group__audio.html#ga8152bc1fb266fdd6bb7c593b3a19523d',1,'tre']]],
+  ['audiomanageractive_25',['audioManagerActive',['../group__audio.html#gaaefd49b5cfa32db920193ddbc4281e77',1,'tre']]],
+  ['audiosource_26',['AudioSource',['../classtre_1_1AudioSource.html',1,'tre']]],
+  ['audiostream_27',['AudioStream',['../classtre_1_1AudioStream.html',1,'tre::AudioStream'],['../classtre_1_1AudioStream.html#abeb76f92680fb0597c4b9f8d7591c379',1,'tre::AudioStream::AudioStream(const std::filesystem::path &amp;path)'],['../classtre_1_1AudioStream.html#abab2fd3b8883eb729d6834908dc1df09',1,'tre::AudioStream::AudioStream(std::span&lt; const std::int16_t &gt; view, int channels, int sampleRate) noexcept']]]
 ];

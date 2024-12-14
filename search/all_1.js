@@ -10,5 +10,6 @@ var searchData=
   ['bottom_5fcenter_7',['BOTTOM_CENTER',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eea3480601794fd3b5473219ae158219fd4',1,'tre']]],
   ['bottom_5fleft_8',['BOTTOM_LEFT',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eea8d81ac82421d1b03da58fccb9174892e',1,'tre']]],
   ['bottom_5fright_9',['BOTTOM_RIGHT',['../group__text.html#ggac40fb74cd776e32fe1dd9687076f15eea341b72aaab1308a3e6667af1e52f5def',1,'tre']]],
-  ['buildatlasbitmap_10',['buildAtlasBitmap',['../group__atlas.html#ga0322a0d88432a74d37d7afb1ffdfa924',1,'tre']]]
+  ['buffer_10',['Buffer',['../structtre_1_1AudioSource_1_1Stream_1_1Buffer.html',1,'tre::AudioSource::Stream']]],
+  ['buildatlasbitmap_11',['buildAtlasBitmap',['../group__atlas.html#ga0322a0d88432a74d37d7afb1ffdfa924',1,'tre']]]
 ];
