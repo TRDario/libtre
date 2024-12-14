@@ -64,11 +64,11 @@ if(TRE_ENABLE_INSTALL)
     )
 
     write_basic_package_version_file(
-        "${PROJECT_BINARY_DIR}/trConfigVersion.cmake"
+        "${PROJECT_BINARY_DIR}/treConfigVersion.cmake"
         COMPATIBILITY SameMinorVersion
     )
     install(
-        FILES "${PROJECT_BINARY_DIR}/trConfigVersion.cmake"
+        FILES "${PROJECT_BINARY_DIR}/treConfigVersion.cmake"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/tre"
     )
 endif()
