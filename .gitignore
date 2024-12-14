@@ -399,10 +399,6 @@ FodyWeavers.xsd
 
 # Build directory
 build/*
-!build/add_embedded_file.cmake
-!build/add_shader.cmake
-!build/tre-config.cmake
-!build/tre.pc.in
 
 # Doxygen files except Doxyfile
 doxygen/*

@@ -1,4 +1,4 @@
-include(build/add_embedded_file.cmake)
+include(cmake/add_embedded_file.cmake)
 
 find_program(GLSLANG glslang)
 
