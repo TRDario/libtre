@@ -225,6 +225,16 @@ namespace tre {
 		void setPitch(float pitch) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the pitch (and speed) of the source over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] pitch The pitch multiplier of the source, clamped to [0.5, 2.0].
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setPitch(float pitch, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the gain of the source.
 		 *
 		 * The gain of the source is multiplied by the gain factors of the audio classes it belongs to.
@@ -241,6 +251,16 @@ namespace tre {
 		void setGain(float gain) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the gain of the source over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] gain The gain multiplier of the source, clamped to a non-negative value.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setGain(float gain, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the distance where the source will no longer be attenuated any further.
 		 *
 		 * @return The maximum distance of the source.
@@ -253,6 +273,16 @@ namespace tre {
 		 * @param[in] maxDistance The maximum distance of the source, clamped to a non-negative value.
 		 **************************************************************************************************************/
 		void setMaxDistance(float maxDistance) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the distance where the source will no longer be attenuated any further over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] maxDistance The maximum distance of the source, clamped to a non-negative value.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setMaxDistance(float maxDistance, tr::SecondsF time);
 
 		/**************************************************************************************************************
 		 * Gets the distance rolloff factor of the source.
@@ -269,6 +299,16 @@ namespace tre {
 		void setRolloff(float rolloff) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the distance rolloff factor of the source over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] rolloff The distance rolloff factor of the source, clamped to a non-negative value.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setRolloff(float rolloff, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the reference distance of the source, where there is no attenuation.
 		 *
 		 * @return Gets the reference distance of the source, where there is no attenuation.
@@ -281,6 +321,16 @@ namespace tre {
 		 * @param[in] referenceDistance The new reference distance of the source, clamped to a non-negative value.
 		 **************************************************************************************************************/
 		void setReferenceDistance(float referenceDistance) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the reference distance of the source, where there is no attenuation over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] referenceDistance The new reference distance of the source, clamped to a non-negative value.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setReferenceDistance(float referenceDistance, tr::SecondsF time);
 
 		/**************************************************************************************************************
 		 * Gets the gain multiplier applied when the listener is outside the source's outer cone angle.
@@ -297,6 +347,16 @@ namespace tre {
 		void setOuterConeGain(float outGain) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the gain multiplier applied when the listener is outside the source's outer cone angle over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] outGain The new gain multiplier, clamped to [0.0, 1.0].
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setOuterConeGain(float outGain, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the width of the inner cone of the source (where no direction attenuation is done).
 		 *
 		 * @return The width of the inner cone of the source.
@@ -309,6 +369,16 @@ namespace tre {
 		 * @param[in] inConeW The new width, clamped to [0.0, outerConeWidth()].
 		 **************************************************************************************************************/
 		void setInnerConeWidth(tr::AngleF inConeW) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the width of the inner cone of the source (where no direction attenuation is done) over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] inConeW The new width, clamped to [0.0, outerConeWidth()].
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setInnerConeWidth(tr::AngleF inConeW, tr::SecondsF time);
 
 		/**************************************************************************************************************
 		 * Gets the width of the outer cone of the source (where direction attenuation is done).
@@ -325,6 +395,16 @@ namespace tre {
 		void setOuterConeWidth(tr::AngleF outConeW) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the width of the outer cone of the source (where direction attenuation is done) over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] outConeW The new width, clamped to [innerConeWidth(), 360 degrees].
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setOuterConeWidth(tr::AngleF outConeW, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the position of the source.
 		 *
 		 * @return The position vector of the audio source.
@@ -337,6 +417,16 @@ namespace tre {
 		 * @param[in] position The position of the source.
 		 **************************************************************************************************************/
 		void setPosition(const glm::vec3& position) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the position of the source over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] position The position of the source.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setPosition(const glm::vec3& position, tr::SecondsF time);
 
 		/**************************************************************************************************************
 		 * Gets the velocity of the source.
@@ -353,6 +443,16 @@ namespace tre {
 		void setVelocity(const glm::vec3& velocity) noexcept;
 
 		/**************************************************************************************************************
+		 * Sets the velocity of the source over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] velocity The velocity of the source.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setVelocity(const glm::vec3& velocity, tr::SecondsF time);
+
+		/**************************************************************************************************************
 		 * Gets the direction of the source cone.
 		 *
 		 * @return The direction vector of the audio source.
@@ -365,6 +465,16 @@ namespace tre {
 		 * @param[in] direction The direction of the source cone. Can also be OMNIDRECTIONAL.
 		 **************************************************************************************************************/
 		void setDirection(const glm::vec3& direction) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the direction of the source cone over time.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] direction The direction of the source cone. Can also be OMNIDRECTIONAL.
+		 * @param[in] time The transition time.
+		 **************************************************************************************************************/
+		void setDirection(const glm::vec3& direction, tr::SecondsF time);
 
 		/**************************************************************************************************************
 		 * Gets the origin of the source's position.
@@ -533,13 +643,43 @@ namespace tre {
 		std::shared_ptr<AudioSource> newSource();
 
 	  private:
+		enum class CommandName {
+			PITCH,
+			GAIN,
+			MAX_DISTANCE,
+			ROLLOFF,
+			REFERENCE_DISTANCE,
+			OUTER_CONE_GAIN,
+			INNER_CONE_WIDTH,
+			OUTER_CONE_WIDTH,
+			POSITION,
+			VELOCITY,
+			DIRECTION
+		};
+		union CommandParameter {
+			float     num;
+			glm::vec3 vec;
+		};
+		struct Command {
+			AudioSource&                                  source;
+			CommandName                                   name;
+			std::pair<CommandParameter, CommandParameter> params;
+			tr::TimePoint                                 startTime;
+			tr::TimePoint                                 endTime;
+		};
+
 		std::list<std::shared_ptr<AudioSource>> _sources;
+		std::list<Command>                      _commands;
 		std::array<float, 32>                   _classGains;
 		std::thread                             _thread;
 		bool                                    _threadActive;
 		std::mutex                              _mutex;
 
-		void thread() noexcept;
+		void                    thread() noexcept;
+		static void             executeCommand(AudioSource& source, CommandName command,
+											   const CommandParameter& parameter) noexcept;
+		static CommandParameter interpolate(CommandName command, const CommandParameter& start,
+											const CommandParameter& end, float t) noexcept;
 
 		friend class AudioSource;
 	};

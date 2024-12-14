@@ -7,7 +7,7 @@ using namespace std::chrono_literals;
 
 namespace tre {
 	AudioManager* _audioManager{nullptr};
-}
+} // namespace tre
 
 tre::AudioStream::AudioStream(const std::filesystem::path& path)
 	: _looping{false}, _loopStart{0}
@@ -200,6 +200,16 @@ void tre::AudioSource::setPitch(float pitch) noexcept
 	return _source.setPitch(pitch);
 }
 
+void tre::AudioSource::setPitch(float pitch, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(
+		*this, AudioManager::CommandName::PITCH,
+		std::pair{AudioManager::CommandParameter{.num = this->pitch()}, AudioManager::CommandParameter{.num = pitch}},
+		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 float tre::AudioSource::gain() const noexcept
 {
 	return _gain;
@@ -214,8 +224,18 @@ void tre::AudioSource::setGain(float gain) noexcept
 		}
 	}
 
-	_gain = std::clamp(gain, 0.0f, 1.0f);
+	_gain = gain;
 	_source.setGain(_gain * multiplier);
+}
+
+void tre::AudioSource::setGain(float gain, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(
+		*this, AudioManager::CommandName::GAIN,
+		std::pair{AudioManager::CommandParameter{.num = this->gain()}, AudioManager::CommandParameter{.num = gain}},
+		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 float tre::AudioSource::maxDistance() const noexcept
@@ -228,6 +248,16 @@ void tre::AudioSource::setMaxDistance(float maxDistance) noexcept
 	_source.setMaxDistance(maxDistance);
 }
 
+void tre::AudioSource::setMaxDistance(float maxDistance, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::MAX_DISTANCE,
+										  std::pair{AudioManager::CommandParameter{.num = this->maxDistance()},
+													AudioManager::CommandParameter{.num = maxDistance}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 float tre::AudioSource::rolloff() const noexcept
 {
 	return _source.rolloff();
@@ -236,6 +266,16 @@ float tre::AudioSource::rolloff() const noexcept
 void tre::AudioSource::setRolloff(float rolloff) noexcept
 {
 	_source.setRolloff(rolloff);
+}
+
+void tre::AudioSource::setRolloff(float rolloff, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::ROLLOFF,
+										  std::pair{AudioManager::CommandParameter{.num = this->rolloff()},
+													AudioManager::CommandParameter{.num = rolloff}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 float tre::AudioSource::referenceDistance() const noexcept
@@ -248,6 +288,16 @@ void tre::AudioSource::setReferenceDistance(float referenceDistance) noexcept
 	_source.setReferenceDistance(referenceDistance);
 }
 
+void tre::AudioSource::setReferenceDistance(float referenceDistance, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::REFERENCE_DISTANCE,
+										  std::pair{AudioManager::CommandParameter{.num = this->referenceDistance()},
+													AudioManager::CommandParameter{.num = referenceDistance}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 float tre::AudioSource::outerConeGain() const noexcept
 {
 	return _source.outerConeGain();
@@ -256,6 +306,16 @@ float tre::AudioSource::outerConeGain() const noexcept
 void tre::AudioSource::setOuterConeGain(float outGain) noexcept
 {
 	_source.setOuterConeGain(outGain);
+}
+
+void tre::AudioSource::setOuterConeGain(float outGain, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::OUTER_CONE_GAIN,
+										  std::pair{AudioManager::CommandParameter{.num = this->outerConeGain()},
+													AudioManager::CommandParameter{.num = outGain}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 tr::AngleF tre::AudioSource::innerConeWidth() const noexcept
@@ -268,6 +328,17 @@ void tre::AudioSource::setInnerConeWidth(tr::AngleF inConeW) noexcept
 	_source.setInnerConeWidth(inConeW);
 }
 
+void tre::AudioSource::setInnerConeWidth(tr::AngleF inConeW, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(
+		*this, AudioManager::CommandName::INNER_CONE_WIDTH,
+		std::pair{AudioManager::CommandParameter{.num = this->innerConeWidth().degs()},
+				  AudioManager::CommandParameter{.num = inConeW.degs()}},
+		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 tr::AngleF tre::AudioSource::outerConeWidth() const noexcept
 {
 	return _source.outerConeWidth();
@@ -276,6 +347,17 @@ tr::AngleF tre::AudioSource::outerConeWidth() const noexcept
 void tre::AudioSource::setOuterConeWidth(tr::AngleF outConeW) noexcept
 {
 	_source.setOuterConeWidth(outConeW);
+}
+
+void tre::AudioSource::setOuterConeWidth(tr::AngleF outConeW, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(
+		*this, AudioManager::CommandName::OUTER_CONE_WIDTH,
+		std::pair{AudioManager::CommandParameter{.num = this->outerConeWidth().degs()},
+				  AudioManager::CommandParameter{.num = outConeW.degs()}},
+		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 glm::vec3 tre::AudioSource::position() const noexcept
@@ -288,6 +370,16 @@ void tre::AudioSource::setPosition(const glm::vec3& position) noexcept
 	_source.setPosition(position);
 }
 
+void tre::AudioSource::setPosition(const glm::vec3& position, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::POSITION,
+										  std::pair{AudioManager::CommandParameter{.vec = this->position()},
+													AudioManager::CommandParameter{.vec = position}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 glm::vec3 tre::AudioSource::velocity() const noexcept
 {
 	return _source.velocity();
@@ -298,6 +390,16 @@ void tre::AudioSource::setVelocity(const glm::vec3& velocity) noexcept
 	_source.setVelocity(velocity);
 }
 
+void tre::AudioSource::setVelocity(const glm::vec3& velocity, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::VELOCITY,
+										  std::pair{AudioManager::CommandParameter{.vec = this->velocity()},
+													AudioManager::CommandParameter{.vec = velocity}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+}
+
 glm::vec3 tre::AudioSource::direction() const noexcept
 {
 	return _source.direction();
@@ -306,6 +408,16 @@ glm::vec3 tre::AudioSource::direction() const noexcept
 void tre::AudioSource::setDirection(const glm::vec3& direction) noexcept
 {
 	_source.setDirection(direction);
+}
+
+void tre::AudioSource::setDirection(const glm::vec3& direction, tr::SecondsF time)
+{
+	std::lock_guard lock{audioManager()._mutex};
+	const auto      now{tr::Clock::now()};
+	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::DIRECTION,
+										  std::pair{AudioManager::CommandParameter{.vec = this->direction()},
+													AudioManager::CommandParameter{.vec = direction}},
+										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 tr::AudioOrigin tre::AudioSource::origin() const noexcept
@@ -533,11 +645,84 @@ void tre::AudioManager::thread() noexcept
 					}
 				}
 			}
+
+			for (auto it = _commands.begin(); it != _commands.end();) {
+				const auto& com{*it};
+				const auto  now{tr::Clock::now()};
+
+				if (com.endTime <= now) {
+					executeCommand(com.source, com.name, com.params.second);
+					it = _commands.erase(it);
+				}
+				else {
+					const auto t{std::chrono::duration_cast<tr::SecondsF>(now - com.startTime) /
+								 std::chrono::duration_cast<tr::SecondsF>(com.endTime - com.startTime)};
+					executeCommand(com.source, com.name, interpolate(com.name, com.params.first, com.params.second, t));
+					++it;
+				}
+			}
 		}
 		catch (...) {
+			// Gracefully exit.
 		}
 		std::this_thread::sleep_for(10ms);
 	}
+}
+
+void tre::AudioManager::executeCommand(AudioSource& source, CommandName command, const CommandParameter& param) noexcept
+{
+	switch (command) {
+	case CommandName::PITCH:
+		source.setPitch(param.num);
+		break;
+	case CommandName::GAIN:
+		source.setGain(param.num);
+		break;
+	case CommandName::MAX_DISTANCE:
+		source.setMaxDistance(param.num);
+		break;
+	case CommandName::ROLLOFF:
+		source.setRolloff(param.num);
+		break;
+	case CommandName::REFERENCE_DISTANCE:
+		source.setReferenceDistance(param.num);
+		break;
+	case CommandName::OUTER_CONE_GAIN:
+		source.setOuterConeGain(param.num);
+		break;
+	case CommandName::INNER_CONE_WIDTH:
+		source.setInnerConeWidth(tr::degs(param.num));
+		break;
+	case CommandName::OUTER_CONE_WIDTH:
+		source.setOuterConeWidth(tr::degs(param.num));
+		break;
+	case CommandName::POSITION:
+		source.setPosition(param.vec);
+		break;
+	case CommandName::VELOCITY:
+		source.setVelocity(param.vec);
+		break;
+	case CommandName::DIRECTION:
+		source.setDirection(param.vec);
+		break;
+	}
+}
+
+tre::AudioManager::CommandParameter tre::AudioManager::interpolate(CommandName command, const CommandParameter& start,
+																   const CommandParameter& end, float t) noexcept
+{
+	CommandParameter value;
+	switch (command) {
+	case CommandName::POSITION:
+	case CommandName::VELOCITY:
+	case CommandName::DIRECTION:
+		value.vec = start.vec + (end.vec - start.vec) * t;
+		break;
+	default:
+		value.num = start.num + (end.num - start.num) * t;
+		break;
+	}
+	return value;
 }
 
 bool tre::audioManagerActive() noexcept
