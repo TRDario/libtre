@@ -231,10 +231,8 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 	const auto       offset{glm::vec2(glyph.xOffset, glyph.yOffset) * scale};
 
 	Renderer2D::TexturedQuad quad;
-	tr::fillRectVertices((quad | tr::positions).begin(), pos - posAnchor + offset, size);
-	tr::fillRectVertices((quad | tr::uvs).begin(), uv.tl, uv.size);
 	if (rotation == 0_degf) {
-		std::ranges::fill(quad | tr::colors, tint);
+		tr::fillRectVertices((quad | tr::positions).begin(), pos - posAnchor + offset, size);
 	}
 	else {
 		if (pos != _cachedRotationTransform.pos || rotation != _cachedRotationTransform.rotation) {
@@ -242,10 +240,8 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 			_cachedRotationTransform.rotation  = rotation;
 			_cachedRotationTransform.transform = tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation);
 		}
-		for (auto& vertex : quad) {
-			vertex.pos   = _cachedRotationTransform.transform * vertex.pos;
-			vertex.color = tint;
-		}
+		tr::fillRectVertices((quad | tr::positions).begin(), pos - posAnchor + offset, size,
+							 _cachedRotationTransform.transform);
 	}
 	if (style == Style::ITALIC) {
 		constexpr double TAN_12_5_DEG{0.22169466264};
@@ -253,6 +249,12 @@ void tre::BitmapTextRenderer::addGlyph(int priority, std::uint32_t codepoint, co
 		quad[0].pos.x += skewOffset;
 		quad[3].pos.x += skewOffset;
 	}
+	tr::fillRectVertices((quad | tr::uvs).begin(), uv.tl, uv.size);
+	for (auto& vertex : quad) {
+		vertex.pos   = _cachedRotationTransform.transform * vertex.pos;
+		vertex.color = tint;
+	}
+
 	renderer2D().addTexturedQuad(priority, quad, {_atlas.texture(), bilinearSampler()});
 }
 

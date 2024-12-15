@@ -30,11 +30,6 @@ namespace tre {
 		using TextureRef = std::pair<const tr::Texture2D&, const tr::Sampler&>;
 
 		/**************************************************************************************************************
-		 * Shorthand for a textured triangle used by the renderer.
-		 **************************************************************************************************************/
-		using TexturedTriangle = std::array<Vertex, 3>;
-
-		/**************************************************************************************************************
 		 * Shorthand for a textured quad used by the renderer.
 		 **************************************************************************************************************/
 		using TexturedQuad = std::array<Vertex, 4>;
@@ -94,15 +89,16 @@ namespace tre {
 		void addUntexturedRect(int priority, const tr::RectF2& rect, tr::RGBA8 color);
 
 		/**************************************************************************************************************
-		 * Adds an untextured rect to the list of objects to draw in the next draw call.
+		 * Adds an untextured rect outline to the list of objects to draw in the next draw call.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
 		 * @param[in] rect The rectangle to draw.
-		 * @param[in] colors The colors of the rectangle, sampled counterclockwise starting from the top-left.
+		 * @param[in] thickness The thickness of the outline.
+		 * @param[in] color The color of the rectangle.
 		 **************************************************************************************************************/
-		void addUntexturedRect(int priority, const tr::RectF2& rect, std::array<tr::RGBA8, 4> colors);
+		void addRectOutline(int priority, const tr::RectF2& rect, float thickness, tr::RGBA8 color);
 
 		/**************************************************************************************************************
 		 * Adds a textured rect to the list of objects to draw in the next draw call.
@@ -117,21 +113,6 @@ namespace tre {
 		 **************************************************************************************************************/
 		void addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture, const tr::RectF2& uv,
 							 tr::RGBA8 tint);
-
-		/**************************************************************************************************************
-		 * Adds a textured rect to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] rect The rectangle to draw.
-		 * @param[in] texture The texture and sampler used for the rectangle.
-		 * @param[in] uvs The UV values used for the rectangle (normalized), sampled counterclockwise starting from the
-		 *                top-left.
-		 * @param[in] tints The tint of the rectangle, sampled counterclockwise starting from the top-left.
-		 **************************************************************************************************************/
-		void addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture, std::array<glm::vec2, 4> uvs,
-							 std::array<tr::RGBA8, 4> tints);
 
 		/**************************************************************************************************************
 		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
@@ -149,7 +130,7 @@ namespace tre {
 										   tr::AngleF rotation, tr::RGBA8 color);
 
 		/**************************************************************************************************************
-		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
+		 * Adds an untextured, rotated rectangle outline to the list of objects to draw in the next draw call.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
@@ -158,10 +139,11 @@ namespace tre {
 		 * @param[in] posAnchor The position of the position/rotation anchor within the rectangle.
 		 * @param[in] size The size of the rectangle.
 		 * @param[in] rotation The rotation of the rectangle.
-		 * @param[in] colors The colors of the rectangle, sampled counterclockwise starting from the top-left.
+		 * @param[in] thickness The thickness of the outline.
+		 * @param[in] color The color of the rectangle.
 		 **************************************************************************************************************/
-		void addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-										   tr::AngleF rotation, std::array<tr::RGBA8, 4> colors);
+		void addRotatedRectangleOutline(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
+										tr::AngleF rotation, float thickness, tr::RGBA8 color);
 
 		/**************************************************************************************************************
 		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
@@ -179,46 +161,6 @@ namespace tre {
 		 **************************************************************************************************************/
 		void addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
 										 tr::AngleF rotation, TextureRef texture, const tr::RectF2& uv, tr::RGBA8 tint);
-
-		/**************************************************************************************************************
-		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] pos The position of the posAnchor.
-		 * @param[in] posAnchor The position of the position/rotation anchor within the rectangle.
-		 * @param[in] size The size of the rectangle.
-		 * @param[in] rotation The rotation of the rectangle.
-		 * @param[in] texture The texture and sampler used for the rectangle.
-		 * @param[in] uvs The UV values used for the rectangle (normalized), sampled counterclockwise starting from the
-		 *                top-left.
-		 * @param[in] tints The tint of the rectangle, sampled counterclockwise starting from the top-left.
-		 **************************************************************************************************************/
-		void addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-										 tr::AngleF rotation, TextureRef texture, std::array<glm::vec2, 4> uvs,
-										 std::array<tr::RGBA8, 4> tints);
-
-		/**************************************************************************************************************
-		 * Adds an untextured triangle to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] triangle The triangle vertices.
-		 **************************************************************************************************************/
-		void addUntexturedTriangle(int priority, std::span<tr::ClrVtx2, 3> triangle);
-
-		/**************************************************************************************************************
-		 * Adds a textured triangle to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] triangle The triangle vertices.
-		 * @param[in] texture The texture and sampler used for the triangle.
-		 **************************************************************************************************************/
-		void addTexturedTriangle(int priority, TexturedTriangle triangle, TextureRef texture);
 
 		/**************************************************************************************************************
 		 * Adds an untextured quad to the list of objects to draw in the next draw call.
@@ -252,8 +194,23 @@ namespace tre {
 		 * @param[in] rotation The rotation of the polygon.
 		 * @param[in] color The color of the polygon.
 		 **************************************************************************************************************/
-		void addUntexturedPolygon(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
-								  tr::RGBA8 color);
+		void addUntexturedRegularPolygon(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
+										 tr::RGBA8 color);
+
+		/**************************************************************************************************************
+		 * Adds an untextured regular polygon to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] circle The polygon circle.
+		 * @param[in] vertexCount The number of vertices in the polygon.
+		 * @param[in] rotation The rotation of the polygon.
+		 * @param[in] thickness The thickness of the outline.
+		 * @param[in] color The color of the polygon.
+		 **************************************************************************************************************/
+		void addRegularPolygonOutline(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
+									  float thickness, tr::RGBA8 color);
 
 		/**************************************************************************************************************
 		 * Adds an untextured circle to the list of objects to draw in the next draw call.
@@ -267,6 +224,29 @@ namespace tre {
 		void addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color);
 
 		/**************************************************************************************************************
+		 * Adds an untextured circle to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] circle The circle to draw.
+		 * @param[in] thickness The thickness of the outline.
+		 * @param[in] color The color of the circle.
+		 **************************************************************************************************************/
+		void addCircleOutline(int priority, const tr::CircleF& circle, float thickness, tr::RGBA8 color);
+
+		/**************************************************************************************************************
+		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] vertices The vertices of the polygon fan.
+		 * @param[in] color The color of the polygon.
+		 **************************************************************************************************************/
+		void addUntexturedPolygon(int priority, std::span<glm::vec2> vertices, tr::RGBA8 color);
+
+		/**************************************************************************************************************
 		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
@@ -274,7 +254,30 @@ namespace tre {
 		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
 		 * @param[in] vertices The vertices of the polygon fan.
 		 **************************************************************************************************************/
-		void addUntexturedPolygonFan(int priority, std::span<tr::ClrVtx2> vertices);
+		void addUntexturedPolygon(int priority, std::span<tr::ClrVtx2> vertices);
+
+		/**************************************************************************************************************
+		 * Adds an untextured polygon fan outline to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] vertices The vertices of the polygon fan.
+		 * @param[in] thickness The thickness of the outline.
+		 * @param[in] color The color of the polygon.
+		 **************************************************************************************************************/
+		// void addPolygonOutline(int priority, std::span<glm::vec2> vertices, float thickness, tr::RGBA8 color);
+
+		/**************************************************************************************************************
+		 * Adds an untextured polygon fan outline to the list of objects to draw in the next draw call.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
+		 * @param[in] vertices The vertices of the polygon fan.
+		 * @param[in] thickness The thickness of the outline.
+		 **************************************************************************************************************/
+		// void addPolygonOutline(int priority, std::span<tr::ClrVtx2> vertices, float thickness);
 
 		/**************************************************************************************************************
 		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
@@ -285,7 +288,7 @@ namespace tre {
 		 * @param[in] vertices The vertices of the polygon fan.
 		 * @param[in] texture The texture and sampler used for the polygon fan.
 		 **************************************************************************************************************/
-		void addTexturedPolygonFan(int priority, std::vector<Vertex> vertices, TextureRef texture);
+		void addTexturedPolygon(int priority, std::vector<Vertex> vertices, TextureRef texture);
 
 		/**************************************************************************************************************
 		 * Draws added objects of a certain priotrity or lower to a target.
@@ -318,9 +321,12 @@ namespace tre {
 		struct TextureRefHash {
 			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
 		};
+		struct PolygonOutline : TexturedVertexFan {
+			using TexturedVertexFan::vector;
+		};
 
 		using RawData   = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
-		using Primitive = std::variant<TexturedTriangle, TexturedQuad, TexturedVertexFan, RawData>;
+		using Primitive = std::variant<TexturedQuad, TexturedVertexFan, PolygonOutline, RawData>;
 		using Priority  = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
 		tr::OwningShaderPipeline   _shaderPipeline;

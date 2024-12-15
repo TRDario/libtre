@@ -89,16 +89,16 @@ void tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2& rect, tr
 	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
 }
 
-void tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2& rect, std::array<tr::RGBA8, 4> colors)
+void tre::Renderer2D::addRectOutline(int priority, const tr::RectF2& rect, float thickness, tr::RGBA8 color)
 {
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
+	PolygonOutline data(8);
+	tr::fillRectOutlineVertices((data | tr::positions).begin(), rect.tl, rect.size, thickness);
 	for (int i = 0; i < 4; ++i) {
 		data[i].uv    = UNTEXTURED_UV;
-		data[i].color = colors[i];
+		data[i].color = color;
 	}
 
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
+	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
 }
 
 void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture, const tr::RectF2& uv,
@@ -112,63 +112,42 @@ void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, Text
 	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
 }
 
-void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture,
-									  std::array<glm::vec2, 4> uvs, std::array<tr::RGBA8, 4> tints)
-{
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
-	for (int i = 0; i < 4; i++) {
-		data[i].uv    = uvs[i];
-		data[i].color = tints[i];
-	}
-
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
-}
-
 void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
 													tr::AngleF rotation, tr::RGBA8 color)
 {
 	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	if (rotation == 0_degf) {
-		for (auto& vertex : data) {
-			vertex.uv    = UNTEXTURED_UV;
-			vertex.color = color;
-		}
+		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
 	}
 	else {
 		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		for (auto& vertex : data) {
-			vertex.pos   = transform * vertex.pos;
-			vertex.uv    = UNTEXTURED_UV;
-			vertex.color = color;
-		}
+		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size, transform);
+	}
+	for (auto& vertex : data) {
+		vertex.uv    = UNTEXTURED_UV;
+		vertex.color = color;
 	}
 
 	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
 }
 
-void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-													tr::AngleF rotation, std::array<tr::RGBA8, 4> colors)
+void tre::Renderer2D::addRotatedRectangleOutline(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
+												 tr::AngleF rotation, float thickness, tr::RGBA8 color)
 {
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
+	PolygonOutline data(8);
 	if (rotation == 0_degf) {
-		for (int i = 0; i < 4; ++i) {
-			data[i].uv    = UNTEXTURED_UV;
-			data[i].color = colors[i];
-		}
+		tr::fillRectOutlineVertices((data | tr::positions).begin(), pos - posAnchor, size, thickness);
 	}
 	else {
 		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		for (int i = 0; i < 4; ++i) {
-			data[i].pos   = transform * data[i].pos;
-			data[i].uv    = UNTEXTURED_UV;
-			data[i].color = colors[i];
-		}
+		tr::fillRectOutlineVertices((data | tr::positions).begin(), pos - posAnchor, size, thickness, transform);
+	}
+	for (auto& vertex : data) {
+		vertex.uv    = UNTEXTURED_UV;
+		vertex.color = color;
 	}
 
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
+	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
 }
 
 void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
@@ -176,57 +155,17 @@ void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, g
 												  tr::RGBA8 tint)
 {
 	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
+	if (rotation == 0_degf) {
+		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
+	}
+	else {
+		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
+		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size, transform);
+	}
 	tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
-	if (rotation == 0_degf) {
-		std::ranges::fill(data | tr::colors, tint);
-	}
-	else {
-		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		for (int i = 0; i < 4; ++i) {
-			data[i].pos   = transform * data[i].pos;
-			data[i].color = tint;
-		}
-	}
+	std::ranges::fill(data | tr::colors, tint);
 
 	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
-}
-
-void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-												  tr::AngleF rotation, TextureRef texture, std::array<glm::vec2, 4> uvs,
-												  std::array<tr::RGBA8, 4> tints)
-{
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
-	if (rotation == 0_degf) {
-		for (int i = 0; i < 4; ++i) {
-			data[i].uv    = uvs[i];
-			data[i].color = tints[i];
-		}
-	}
-	else {
-		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		for (int i = 0; i < 4; ++i) {
-			data[i].pos   = transform * data[i].pos;
-			data[i].uv    = uvs[i];
-			data[i].color = tints[i];
-		}
-	}
-
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
-}
-
-void tre::Renderer2D::addUntexturedTriangle(int priority, std::span<tr::ClrVtx2, 3> triangle)
-{
-	_renderGraph[priority][std::nullopt].emplace_back(
-		std::in_place_type<TexturedTriangle>, TexturedTriangle{{{triangle[0].pos, UNTEXTURED_UV, triangle[0].color},
-																{triangle[1].pos, UNTEXTURED_UV, triangle[1].color},
-																{triangle[2].pos, UNTEXTURED_UV, triangle[2].color}}});
-}
-
-void tre::Renderer2D::addTexturedTriangle(int priority, TexturedTriangle triangle, TextureRef texture)
-{
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedTriangle>, triangle);
 }
 
 void tre::Renderer2D::addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> quad)
@@ -243,8 +182,8 @@ void tre::Renderer2D::addTexturedQuad(int priority, TexturedQuad quad, TextureRe
 	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, quad);
 }
 
-void tre::Renderer2D::addUntexturedPolygon(int priority, const tr::CircleF& circle, int vertexCount,
-										   tr::AngleF rotation, tr::RGBA8 color)
+void tre::Renderer2D::addUntexturedRegularPolygon(int priority, const tr::CircleF& circle, int vertexCount,
+												  tr::AngleF rotation, tr::RGBA8 color)
 {
 	TexturedVertexFan data(vertexCount);
 	tr::fillPolygonVertices((data | tr::positions).begin(), vertexCount, circle, rotation);
@@ -256,12 +195,46 @@ void tre::Renderer2D::addUntexturedPolygon(int priority, const tr::CircleF& circ
 	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
 }
 
-void tre::Renderer2D::addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color)
+void tre::Renderer2D::addRegularPolygonOutline(int priority, const tr::CircleF& circle, int vertexCount,
+											   tr::AngleF rotation, float thickness, tr::RGBA8 color)
 {
-	addUntexturedPolygon(priority, circle, tr::smoothPolygonVerticesCount(circle.r), tr::rads(0), color);
+	PolygonOutline data(vertexCount * 2);
+	tr::fillPolygonOutlineVertices((data | tr::positions).begin(), vertexCount, circle, rotation, thickness);
+	for (auto& vertex : data) {
+		vertex.uv    = UNTEXTURED_UV;
+		vertex.color = color;
+	}
+
+	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
 }
 
-void tre::Renderer2D::addUntexturedPolygonFan(int priority, std::span<tr::ClrVtx2> vertices)
+void tre::Renderer2D::addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color)
+{
+	addUntexturedRegularPolygon(priority, circle, tr::smoothPolygonVerticesCount(circle.r), tr::rads(0), color);
+}
+
+void tre::Renderer2D::addCircleOutline(int priority, const tr::CircleF& circle, float thickness, tr::RGBA8 color)
+{
+	addRegularPolygonOutline(priority, circle, tr::smoothPolygonVerticesCount(circle.r), tr::rads(0), thickness, color);
+}
+
+void tre::Renderer2D::addUntexturedPolygon(int priority, std::span<glm::vec2> vertices, tr::RGBA8 color)
+{
+	if (vertices.size() < 3) {
+		return;
+	}
+
+	TexturedVertexFan data(vertices.size());
+	for (std::size_t i = 0; i < data.size(); ++i) {
+		data[i].pos   = vertices[i];
+		data[i].uv    = UNTEXTURED_UV;
+		data[i].color = color;
+	}
+
+	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
+}
+
+void tre::Renderer2D::addUntexturedPolygon(int priority, std::span<tr::ClrVtx2> vertices)
 {
 	if (vertices.size() < 3) {
 		return;
@@ -277,7 +250,7 @@ void tre::Renderer2D::addUntexturedPolygonFan(int priority, std::span<tr::ClrVtx
 	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
 }
 
-void tre::Renderer2D::addTexturedPolygonFan(int priority, std::vector<Vertex> vertices, TextureRef texture)
+void tre::Renderer2D::addTexturedPolygon(int priority, std::vector<Vertex> vertices, TextureRef texture)
 {
 	if (vertices.size() < 3) {
 		return;
@@ -311,10 +284,6 @@ void tre::Renderer2D::setupContext() noexcept
 
 void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index)
 {
-	const auto triangle{[&](const TexturedTriangle& triangle) {
-		_vertices.insert(_vertices.end(), triangle.begin(), triangle.end());
-		_indices.insert(_indices.end(), {index++, index++, index++});
-	}};
 	const auto rectangle{[&](const TexturedQuad& rectangle) {
 		_vertices.insert(_vertices.end(), rectangle.begin(), rectangle.end());
 		tr::fillPolygonIndices(back_inserter(_indices), 4, index);
@@ -325,6 +294,11 @@ void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std:
 		tr::fillPolygonIndices(back_inserter(_indices), fan.size(), index);
 		index += fan.size();
 	}};
+	const auto outline{[&](const PolygonOutline& outline) {
+		_vertices.insert(_vertices.end(), outline.begin(), outline.end());
+		tr::fillPolygonOutlineIndices(back_inserter(_indices), outline.size() / 2, index);
+		index += outline.size();
+	}};
 	const auto data{[&](const RawData& data) {
 		const auto offset{std::views::transform([&](auto idx) { return idx + index; })};
 
@@ -333,7 +307,7 @@ void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std:
 		index += data.first.size();
 	}};
 
-	std::visit(tr::Overloaded{triangle, rectangle, fan, data}, primitive);
+	std::visit(tr::Overloaded{rectangle, fan, outline, data}, primitive);
 }
 
 void tre::Renderer2D::drawUpToPriority(int maxPriority, tr::BasicFramebuffer& target)
