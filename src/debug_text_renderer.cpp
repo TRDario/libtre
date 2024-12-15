@@ -12,9 +12,12 @@ namespace tre {
 	constexpr std::array<glm::u8vec2, 4> GLYPH_VERTICES{{{0, 0}, {0, 1}, {1, 1}, {1, 0}}};
 
 	DebugTextRenderer* _debugTextRenderer{nullptr};
+
+	std::string formatDuration(std::string_view prefix, tr::Duration duration);
 } // namespace tre
 
 using VtxAttrF = tr::VertexAttributeF;
+using namespace std::chrono_literals;
 
 tre::DebugTextRenderer::DebugTextRenderer()
 	: _shaderPipeline{{tr::asBytes(DEBUG_TEXT_VERT_SPV), tr::ShaderType::VERTEX},
@@ -209,6 +212,45 @@ void tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor, t
 		}
 	}
 	handleNewline(context);
+}
+
+std::string tre::formatDuration(std::string_view prefix, tr::Duration duration)
+{
+	if (duration <= 1us) {
+		const auto count{std::chrono::duration_cast<tr::NanosecondsD>(duration).count()};
+		const int  precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(std::format("{}{{:#08.{}f}}ns", prefix, precision), std::make_format_args(count));
+	}
+	else if (duration <= 1ms) {
+		const auto count{std::chrono::duration_cast<tr::MicrosecondsD>(duration).count()};
+		const int  precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(std::format("{}{{:#08.{}f}}us", prefix, precision), std::make_format_args(count));
+	}
+	else if (duration <= 1s) {
+		const auto count{std::chrono::duration_cast<tr::MillisecondsD>(duration).count()};
+		const int  precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(std::format("{}{{:#08.{}f}}ms", prefix, precision), std::make_format_args(count));
+	}
+	else {
+		const auto count{std::chrono::duration_cast<tr::SecondsD>(duration).count()};
+		const int  precision{6 - std::clamp(int(std::log10(count)), 0, 5)};
+		return std::vformat(std::format("{}{{:#08.{}f}}s ", prefix, precision), std::make_format_args(count));
+	}
+}
+
+void tre::DebugTextRenderer::write(const tr::Benchmark& benchmark, std::string_view name, tr::Duration altColorLimit,
+								   tr::RGBA8 textColor, tr::RGBA8 altTextColor, tr::RGBA8 backgroundColor,
+								   Align alignment)
+{
+	if (!name.empty()) {
+		write(std::format("{:<15}", name), textColor, backgroundColor, {}, alignment);
+	}
+	write(formatDuration("MIN: ", benchmark.min()), benchmark.min() < altColorLimit ? textColor : altTextColor,
+		  backgroundColor, {}, alignment);
+	write(formatDuration("AVG: ", benchmark.average()), benchmark.average() < altColorLimit ? textColor : altTextColor,
+		  backgroundColor, {}, alignment);
+	write(formatDuration("MAX: ", benchmark.max()), benchmark.max() < altColorLimit ? textColor : altTextColor,
+		  backgroundColor, {}, alignment);
 }
 
 void tre::DebugTextRenderer::draw()

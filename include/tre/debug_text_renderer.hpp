@@ -42,6 +42,16 @@ namespace tre {
 		static constexpr tr::RGBA8 WHITE{255, 255, 255, 255};
 
 		/**************************************************************************************************************
+		 * Shorthand for the commonly used red color.
+		 **************************************************************************************************************/
+		static constexpr tr::RGBA8 RED{255, 0, 0, 255};
+
+		/**************************************************************************************************************
+		 * Shorthand for the commonly used black color.
+		 **************************************************************************************************************/
+		static constexpr tr::RGBA8 BLACK{0, 0, 0, 255};
+
+		/**************************************************************************************************************
 		 * Shorthand for the commonly used transparent color.
 		 **************************************************************************************************************/
 		static constexpr tr::RGBA8 NONE{0, 0, 0, 0};
@@ -84,8 +94,25 @@ namespace tre {
 		 * @param[in] extraColors Additional colors used by the text.
 		 * @param[in] alignment Whether to draw the text left- or right-aligned.
 		 **************************************************************************************************************/
-		void write(std::string_view text, tr::RGBA8 textColor = WHITE, tr::RGBA8 backgroundColor = NONE,
+		void write(std::string_view text, tr::RGBA8 textColor = WHITE, tr::RGBA8 backgroundColor = BLACK,
 				   std::span<tr::RGBA8> extraColors = {}, Align alignment = Align::LEFT);
+
+		/**************************************************************************************************************
+		 * Helper function for writing benchmark results.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] benchmark The benchmark to display data from.
+		 * @param[in] name The name of the benchmark, leave empty for no title.
+		 * @param[in] altColorLimit The delimiting length after which text will be shown in the alt color.
+		 * @param[in] textColor The primary text color.
+		 * @param[in] altTextColor The secondary text color, used for durations above the altColorLimit.
+		 * @param[in] backgroundColor The background color.
+		 * @param[in] alignment Whether to draw the text left- or right-aligned.
+		 **************************************************************************************************************/
+		void write(const tr::Benchmark& benchmark, std::string_view name, tr::Duration altColorLimit,
+				   tr::RGBA8 textColor = WHITE, tr::RGBA8 altTextColor = RED, tr::RGBA8 backgroundColor = BLACK,
+				   Align alignment = Align::RIGHT);
 
 		/**************************************************************************************************************
 		 * Draws all written text to the screen and clears it.
