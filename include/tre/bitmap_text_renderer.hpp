@@ -1,7 +1,7 @@
 #pragma once
 #include "atlas.hpp"
 #include "text.hpp"
-#include <tref.hpp>
+#include <tref/tref.hpp>
 
 namespace tre {
 	/** @addtogroup text
