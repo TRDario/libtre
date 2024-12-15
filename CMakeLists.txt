@@ -33,7 +33,7 @@ target_sources(tre PUBLIC FILE_SET HEADERS BASE_DIRS include FILES
     include/tre/atlas.hpp include/tre/audio.hpp include/tre/bitmap_text_renderer.hpp include/tre/debug_text_renderer.hpp
     include/tre/dynamic_text_renderer.hpp include/tre/localization_manager.hpp include/tre/renderer_2d.hpp
     include/tre/renderer_base.hpp include/tre/sampler.hpp include/tre/state_manager.hpp
-    include/tre/static_text_renderer.hpp include/tre/text.hpp
+    include/tre/static_text_renderer.hpp include/tre/text.hpp include/tre/tre.hpp
 )
 
 if(TRE_ENABLE_INSTALL)
