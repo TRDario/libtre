@@ -72,11 +72,6 @@ namespace tre {
 		void setColumnLimit(std::uint8_t columns) noexcept;
 
 		/**************************************************************************************************************
-		 * Clears any written text.
-		 **************************************************************************************************************/
-		void clear() noexcept;
-
-		/**************************************************************************************************************
 		 * Writes a line of formatted text.
 		 *
 		 * For specifics of the text format, see @ref debformat.
@@ -93,9 +88,7 @@ namespace tre {
 				   std::span<tr::RGBA8> extraColors = {}, Align alignment = Align::LEFT);
 
 		/**************************************************************************************************************
-		 * Draws all written text to the screren.
-		 *
-		 * The text will remain drawable until a call to clear().
+		 * Draws all written text to the screen and clears it.
 		 *
 		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 **************************************************************************************************************/

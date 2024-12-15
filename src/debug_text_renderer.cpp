@@ -61,13 +61,6 @@ void tre::DebugTextRenderer::setColumnLimit(std::uint8_t columns) noexcept
 	_columnLimit = columns;
 }
 
-void tre::DebugTextRenderer::clear() noexcept
-{
-	_shaderGlyphs.clear();
-	_leftLine  = 0;
-	_rightLine = 0;
-}
-
 void tre::DebugTextRenderer::rightAlignLine(std::size_t begin, std::size_t end) noexcept
 {
 	for (auto i = begin; i < end; ++i) {
@@ -241,7 +234,11 @@ void tre::DebugTextRenderer::draw()
 		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.viewport().size));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
 		glContext.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
+		_shaderGlyphs.clear();
 	}
+
+	_leftLine  = 0;
+	_rightLine = 0;
 }
 
 void tre::DebugTextRenderer::setupContext() noexcept

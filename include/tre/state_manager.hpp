@@ -2,7 +2,7 @@
 #include <tr/tr.hpp>
 
 namespace tre {
-	/** @defgroup state_management Staet Management
+	/** @defgroup state_management State Management
 	 *  State management functionality.
 	 *  @{
 	 */
