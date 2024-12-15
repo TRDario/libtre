@@ -98,7 +98,7 @@ namespace tre {
 				   std::span<tr::RGBA8> extraColors = {}, Align alignment = Align::LEFT);
 
 		/**************************************************************************************************************
-		 * Helper function for writing benchmark results.
+		 * Writes benchmark data.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
