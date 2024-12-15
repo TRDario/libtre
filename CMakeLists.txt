@@ -18,6 +18,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(tre PRIVATE -march=x86-64-v2)
 endif()
 target_link_libraries(tre PUBLIC tref::tref tr::tr)
+set_target_properties(tre PROPERTIES DEBUG_POSTFIX "d")
 
 add_shader(tre resources/renderer_2d.vert RENDERER_2D_VERT_SPV)
 add_shader(tre resources/renderer_2d.frag RENDERER_2D_FRAG_SPV)

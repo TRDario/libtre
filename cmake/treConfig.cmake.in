@@ -3,3 +3,7 @@
 @PACKAGE_INIT@
 
 include ("${CMAKE_CURRENT_LIST_DIR}/treTargets.cmake")
+
+include(CMakeFindDependencyMacro)
+find_dependency(tr REQUIRED)
+find_dependency(tref REQUIRED)
