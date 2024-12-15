@@ -117,11 +117,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad814d2141e02f091c2acdf361dc8cced"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8728817ff57b522cbd4a2d1858f03c91" id="r_a8728817ff57b522cbd4a2d1858f03c91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8728817ff57b522cbd4a2d1858f03c91">~DebugTextRenderer</a> () noexcept</td></tr>
 <tr class="separator:a8728817ff57b522cbd4a2d1858f03c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af02a3dfe9f1098b9b4ce33bdf35bd0e8" id="r_af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af02a3dfe9f1098b9b4ce33bdf35bd0e8">clear</a> () noexcept</td></tr>
-<tr class="memdesc:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears any written text.  <br /></td></tr>
-<tr class="separator:af02a3dfe9f1098b9b4ce33bdf35bd0e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae44b92bcef0346b96777f9868754fb27" id="r_ae44b92bcef0346b96777f9868754fb27"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae44b92bcef0346b96777f9868754fb27">draw</a> ()</td></tr>
-<tr class="memdesc:ae44b92bcef0346b96777f9868754fb27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all written text to the screren.  <br /></td></tr>
+<tr class="memdesc:ae44b92bcef0346b96777f9868754fb27"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws all written text to the screen and clears it.  <br /></td></tr>
 <tr class="separator:ae44b92bcef0346b96777f9868754fb27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b737daeaf3f1d2717fba3f4efb081f4" id="r_a8b737daeaf3f1d2717fba3f4efb081f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8b737daeaf3f1d2717fba3f4efb081f4">setColumnLimit</a> (std::uint8_t columns) noexcept</td></tr>
 <tr class="memdesc:a8b737daeaf3f1d2717fba3f4efb081f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text's column limit.  <br /></td></tr>
@@ -232,33 +229,6 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="af02a3dfe9f1098b9b4ce33bdf35bd0e8" name="af02a3dfe9f1098b9b4ce33bdf35bd0e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af02a3dfe9f1098b9b4ce33bdf35bd0e8">&#9670;&#160;</a></span>clear()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void tre::DebugTextRenderer::clear </td>
-          <td>(</td>
-          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Clears any written text. </p>
-
-</div>
-</div>
 <a id="ae44b92bcef0346b96777f9868754fb27" name="ae44b92bcef0346b96777f9868754fb27"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae44b92bcef0346b96777f9868754fb27">&#9670;&#160;</a></span>draw()</h2>
 
@@ -274,8 +244,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Draws all written text to the screren. </p>
-<p>The text will remain drawable until a call to <a class="el" href="#af02a3dfe9f1098b9b4ce33bdf35bd0e8" title="Clears any written text.">clear()</a>.</p>
+<p>Draws all written text to the screen and clears it. </p>
 <dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">tr::GLBufferBadAlloc</td><td>If an internal allocation fails. </td></tr>
