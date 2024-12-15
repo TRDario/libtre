@@ -126,18 +126,27 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a38518ffcf159440d1863b46777ca5d7c" id="r_a38518ffcf159440d1863b46777ca5d7c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38518ffcf159440d1863b46777ca5d7c">setScale</a> (float scale) noexcept</td></tr>
 <tr class="memdesc:a38518ffcf159440d1863b46777ca5d7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text's drawing scale.  <br /></td></tr>
 <tr class="separator:a38518ffcf159440d1863b46777ca5d7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a227d5248b7e33bf66e4b41d803cd40da" id="r_a227d5248b7e33bf66e4b41d803cd40da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a227d5248b7e33bf66e4b41d803cd40da">write</a> (std::string_view text, tr::RGBA8 textColor=<a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a>, tr::RGBA8 backgroundColor=<a class="el" href="#aab76442188f79677a8bc08e3c91d5d00">NONE</a>, std::span&lt; tr::RGBA8 &gt; extraColors={}, <a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a> alignment=<a class="el" href="#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758">Align::LEFT</a>)</td></tr>
-<tr class="memdesc:a227d5248b7e33bf66e4b41d803cd40da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a line of formatted text.  <br /></td></tr>
-<tr class="separator:a227d5248b7e33bf66e4b41d803cd40da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab84410a37616352edac1703a53d98793" id="r_ab84410a37616352edac1703a53d98793"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab84410a37616352edac1703a53d98793">write</a> (const tr::Benchmark &amp;benchmark, std::string_view name, tr::Duration altColorLimit, tr::RGBA8 textColor=<a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a>, tr::RGBA8 altTextColor=<a class="el" href="#a96b84b38fe5f9a8de1cfe1e648fdd76f">RED</a>, tr::RGBA8 backgroundColor=<a class="el" href="#a45cf930cfe0580835b27020cabb654a8">BLACK</a>, <a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a> alignment=<a class="el" href="#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403">Align::RIGHT</a>)</td></tr>
+<tr class="memdesc:ab84410a37616352edac1703a53d98793"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes benchmark data.  <br /></td></tr>
+<tr class="separator:ab84410a37616352edac1703a53d98793"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb50c2e18b8ce8d4740ca4cc2d6ebe23" id="r_aeb50c2e18b8ce8d4740ca4cc2d6ebe23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeb50c2e18b8ce8d4740ca4cc2d6ebe23">write</a> (std::string_view text, tr::RGBA8 textColor=<a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a>, tr::RGBA8 backgroundColor=<a class="el" href="#a45cf930cfe0580835b27020cabb654a8">BLACK</a>, std::span&lt; tr::RGBA8 &gt; extraColors={}, <a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a> alignment=<a class="el" href="#afa3e64e2edce696275bc804deadd1608a684d325a7303f52e64011467ff5c5758">Align::LEFT</a>)</td></tr>
+<tr class="memdesc:aeb50c2e18b8ce8d4740ca4cc2d6ebe23"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes a line of formatted text.  <br /></td></tr>
+<tr class="separator:aeb50c2e18b8ce8d4740ca4cc2d6ebe23"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
+<tr class="memitem:a45cf930cfe0580835b27020cabb654a8" id="r_a45cf930cfe0580835b27020cabb654a8"><td class="memItemLeft" align="right" valign="top">static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45cf930cfe0580835b27020cabb654a8">BLACK</a> {0, 0, 0, 255}</td></tr>
+<tr class="memdesc:a45cf930cfe0580835b27020cabb654a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used black color.  <br /></td></tr>
+<tr class="separator:a45cf930cfe0580835b27020cabb654a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a887f534c5a60910e844e2d1435838986" id="r_a887f534c5a60910e844e2d1435838986"><td class="memItemLeft" align="right" valign="top">static constexpr std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a887f534c5a60910e844e2d1435838986">ID</a> {-3U}</td></tr>
 <tr class="memdesc:a887f534c5a60910e844e2d1435838986"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unique renderer ID of this renderer.  <br /></td></tr>
 <tr class="separator:a887f534c5a60910e844e2d1435838986"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab76442188f79677a8bc08e3c91d5d00" id="r_aab76442188f79677a8bc08e3c91d5d00"><td class="memItemLeft" align="right" valign="top">static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aab76442188f79677a8bc08e3c91d5d00">NONE</a> {0, 0, 0, 0}</td></tr>
 <tr class="memdesc:aab76442188f79677a8bc08e3c91d5d00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used transparent color.  <br /></td></tr>
 <tr class="separator:aab76442188f79677a8bc08e3c91d5d00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96b84b38fe5f9a8de1cfe1e648fdd76f" id="r_a96b84b38fe5f9a8de1cfe1e648fdd76f"><td class="memItemLeft" align="right" valign="top">static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a96b84b38fe5f9a8de1cfe1e648fdd76f">RED</a> {255, 0, 0, 255}</td></tr>
+<tr class="memdesc:a96b84b38fe5f9a8de1cfe1e648fdd76f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used red color.  <br /></td></tr>
+<tr class="separator:a96b84b38fe5f9a8de1cfe1e648fdd76f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32b1f2dea3b7311260fdd3f0d6578a22" id="r_a32b1f2dea3b7311260fdd3f0d6578a22"><td class="memItemLeft" align="right" valign="top">static constexpr tr::RGBA8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a> {255, 255, 255, 255}</td></tr>
 <tr class="memdesc:a32b1f2dea3b7311260fdd3f0d6578a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shorthand for the commonly used white color.  <br /></td></tr>
 <tr class="separator:a32b1f2dea3b7311260fdd3f0d6578a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -321,8 +330,74 @@ Static Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a227d5248b7e33bf66e4b41d803cd40da" name="a227d5248b7e33bf66e4b41d803cd40da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a227d5248b7e33bf66e4b41d803cd40da">&#9670;&#160;</a></span>write()</h2>
+<a id="ab84410a37616352edac1703a53d98793" name="ab84410a37616352edac1703a53d98793"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab84410a37616352edac1703a53d98793">&#9670;&#160;</a></span>write() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void tre::DebugTextRenderer::write </td>
+          <td>(</td>
+          <td class="paramtype">const tr::Benchmark &amp;</td>          <td class="paramname"><span class="paramname"><em>benchmark</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::Duration</td>          <td class="paramname"><span class="paramname"><em>altColorLimit</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>textColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a32b1f2dea3b7311260fdd3f0d6578a22">WHITE</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>altTextColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a96b84b38fe5f9a8de1cfe1e648fdd76f">RED</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>backgroundColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a45cf930cfe0580835b27020cabb654a8">BLACK</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="#afa3e64e2edce696275bc804deadd1608">Align</a></td>          <td class="paramname"><span class="paramname"><em>alignment</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#afa3e64e2edce696275bc804deadd1608a21507b40c80068eda19865706fdc2403">Align::RIGHT</a></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes benchmark data. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::bad_alloc</td><td>If an internal allocation fails.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">benchmark</td><td>The benchmark to display data from. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">name</td><td>The name of the benchmark, leave empty for no title. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">altColorLimit</td><td>The delimiting length after which text will be shown in the alt color. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">textColor</td><td>The primary text color. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">altTextColor</td><td>The secondary text color, used for durations above the altColorLimit. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">backgroundColor</td><td>The background color. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">alignment</td><td>Whether to draw the text left- or right-aligned. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="aeb50c2e18b8ce8d4740ca4cc2d6ebe23" name="aeb50c2e18b8ce8d4740ca4cc2d6ebe23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb50c2e18b8ce8d4740ca4cc2d6ebe23">&#9670;&#160;</a></span>write() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -340,7 +415,7 @@ Static Public Attributes</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>backgroundColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#aab76442188f79677a8bc08e3c91d5d00">NONE</a></span>, </td>
+          <td class="paramtype">tr::RGBA8</td>          <td class="paramname"><span class="paramname"><em>backgroundColor</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a45cf930cfe0580835b27020cabb654a8">BLACK</a></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -377,6 +452,30 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a id="a45cf930cfe0580835b27020cabb654a8" name="a45cf930cfe0580835b27020cabb654a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45cf930cfe0580835b27020cabb654a8">&#9670;&#160;</a></span>BLACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::RGBA8 tre::DebugTextRenderer::BLACK {0, 0, 0, 255}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shorthand for the commonly used black color. </p>
+
+</div>
+</div>
 <a id="a887f534c5a60910e844e2d1435838986" name="a887f534c5a60910e844e2d1435838986"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a887f534c5a60910e844e2d1435838986">&#9670;&#160;</a></span>ID</h2>
 
@@ -422,6 +521,30 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Shorthand for the commonly used transparent color. </p>
+
+</div>
+</div>
+<a id="a96b84b38fe5f9a8de1cfe1e648fdd76f" name="a96b84b38fe5f9a8de1cfe1e648fdd76f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96b84b38fe5f9a8de1cfe1e648fdd76f">&#9670;&#160;</a></span>RED</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tr::RGBA8 tre::DebugTextRenderer::RED {255, 0, 0, 255}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shorthand for the commonly used red color. </p>
 
 </div>
 </div>
