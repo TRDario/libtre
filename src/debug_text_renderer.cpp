@@ -255,7 +255,7 @@ void tre::DebugTextRenderer::write(const tr::Benchmark& benchmark, std::string_v
 
 void tre::DebugTextRenderer::draw()
 {
-	auto& glContext{tr::window().glContext()};
+	auto& graphics{tr::window().graphics()};
 	auto& target{tr::window().backbuffer()};
 
 	if (!_shaderGlyphs.empty()) {
@@ -263,7 +263,7 @@ void tre::DebugTextRenderer::draw()
 			setupContext();
 			setLastRendererID(ID);
 		}
-		glContext.setFramebuffer(target);
+		graphics.setFramebuffer(target);
 
 		if (_shaderGlyphBuffer.arrayCapacity() < _shaderGlyphs.size() * sizeof(ShaderGlyph)) {
 			const auto newCapacity{std::bit_ceil(_shaderGlyphs.size() * sizeof(ShaderGlyph))};
@@ -275,7 +275,7 @@ void tre::DebugTextRenderer::draw()
 		_shaderGlyphBuffer.setArray(tr::rangeBytes(_shaderGlyphs));
 		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.viewport().size));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
-		glContext.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
+		graphics.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
 		_shaderGlyphs.clear();
 	}
 
@@ -285,19 +285,19 @@ void tre::DebugTextRenderer::draw()
 
 void tre::DebugTextRenderer::setupContext() noexcept
 {
-	auto& glContext{tr::window().glContext()};
+	auto& graphics{tr::window().graphics()};
 
-	glContext.useDepthTest(false);
-	glContext.useScissorTest(false);
-	glContext.useStencilTest(false);
-	glContext.useFaceCulling(false);
+	graphics.useDepthTest(false);
+	graphics.useScissorTest(false);
+	graphics.useStencilTest(false);
+	graphics.useFaceCulling(false);
 
-	glContext.useBlending(true);
-	glContext.setBlendingMode(tr::ALPHA_BLENDING);
+	graphics.useBlending(true);
+	graphics.setBlendingMode(tr::ALPHA_BLENDING);
 
-	glContext.setShaderPipeline(_shaderPipeline);
-	glContext.setVertexFormat(_vertexFormat);
-	glContext.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
+	graphics.setShaderPipeline(_shaderPipeline);
+	graphics.setVertexFormat(_vertexFormat);
+	graphics.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
 }
 
 bool tre::debugTextRendererActive() noexcept

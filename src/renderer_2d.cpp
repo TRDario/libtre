@@ -7,14 +7,6 @@
 #include <boost/container_hash/hash.hpp>
 #include <cstddef>
 #include <ranges>
-#include <tr/draw_geometry.hpp>
-#include <tr/geometry.hpp>
-#include <tr/gl_context.hpp>
-#include <tr/index_buffer.hpp>
-#include <tr/shader.hpp>
-#include <tr/texture.hpp>
-#include <tr/vertex.hpp>
-#include <tr/vertex_buffer.hpp>
 
 using namespace tr::angle_literals;
 using namespace tr::matrix_operators;
@@ -260,26 +252,26 @@ void tre::Renderer2D::addTexturedPolygon(int priority, std::vector<Vertex> verti
 
 void tre::Renderer2D::setupContext() noexcept
 {
-	auto& context{tr::window().glContext()};
+	auto& graphics{tr::window().graphics()};
 
-	context.useDepthTest(false);
-	context.useFaceCulling(false);
+	graphics.useDepthTest(false);
+	graphics.useFaceCulling(false);
 
-	context.useBlending(true);
-	context.setBlendingMode(_blendMode);
+	graphics.useBlending(true);
+	graphics.setBlendingMode(_blendMode);
 
 	if (_scissorBox != NO_SCISSOR_BOX) {
-		context.useScissorTest(true);
-		context.setScissorBox(_scissorBox);
+		graphics.useScissorTest(true);
+		graphics.setScissorBox(_scissorBox);
 	}
 	else {
-		context.useScissorTest(false);
+		graphics.useScissorTest(false);
 	}
 
-	context.useStencilTest(false);
+	graphics.useStencilTest(false);
 
-	context.setShaderPipeline(_shaderPipeline);
-	context.setVertexFormat(tr::TintVtx2::vertexFormat());
+	graphics.setShaderPipeline(_shaderPipeline);
+	graphics.setVertexFormat(tr::TintVtx2::vertexFormat());
 }
 
 void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index)
@@ -312,13 +304,13 @@ void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std:
 
 void tre::Renderer2D::drawUpToPriority(int maxPriority, tr::BasicFramebuffer& target)
 {
-	auto& glContext{tr::window().glContext()};
+	auto& graphics{tr::window().graphics()};
 
 	if (lastRendererID() != ID) {
 		setupContext();
 		setLastRendererID(ID);
 	}
-	glContext.setFramebuffer(target);
+	graphics.setFramebuffer(target);
 
 	const std::ranges::subrange range{_renderGraph.begin(), _renderGraph.lower_bound(maxPriority)};
 	for (auto& priority : range | std::views::values) {
@@ -337,9 +329,9 @@ void tre::Renderer2D::drawUpToPriority(int maxPriority, tr::BasicFramebuffer& ta
 			}
 			_vertexBuffer.set(tr::rangeBytes(_vertices));
 			_indexBuffer.set(_indices);
-			glContext.setVertexBuffer(_vertexBuffer, 0, sizeof(tr::TintVtx2));
-			glContext.setIndexBuffer(_indexBuffer);
-			glContext.drawIndexed(tr::Primitive::TRIS, 0, _indexBuffer.size());
+			graphics.setVertexBuffer(_vertexBuffer, 0, sizeof(tr::TintVtx2));
+			graphics.setIndexBuffer(_indexBuffer);
+			graphics.drawIndexed(tr::Primitive::TRIS, 0, _indexBuffer.size());
 		}
 	}
 	_renderGraph.erase(range.begin(), range.end());

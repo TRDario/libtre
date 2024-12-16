@@ -308,7 +308,7 @@ namespace tre {
 		 *
 		 * The render graph is cleared afterwards.
 		 *
-		 * Equivalent to drawUpToPriority(glContext, target, INT_MIN).
+		 * Equivalent to drawUpToPriority(target, INT_MIN).
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
