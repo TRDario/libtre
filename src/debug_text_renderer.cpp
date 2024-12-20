@@ -1,5 +1,4 @@
 #include "../include/tre/debug_text_renderer.hpp"
-#include "../include/tre/renderer_base.hpp"
 #include "../include/tre/sampler.hpp"
 
 #include <GL/gl.h>
@@ -20,10 +19,10 @@ using VtxAttrF = tr::VertexAttributeF;
 using namespace std::chrono_literals;
 
 tre::DebugTextRenderer::DebugTextRenderer()
-	: _shaderPipeline{{tr::asBytes(DEBUG_TEXT_VERT_SPV), tr::ShaderType::VERTEX},
-					  {tr::asBytes(DEBUG_TEXT_FRAG_SPV), tr::ShaderType::FRAGMENT}}
+	: _shaderPipeline{tr::loadEmbeddedShader(DEBUG_TEXT_VERT_SPV, tr::ShaderType::VERTEX),
+					  tr::loadEmbeddedShader(DEBUG_TEXT_FRAG_SPV, tr::ShaderType::FRAGMENT)}
 	, _shaderGlyphBuffer{0, 256 * sizeof(ShaderGlyph), tr::ShaderBuffer::Access::WRITE_ONLY}
-	, _font{tr::Bitmap{tr::asBytes(DEBUG_TEXT_FONT_BMP)}, tr::NO_MIPMAPS, tr::TextureFormat::R8}
+	, _font{tr::loadEmbeddedBitmap(DEBUG_TEXT_FONT_BMP), tr::NO_MIPMAPS, tr::TextureFormat::R8}
 	, _vertexFormat{std::initializer_list<tr::VertexAttribute>{{VtxAttrF{VtxAttrF::Type::UI8, 2, false, 0}}}}
 	, _vertexBuffer{tr::asBytes(GLYPH_VERTICES)}
 	, _columnLimit{255}
@@ -255,15 +254,8 @@ void tre::DebugTextRenderer::write(const tr::Benchmark& benchmark, std::string_v
 
 void tre::DebugTextRenderer::draw()
 {
-	auto& graphics{tr::window().graphics()};
-	auto& target{tr::window().backbuffer()};
-
 	if (!_shaderGlyphs.empty()) {
-		if (lastRendererID() != ID) {
-			setupContext();
-			setLastRendererID(ID);
-		}
-		graphics.setFramebuffer(target);
+		setupContext();
 
 		if (_shaderGlyphBuffer.arrayCapacity() < _shaderGlyphs.size() * sizeof(ShaderGlyph)) {
 			const auto newCapacity{std::bit_ceil(_shaderGlyphs.size() * sizeof(ShaderGlyph))};
@@ -273,9 +265,9 @@ void tre::DebugTextRenderer::draw()
 #endif
 		}
 		_shaderGlyphBuffer.setArray(tr::rangeBytes(_shaderGlyphs));
-		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(target.viewport().size));
+		_shaderPipeline.vertexShader().setUniform(0, glm::vec2(tr::window().size()));
 		_shaderPipeline.vertexShader().setStorageBuffer(0, _shaderGlyphBuffer);
-		graphics.drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
+		tr::window().graphics().drawInstances(tr::Primitive::TRI_FAN, 0, 4, _shaderGlyphs.size());
 		_shaderGlyphs.clear();
 	}
 
@@ -285,19 +277,21 @@ void tre::DebugTextRenderer::draw()
 
 void tre::DebugTextRenderer::setupContext() noexcept
 {
-	auto& graphics{tr::window().graphics()};
+	auto& context{tr::window().graphics()};
 
-	graphics.useDepthTest(false);
-	graphics.useScissorTest(false);
-	graphics.useStencilTest(false);
-	graphics.useFaceCulling(false);
+	context.useDepthTest(false);
+	context.useScissorTest(false);
+	context.useStencilTest(false);
+	context.useFaceCulling(false);
 
-	graphics.useBlending(true);
-	graphics.setBlendingMode(tr::ALPHA_BLENDING);
+	context.useBlending(true);
+	context.setBlendingMode(tr::ALPHA_BLENDING);
 
-	graphics.setShaderPipeline(_shaderPipeline);
-	graphics.setVertexFormat(_vertexFormat);
-	graphics.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
+	context.setFramebuffer(tr::window().backbuffer());
+	context.setViewport({{}, tr::window().backbuffer().size()});
+	context.setShaderPipeline(_shaderPipeline);
+	context.setVertexFormat(_vertexFormat);
+	context.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
 }
 
 bool tre::debugTextRendererActive() noexcept
