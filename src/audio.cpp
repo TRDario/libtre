@@ -153,8 +153,7 @@ void tre::AudioSource::Stream::refillBuffer(Buffer& buffer)
 	auto samplesToRead{std::min<int>(AUDIO_STREAM_BUFFER_SIZE, samplesLeft)};
 	dataBuffer.resize(samplesToRead * channels());
 	read(dataBuffer.begin(), samplesToRead);
-	buffer.set(tr::rangeBytes(dataBuffer), channels() == 2 ? tr::AudioFormat::STEREO16 : tr::AudioFormat::MONO16,
-			   sampleRate());
+	buffer.set(dataBuffer, channels() == 2 ? tr::AudioFormat::STEREO16 : tr::AudioFormat::MONO16, sampleRate());
 	if (samplesToRead < AUDIO_STREAM_BUFFER_SIZE && looping()) {
 		seek(loopStart());
 	}
@@ -505,7 +504,8 @@ tr::SecondsF tre::AudioSource::offset() const noexcept
 		if (state == tr::AudioState::INITIAL || state == tr::AudioState::STOPPED) {
 			return tr::SecondsF{_stream->position() / float(_stream->sampleRate())};
 		}
-		auto& buffer{*std::ranges::find(_stream->buffers, _source.buffer())};
+		auto& buffer{
+			*std::ranges::find(_stream->buffers, _source.buffer(), &tr::AudioBuffer::operator tr::AudioBufferView)};
 		return tr::SecondsF{buffer.startFileOffset / float(_stream->sampleRate())} + _source.offset();
 	}
 	else {
@@ -637,7 +637,8 @@ void tre::AudioManager::thread() noexcept
 						buffers.push_back(source._source.unqueueBuffer());
 					}
 					for (auto& buffer : buffers) {
-						stream.refillBuffer(*std::ranges::find(stream.buffers, buffer));
+						stream.refillBuffer(
+							*std::ranges::find(stream.buffers, buffer, &tr::AudioBuffer::operator tr::AudioBufferView));
 						source._source.queueBuffer(buffer);
 						if (stream.position() == stream.length()) {
 							break;
