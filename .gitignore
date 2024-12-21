@@ -404,6 +404,10 @@ build/*
 doxygen/*
 !doxygen/manual
 !doxygen/Doxyfile
+!doxygen/custom.css
+!doxygen/doxygen-awesome-darkmode-toggle.js
+!doxygen/doxygen-awesome.css
+!doxygen/header.html
 
 # .h/.hpp and .spv files in resources
 resources/*.h
