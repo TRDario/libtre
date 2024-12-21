@@ -5,9 +5,6 @@
 namespace tre {
 	/** @defgroup atlas Atlases
 	 *  Texture atlas functionality.
-	 *
-	 *  An instance of tr::Window must be created before any functionality from this section can be used.
-	 *  @{
 	 */
 
 	/******************************************************************************************************************
@@ -28,6 +25,10 @@ namespace tre {
 	/******************************************************************************************************************
 	 * Builds an atlas bitmap.
 	 *
+	 * @par Exception Safety
+	 *
+	 * Strong exception guarantee.
+	 *
 	 * @exception tr::BitmapBadAlloc If allocating the bitmap fails.
 	 * @exception std::bad_alloc If allocating the entry map fails.
 	 *
@@ -47,6 +48,10 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Uploads a pre-made atlas bitmap.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
 		 * @exception tr::TextureBadAlloc If allocating the texture fails.
 		 * @exception std::bad_alloc If allocating the texture entries fails.
 		 *
@@ -57,7 +62,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Creates an atlas from a list of named bitmaps.
 		 *
-		 * Equivalent to `Atlas2D(buildAtlasBitmap(bitmaps))`.
+		 * Functionally equivalent to `Atlas2D(buildAtlasBitmap(bitmaps))`.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception tr::BitmapBadAlloc If allocating the bitmap fails.
 		 * @exception tr::TextureBadAlloc If allocating the texture fails.
@@ -86,7 +95,12 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Returns the rect associated with an entry.
 		 *
-		 * @param[in] name The name of the entry. The entry must exist in the atlas.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the entry.
+		 *
+		 * @pre The entry must exist in the atlas.
+		 * @endparblock
 		 *
 		 * @return The entry rect with normalized size and coordinates.
 		 **************************************************************************************************************/
@@ -127,7 +141,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Gets the atlas texture.
 		 *
-		 * This function cannot be called with an empty atlas.
+		 * @pre This function cannot be called with an empty atlas.
 		 *
 		 * @return An immutable reference to the atlas texture.
 		 **************************************************************************************************************/
@@ -161,7 +175,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Reserves a certain amount of space in the bitmap.
 		 *
-		 * If the requested capacity is larger than the current capacity, this function does nothing.
+		 * @note If the requested capacity is larger than the current capacity, this function does nothing.
 		 *
 		 * @warning Calling this function invalidates any previous atlas texture bindings, the atlas texture must be
 		 *          rebound to any texture units it was bound to.
@@ -182,33 +196,71 @@ namespace tre {
 		 * @exception tr::TextureBadAlloc If a texture reallocation happens and fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] name The name of the new entry.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the new entry.
+		 *
+		 * @pre An entry named @em name must not already exist in the atlas.
+		 * @endparblock
 		 * @param[in] bitmap The entry's bitmap data.
 		 **************************************************************************************************************/
-		void add(std::string name, tr::SubBitmap bitmap);
+		void add(const std::string& name, const tr::SubBitmap& bitmap);
+
+		/**************************************************************************************************************
+		 * Adds an entry to the atlas.
+		 *
+		 * @warning Calling this function invalidates any previous atlas texture bindings, the atlas texture must be
+		 *          rebound to any texture units it was bound to.
+		 *
+		 * @exception tr::TextureBadAlloc If a texture reallocation happens and fails.
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
+		 * @param[in] name
+		 * @parblock
+		 * The name of the new entry. The contents of the string will be moved in the process.
+		 *
+		 * @pre An entry named @em name must not already exist in the atlas.
+		 * @endparblock
+		 * @param[in] bitmap The entry's bitmap data.
+		 **************************************************************************************************************/
+		void add(std::string&& name, const tr::SubBitmap& bitmap);
 
 		/**************************************************************************************************************
 		 * Removes an entry from the atlas.
 		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the entry to remove.
 		 *
-		 * @param[in] name The name of the entry to remove.
+		 * @note If there is no entry called @em name in the atlas, nothing happens.
+		 * @endparblock
 		 **************************************************************************************************************/
-		void remove(std::string_view name);
+		void remove(std::string_view name) noexcept;
 
 		/**************************************************************************************************************
 		 * Removes all entries from the atlas.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
 		 **************************************************************************************************************/
-		void clear();
+		void clear() noexcept;
 
 		/**************************************************************************************************************
 		 * Sets the debug label of the atlas texture.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::bad_alloc If an internal allocation fails.
+		 *
 		 * @param[in] label The new label of the atlas texture.
 		 **************************************************************************************************************/
-		void setLabel(std::string label) noexcept;
+		void setLabel(const std::string& label);
+
+		/**************************************************************************************************************
+		 * Sets the debug label of the atlas texture.
+		 *
+		 * @param[in] label The new label of the atlas texture. The contents of the string will be moved in the process.
+		 **************************************************************************************************************/
+		void setLabel(std::string&& label) noexcept;
 
 	  private:
 		std::optional<tr::Texture2D>  _tex;

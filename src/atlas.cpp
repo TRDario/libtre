@@ -288,26 +288,38 @@ std::forward_list<tr::RectI2>::iterator tre::DynAtlas2D::findFreeRectPrev(glm::i
 	}
 }
 
-void tre::DynAtlas2D::add(std::string name, tr::SubBitmap bitmap)
+void tre::DynAtlas2D::add(const std::string& name, const tr::SubBitmap& bitmap)
 {
 	const auto prev{findFreeRectPrev(bitmap.size())};
 	const auto it{std::next(prev)};
 
-	_entries.emplace(std::move(name), tr::RectI2{it->tl, bitmap.size()});
+	_entries.emplace(std::piecewise_construct, std::forward_as_tuple(name),
+					 std::forward_as_tuple(it->tl, bitmap.size()));
 	_tex->setRegion(it->tl, bitmap);
 	tre::shrinkFreeRect(_freeRects, prev, bitmap.size());
 }
 
-void tre::DynAtlas2D::remove(std::string_view name)
+void tre::DynAtlas2D::add(std::string&& name, const tr::SubBitmap& bitmap)
+{
+	const auto prev{findFreeRectPrev(bitmap.size())};
+	const auto it{std::next(prev)};
+
+	_entries.emplace(std::piecewise_construct, std::forward_as_tuple(std::move(name)),
+					 std::forward_as_tuple(it->tl, bitmap.size()));
+	_tex->setRegion(it->tl, bitmap);
+	tre::shrinkFreeRect(_freeRects, prev, bitmap.size());
+}
+
+void tre::DynAtlas2D::remove(std::string_view name) noexcept
 {
 	auto it{_entries.find(name)};
 	if (it != _entries.end()) {
-		_freeRects.emplace_front(it->second.tl, it->second.size);
 		_entries.erase(it);
+		_freeRects.emplace_front(it->second.tl, it->second.size);
 	}
 }
 
-void tre::DynAtlas2D::clear()
+void tre::DynAtlas2D::clear() noexcept
 {
 	_entries.clear();
 	_freeRects.clear();
@@ -316,7 +328,15 @@ void tre::DynAtlas2D::clear()
 	}
 }
 
-void tre::DynAtlas2D::setLabel(std::string label) noexcept
+void tre::DynAtlas2D::setLabel(const std::string& label)
+{
+	_label = label;
+	if (_tex.has_value()) {
+		_tex->setLabel(_label);
+	}
+}
+
+void tre::DynAtlas2D::setLabel(std::string&& label) noexcept
 {
 	_label = std::move(label);
 	if (_tex.has_value()) {
