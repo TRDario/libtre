@@ -27,12 +27,12 @@ add_shader(tre resources/debug_text.frag DEBUG_TEXT_FRAG_SPV)
 add_embedded_file(tre resources/debug_text_font.bmp DEBUG_TEXT_FONT_BMP)
 target_sources(tre PRIVATE
     src/atlas.cpp src/audio.cpp src/bitmap_text_renderer.cpp src/debug_text_renderer.cpp src/dynamic_text_renderer.cpp
-    src/localization_manager.cpp src/renderer_2d.cpp src/sampler.cpp src/state_manager.cpp
+    src/localization_manager.cpp src/renderer_2d.cpp src/render_view.cpp src/sampler.cpp src/state_manager.cpp
     src/static_text_renderer.cpp src/text.cpp
 )
 target_sources(tre PUBLIC FILE_SET HEADERS BASE_DIRS include FILES
     include/tre/atlas.hpp include/tre/audio.hpp include/tre/bitmap_text_renderer.hpp include/tre/debug_text_renderer.hpp
-    include/tre/dynamic_text_renderer.hpp include/tre/localization_manager.hpp include/tre/renderer_2d.hpp
+    include/tre/dynamic_text_renderer.hpp include/tre/localization_manager.hpp include/tre/renderer_2d.hpp include/tre/render_view.hpp
     include/tre/sampler.hpp include/tre/state_manager.hpp
     include/tre/static_text_renderer.hpp include/tre/text.hpp include/tre/tre.hpp
 )
