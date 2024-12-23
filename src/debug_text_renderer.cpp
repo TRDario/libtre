@@ -29,7 +29,7 @@ tre::DebugTextRenderer::DebugTextRenderer()
 	, _leftLine{0}
 	, _rightLine{0}
 {
-	assert(!debugTextRendererActive());
+	assert(!debugTextActive());
 	_debugTextRenderer = this;
 
 	_textureUnit.setTexture(_font);
@@ -277,30 +277,26 @@ void tre::DebugTextRenderer::draw()
 
 void tre::DebugTextRenderer::setupContext() noexcept
 {
-	auto& context{tr::window().graphics()};
-
-	context.useDepthTest(false);
-	context.useScissorTest(false);
-	context.useStencilTest(false);
-	context.useFaceCulling(false);
-
-	context.useBlending(true);
-	context.setBlendingMode(tr::ALPHA_BLENDING);
-
-	context.setFramebuffer(tr::window().backbuffer());
-	context.setViewport({{}, tr::window().backbuffer().size()});
-	context.setShaderPipeline(_shaderPipeline);
-	context.setVertexFormat(_vertexFormat);
-	context.setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
+	tr::window().graphics().useDepthTest(false);
+	tr::window().graphics().useScissorTest(false);
+	tr::window().graphics().useStencilTest(false);
+	tr::window().graphics().useFaceCulling(false);
+	tr::window().graphics().useBlending(true);
+	tr::window().graphics().setBlendingMode(tr::ALPHA_BLENDING);
+	tr::window().graphics().setFramebuffer(tr::window().backbuffer());
+	tr::window().graphics().setViewport({{}, tr::window().backbuffer().size()});
+	tr::window().graphics().setShaderPipeline(_shaderPipeline);
+	tr::window().graphics().setVertexFormat(_vertexFormat);
+	tr::window().graphics().setVertexBuffer(_vertexBuffer, 0, sizeof(glm::u8vec2));
 }
 
-bool tre::debugTextRendererActive() noexcept
+bool tre::debugTextActive() noexcept
 {
 	return _debugTextRenderer != nullptr;
 }
 
-tre::DebugTextRenderer& tre::debugTextRenderer() noexcept
+tre::DebugTextRenderer& tre::debugText() noexcept
 {
-	assert(debugTextRendererActive());
+	assert(debugTextActive());
 	return *_debugTextRenderer;
 }

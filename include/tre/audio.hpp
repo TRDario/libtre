@@ -702,7 +702,7 @@ namespace tre {
 		AudioManager(AudioManager&& r) noexcept;
 
 		/**************************************************************************************************************
-		 * Destroys the audio amanger and disables the ability to use the tre::audio() getter.
+		 * Destroys the audio manager and disables the ability to use the tre::audio() getter.
 		 **************************************************************************************************************/
 		~AudioManager() noexcept;
 

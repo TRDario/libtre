@@ -1,7 +1,7 @@
 /**********************************************************************************************************************
  * @page debformat Formatted Debug Text Format
  * 
- * debug_text_renderer.hpp features a formatted text mode with a number of built-in controls. The following are the
+ * DebugTextRenderer uses a formatted text format with a number of built-in controls. The following are the
  * valid escape sequences for those controls:
  *
  * <code>\\b[i]</code> (where @em i is 0-9)

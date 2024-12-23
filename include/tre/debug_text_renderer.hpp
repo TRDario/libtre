@@ -2,7 +2,9 @@
 #include <tr/tr.hpp>
 
 namespace tre {
-	/** @addtogroup text
+	/** @defgroup debug_text Debug Text
+	 *  Debug text rendering functionality.
+	 *
 	 *  @{
 	 */
 
@@ -10,9 +12,17 @@ namespace tre {
 	 * Debug text renderer.
 	 *
 	 * The renderer is conceptualized around two independent "pens", a left-aligned and right-aligned one, writing text
-	 * sequentially. Writing uses special text formatting, the specifics of which you can see at @ref debformat.
+	 * sequentially. Writing uses special text formatting, the specifics of which can be seen at @ref debformat.
 	 *
-	 * Only one instance of the debug text renderer is allowed to exist at a time.
+	 * The DebugTextRenderer class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
+	 * will be globally available through debugText(). Instancing the renderer again after it has been closed is a
+	 * valid action.
+	 *
+	 * DebugTextRenderer is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
+	 * where another renderer can be moved into it, but is otherwise unusable.
+	 *
+	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.
 	 ******************************************************************************************************************/
 	class DebugTextRenderer {
 	  public:
@@ -54,10 +64,25 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Constructs the debug text renderer.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
 		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 **************************************************************************************************************/
 		DebugTextRenderer();
 
+		/**************************************************************************************************************
+		 * Move-constructs a debug text renderer.
+		 *
+		 * @param[in] r The debug text renderer to move from. @em r will be left in a moved-from state that shouldn't
+		 *              be used.
+		 **************************************************************************************************************/
+		DebugTextRenderer(DebugTextRenderer&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the debug text renderer and disables the ability to use the tre::debugText() getter.
+		 **************************************************************************************************************/
 		~DebugTextRenderer() noexcept;
 
 		/**************************************************************************************************************
@@ -70,7 +95,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the text's column limit.
 		 *
-		 * Setting this in the middle of writing will leave any existing text as-is.
+		 * @note Setting this in the middle of writing will leave any existing text as-is.
 		 *
 		 * @param[in] columns The maximum allowed number of columns tolerated before a break is needed.
 		 **************************************************************************************************************/
@@ -166,15 +191,16 @@ namespace tre {
 	 *
 	 * @return True if the debug text renderer was initialized, and false otherwise.
 	 ******************************************************************************************************************/
-	bool debugTextRendererActive() noexcept;
+	bool debugTextActive() noexcept;
 
 	/******************************************************************************************************************
 	 * Gets a reference to the debug text renderer.
-	 * This function cannot be called if the debug text renderer wasn't initialized.
+	 *
+	 * @pre The debug text renderer must be instantiated.
 	 *
 	 * @return A reference to the debug text renderer.
 	 ******************************************************************************************************************/
-	DebugTextRenderer& debugTextRenderer() noexcept;
+	DebugTextRenderer& debugText() noexcept;
 
 	/// @}
 } // namespace tre
