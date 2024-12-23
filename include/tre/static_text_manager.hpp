@@ -14,15 +14,15 @@ namespace tre {
 	/******************************************************************************************************************
 	 * Texture and mesh manager for rarely-changing text.
 	 *
-	 * The DebugTextRenderer class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * The StaticTextManager class uses something akin to the singleton pattern. It is still your job to instantiate the
 	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
 	 * will be globally available through staticText(). Instancing the renderer again after it has been closed is a
 	 * valid action.
 	 *
-	 * DebugTextRenderer is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
+	 * StaticTextManager is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
 	 * where another renderer can be moved into it, but is otherwise unusable.
 	 *
-	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.
+	 * @note An instance of tr::Window must be created before StaticTextManager can be instantiated.
 	 ******************************************************************************************************************/
 	class StaticTextManager {
 	  public:

@@ -3,7 +3,7 @@
 #include "audio.hpp"
 #include "bitmap_text_renderer.hpp"
 #include "debug_text_renderer.hpp"
-#include "dynamic_text_renderer.hpp"
+#include "dynamic_text_manager.hpp"
 #include "localization_manager.hpp"
 #include "render_view.hpp"
 #include "renderer_2d.hpp"

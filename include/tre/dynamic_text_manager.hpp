@@ -1,20 +1,30 @@
 #pragma once
 #include "atlas.hpp"
+#include "renderer_2d.hpp"
 #include "text.hpp"
 
 namespace tre {
-	/** @addtogroup text
+	/** @ingroup text
+	 *  @defgroup dynamic_text Dynamic Text
+	 *  Dynamic text management functionality.
+	 *
 	 *  @{
 	 */
 
 	/******************************************************************************************************************
-	 * Renderer for one-off or frequently changing text.
+	 * Texture and mesh manager for frequently-changing text.
 	 *
-	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
+	 * The DynamicTextManager class uses something akin to the singleton pattern. It is still your job to instantiate
+	 * the renderer once (and only once!), after which it will stay active until its destructor is called, but this
+	 * instance will be globally available through staticText(). Instancing the renderer again after it has been closed
+	 * is a valid action.
 	 *
-	 * Only one instance of the dynamic text renderer is allowed to exist at a time.
+	 * DynamicTextManager is move-constructible, but neither copyable nor assignable. A moved renderer is left in a
+	 * state where another renderer can be moved into it, but is otherwise unusable.
+	 *
+	 * @note An instance of tr::Window must be created before DynamicTextManager can be instantiated.
 	 ******************************************************************************************************************/
-	class DynamicTextRenderer {
+	class DynamicTextManager {
 	  public:
 		/**************************************************************************************************************
 		 * Dynamic text textbox rectangle.
@@ -47,11 +57,29 @@ namespace tre {
 		};
 
 		/**************************************************************************************************************
-		 * Constructs the dynamic text renderer.
+		 * Constructs the dynamic text manager.
 		 **************************************************************************************************************/
-		DynamicTextRenderer() noexcept;
+		DynamicTextManager() noexcept;
 
-		~DynamicTextRenderer() noexcept;
+		/**************************************************************************************************************
+		 * Move-constructs a dynamic text manager.
+		 *
+		 * @param[in] r The dynamic text manager to move from. @em r will be left in a moved-from state that shouldn't
+		 *              be used.
+		 **************************************************************************************************************/
+		DynamicTextManager(DynamicTextManager&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the debug text renderer and disables the ability to use the dynamicText() getter.
+		 **************************************************************************************************************/
+		~DynamicTextManager() noexcept;
+
+		/**************************************************************************************************************
+		 * Gets a reference to the manager's texture atlas.
+		 *
+		 * @return An immutable reference to the manager's texture atlas.
+		 **************************************************************************************************************/
+		const tr::Texture2D& texture() const noexcept;
 
 		/**************************************************************************************************************
 		 * Sets the DPI of the renderer.
@@ -73,8 +101,12 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
-		 * @param[in] text The text string.
+		 * @param[in] text
+		 * @parblock
+		 * The text string.
+		 *
+		 * @pre @em text cannot be an empty string.
+		 * @endparblock
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
 		 * @param[in] style The font style to use for the text.
@@ -82,8 +114,9 @@ namespace tre {
 		 * @param[in] outline The outline parameters to use for the text, or NO_OUTLINE.
 		 * @param[in] textbox The textbox to frame the text around.
 		 **************************************************************************************************************/
-		void addUnformatted(int priority, const char* text, tr::TTFont& font, int fontSize, tr::TTFont::Style style,
-							tr::RGBA8 textColor, TextOutline outline, const Textbox& textbox);
+		Renderer2D::TextureQuad createUnformatted(const char* text, tr::TTFont& font, int fontSize,
+												  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
+												  const Textbox& textbox);
 
 		/**************************************************************************************************************
 		 * Adds unformatted, single-style text to the 2D renderer.
@@ -91,8 +124,12 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
-		 * @param[in] text The text string.
+		 * @param[in] text
+		 * @parblock
+		 * The text string.
+		 *
+		 * @pre @em text cannot be an empty string.
+		 * @endparblock
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
 		 * @param[in] style The font style to use for the text.
@@ -100,8 +137,9 @@ namespace tre {
 		 * @param[in] outline The outline parameters to use for the text, or NO_OUTLINE.
 		 * @param[in] textbox The textbox to frame the text around.
 		 **************************************************************************************************************/
-		void addUnformatted(int priority, const std::string& text, tr::TTFont& font, int fontSize,
-							tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, const Textbox& textbox);
+		Renderer2D::TextureQuad createUnformatted(const std::string& text, tr::TTFont& font, int fontSize,
+												  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
+												  const Textbox& textbox);
 
 		/**************************************************************************************************************
 		 * Adds formatted, multistyle text to the 2D renderer.
@@ -109,16 +147,20 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
-		 * @param[in] text The text string. See @ref renderformat for the specifics of the text format.
+		 * @param[in] text
+		 * @parblock
+		 * The text string. See @ref renderformat for the specifics of the text format.
+		 *
+		 * @pre @em text cannot be an empty string.
+		 * @endparblock
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
 		 * @param[in] textColor The color to use for the text.
 		 * @param[in] outline The outline parameters to use for the text, or NO_OUTLINE.
 		 * @param[in] textbox The textbox to frame the text around.
 		 **************************************************************************************************************/
-		void addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize, tr::RGBA8 textColor,
-						  TextOutline outline, const Textbox& textbox);
+		Renderer2D::TextureQuad createFormatted(std::string_view text, tr::TTFont& font, int fontSize,
+												tr::RGBA8 textColor, TextOutline outline, const Textbox& textbox);
 
 		/**************************************************************************************************************
 		 * Adds formatted, multistyle text to the 2D renderer.
@@ -126,47 +168,56 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
-		 * @param[in] text The text string. See @ref renderformat for the specifics of the text format.
+		 * @param[in] text
+		 * @parblock
+		 * The text string. See @ref renderformat for the specifics of the text format.
+		 *
+		 * @pre @em text cannot be an empty string.
+		 * @endparblock
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
-		 * @param[in] textColors The available text colors. By default, the color at index 0 is used. Must not be empty.
+		 * @param[in] textColors
+		 * @parblock
+		 * The available text colors.
+		 *
+		 * @pre @em textColors cannot be empty.
+		 * @endparblock
 		 * @param[in] outline The outline parameters to use for the text, or NO_OUTLINE.
 		 * @param[in] textbox The textbox to frame the text around.
 		 **************************************************************************************************************/
-		void addFormatted(int priority, std::string_view text, tr::TTFont& font, int fontSize,
-						  std::span<tr::RGBA8> textColors, TextOutline outline, const Textbox& textbox);
+		Renderer2D::TextureQuad createFormatted(std::string_view text, tr::TTFont& font, int fontSize,
+												std::span<tr::RGBA8> textColors, TextOutline outline,
+												const Textbox& textbox);
 
 		/**************************************************************************************************************
-		 * Prepares the renderer for a new frame.
+		 * Prepares the manager for a new frame.
 		 *
 		 * @warning This function should only be called after all previously outputted text was rendered!
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
 		 **************************************************************************************************************/
-		void newFrame();
+		void newFrame() noexcept;
 
 	  private:
 		DynAtlas2D _atlas;
 		glm::uvec2 _dpi;
 
-		void addToRenderer(int priority, const std::string& name, const Textbox& textbox);
+		Renderer2D::TextureQuad createMesh(const std::string& name, const Textbox& textbox);
 	};
 
 	/******************************************************************************************************************
-	 * Gets whether the dynamic text renderer was initialized.
+	 * Gets whether the dynamic text manager was initialized.
 	 *
-	 * @return True if the dynamic text renderer was initialized, and false otherwise.
+	 * @return True if the dynamic text manager was initialized, and false otherwise.
 	 ******************************************************************************************************************/
-	bool dynamicTextRendererActive() noexcept;
+	bool dynamicTextActive() noexcept;
 
 	/******************************************************************************************************************
-	 * Gets a reference to the dynamic text renderer.
-	 * This function cannot be called if the dynamic text renderer wasn't initialized.
+	 * Gets a reference to the dynamic text manager.
 	 *
-	 * @return A reference to the dynamic text renderer.
+	 * @pre The dynamic text manager must be instantiated.
+	 *
+	 * @return A reference to the dynamic text manager.
 	 ******************************************************************************************************************/
-	DynamicTextRenderer& dynamicTextRenderer() noexcept;
+	DynamicTextManager& dynamicText() noexcept;
 
 	/// @}
 } // namespace tre

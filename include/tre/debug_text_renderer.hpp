@@ -23,7 +23,7 @@ namespace tre {
 	 * DebugTextRenderer is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
 	 * where another renderer can be moved into it, but is otherwise unusable.
 	 *
-	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.
+	 * @note An instance of tr::Window must be created before DebugTextRenderer can be instantiated.
 	 ******************************************************************************************************************/
 	class DebugTextRenderer {
 	  public:
