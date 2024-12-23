@@ -1,348 +1,480 @@
 #pragma once
+#include "render_view.hpp"
 #include <map>
-#include <tr/tr.hpp>
 
 namespace tre {
-	/** @addtogroup renderer
-	 *  @{
-	 */
-
 	/******************************************************************************************************************
-	 * General-purpose batched 2D renderer.
+	 * Layer-based basic 2D renderer.
 	 *
-	 * Only one instance of the 2D renderer is allowed to exist at a time.
+	 * Renderer2D uses @em layers as a way of grouping primitives of the same drawing priority, as well as the same
+	 * rendering configuration (texture, sampler, transfomration matrix, blending mode). Smart usage of layers will
+	 * group layers with similar rendering configurations cloe by to minimize rendering state changes.
+	 *
+	 * The Renderer2D class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
+	 * will be globally available through renderer2D(). Instancing the renderer again after it has been closed is a
+	 * valid action.
+	 *
+	 * Renderer2D is move-constructive, but neither copyable nor assignable. A moved renderer is left in a state where
+	 * another renderer can be moved into it, but is otherwise unusable.
 	 ******************************************************************************************************************/
 	class Renderer2D {
 	  public:
 		/**************************************************************************************************************
-		 * The unique renderer ID of this renderer.
-		 **************************************************************************************************************/
-		static constexpr std::uint32_t ID{-2U};
-
-		/**************************************************************************************************************
-		 * Shorthand for the vertex type used by the renderer.
-		 **************************************************************************************************************/
-		using Vertex = tr::TintVtx2;
-
-		/**************************************************************************************************************
-		 * The combination of texture and sampler used when drawing an object.
-		 **************************************************************************************************************/
-		using TextureRef = std::pair<const tr::Texture2D&, const tr::Sampler&>;
-
-		/**************************************************************************************************************
-		 * Shorthand for a textured quad used by the renderer.
-		 **************************************************************************************************************/
-		using TexturedQuad = std::array<Vertex, 4>;
-
-		/**************************************************************************************************************
-		 * Shorthand for a textured vertex fan used by the renderer.
-		 **************************************************************************************************************/
-		using TexturedVertexFan = std::vector<Vertex>;
-
-		/**************************************************************************************************************
-		 * Creates the 2D renderer.
+		 * Creates the 2D renderer and enables the ability to use the tre::renderer2D() getter.
 		 *
-		 * Only one of these should be created at a time. This class can only be instantiated after an OpenGL context
-		 * is opened.
+		 * @note Only one instance of Renderer2D can exist at any one time.
 		 **************************************************************************************************************/
 		Renderer2D();
 
+		/**************************************************************************************************************
+		 * Move-constructs a 2D renderer.
+		 *
+		 * @param[in] r The renderer to move from. @em r will be left in a moved-from state that shouldn't be used.
+		 **************************************************************************************************************/
+		Renderer2D(Renderer2D&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the 2D renderer and disables the ability to use the tre::renderer2D() getter.
+		 **************************************************************************************************************/
 		~Renderer2D() noexcept;
 
 		/**************************************************************************************************************
-		 * Gets the size of the rendered field.
+		 * Adds a new color-only layer to the renderer.
 		 *
-		 * @return The size of the rendered field.
-		 **************************************************************************************************************/
-		glm::vec2 fieldSize() const noexcept;
-
-		/**************************************************************************************************************
-		 * Sets the size of the rendered field.
+		 * @note The layer can be turned into a full layer afterwards by setting its texture and sampler.
 		 *
-		 * @param[in] size The new size of the rendered field.
-		 **************************************************************************************************************/
-		void setFieldSize(glm::vec2 size) noexcept;
-
-		/**************************************************************************************************************
-		 * Sets the blending mode used by the renderer.
+		 * @par Exception Safety
 		 *
-		 * @param[in] blendMode The blending mode used by the renderer.
-		 **************************************************************************************************************/
-		void setBlendingMode(tr::BlendMode blendMode) noexcept;
-
-		/**************************************************************************************************************
-		 * Sets the scissor box used by the renderer.
-		 *
-		 * @param[in] scissorBox The scissor box to use, or std::nullopt to disable the scissor test.
-		 **************************************************************************************************************/
-		void setScissorBox(std::optional<tr::RectI2> scissorBox) noexcept;
-
-		/**************************************************************************************************************
-		 * Adds an untextured rect to the list of objects to draw in the next draw call.
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] rect The rectangle to draw.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] priority
+		 * @parblock
+		 * The priority of the layer (layers with a higher priority are drawn on top).
+		 *
+		 * This value will be used as the name of the layer afterwards.
+		 *
+		 * @pre A layer with this priority cannot exist already.
+		 * @endparblock
+		 * @param[in] transform The transformation matrix used for primitives on this layer.
+		 * @param[in] blendMode The blending mode used for primitives on this layer.
 		 **************************************************************************************************************/
-		void addUntexturedRect(int priority, const tr::RectF2& rect, tr::RGBA8 color);
+		void addColorOnlyLayer(int priority, const glm::mat4& transform,
+							   const tr::BlendMode& blendMode = tr::ALPHA_BLENDING);
 
 		/**************************************************************************************************************
-		 * Adds an untextured rect outline to the list of objects to draw in the next draw call.
+		 * Adds a new full layer to the renderer.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] rect The rectangle to draw.
-		 * @param[in] thickness The thickness of the outline.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] priority
+		 * @parblock
+		 * The priority of the layer (layers with a higher priority are drawn on top).
+		 *
+		 * This value will be used as the name of the layer afterwards.
+		 *
+		 * @pre A layer with this priority cannot exist already.
+		 * @endparblock
+		 * @param[in] texture
+		 * @parblock
+		 * The texture used for textured primitives on this layer.
+		 *
+		 * @warning The texture reference must stay valid for as long as this layer uses it.
+		 * @endparblock
+		 * @param[in] sampler
+		 * @parblock
+		 * The sampler used for textured primitives on this layer.
+		 *
+		 * @warning The sampler reference must stay valid for as long as this layer uses it.
+		 * @endparblock
+		 * @param[in] transform The transformation matrix used for primitives on this layer.
+		 * @param[in] blendMode The blending mode used for primitives on this layer.
 		 **************************************************************************************************************/
-		void addRectOutline(int priority, const tr::RectF2& rect, float thickness, tr::RGBA8 color);
+		void addLayer(int priority, const tr::Texture2D& texture, const tr::Sampler& sampler,
+					  const glm::mat4& transform, const tr::BlendMode& blendMode = tr::ALPHA_BLENDING);
 
 		/**************************************************************************************************************
-		 * Adds a textured rect to the list of objects to draw in the next draw call.
+		 * Sets the texture used by textured primitives on a layer.
+		 *
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to set the texture for.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] texture
+		 * @parblock
+		 * The texture to use for textured primitives on this layer.
+		 *
+		 * @warning The texture reference must stay valid for as long as this layer uses it.
+		 * @endparblock
+		 **************************************************************************************************************/
+		void setLayerTexture(int layer, const tr::Texture2D& texture) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the sampler used by textured primitives on a layer.
+		 *
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to set the sampler for.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] sampler
+		 * @parblock
+		 * The sampler to use for textured primitives on this layer.
+		 *
+		 * @warning The sampler reference must stay valid for as long as this layer uses it.
+		 * @endparblock
+		 **************************************************************************************************************/
+		void setLayerSampler(int layer, const tr::Sampler& sampler) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the transformation matrix used by primitives on a layer.
+		 *
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to set the transformation matrix for.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] transform The transformation matrix to use for textured primitives on this layer.
+		 **************************************************************************************************************/
+		void setLayerTransform(int layer, const glm::mat4& transform) noexcept;
+
+		/**************************************************************************************************************
+		 * Sets the blending mode used by primitives on a layer.
+		 *
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to set the blending mode for.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] blendMode The blending mode to use for textured primitives on this layer.
+		 **************************************************************************************************************/
+		void setLayerBlendMode(int layer, const tr::BlendMode& blendMode) noexcept;
+
+		/**************************************************************************************************************
+		 * Removes a layer from the renderer.
+		 *
+		 * @param[in] layer The layer to remove.
+		 **************************************************************************************************************/
+		void removeLayer(int layer) noexcept;
+
+		/**************************************************************************************************************
+		 * Shorthand for an untextured quad primitive.
+		 **************************************************************************************************************/
+		using ColorQuad = std::array<tr::ClrVtx2, 4>;
+
+		/**************************************************************************************************************
+		 * Adds an untextured quad to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] rect The rectangle to draw.
-		 * @param[in] texture The texture and sampler used for the rectangle.
-		 * @param[in] uv The UV values used for the rectangle (normalized).
-		 * @param[in] tint The tint of the rectangle.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the quad on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] quad The quad to draw according to layer parameters.
 		 **************************************************************************************************************/
-		void addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture, const tr::RectF2& uv,
-							 tr::RGBA8 tint);
+		void addColorQuad(int layer, const ColorQuad& quad);
 
 		/**************************************************************************************************************
-		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
+		 * Shorthand for a textured quad primitive.
+		 **************************************************************************************************************/
+		using TextureQuad = std::array<tr::TintVtx2, 4>;
+
+		/**************************************************************************************************************
+		 * Adds a textured quad to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] pos The position of the posAnchor.
-		 * @param[in] posAnchor The position of the position/rotation anchor within the rectangle.
-		 * @param[in] size The size of the rectangle.
-		 * @param[in] rotation The rotation of the rectangle.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the quad on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 *
+		 * @pre @em layer must be a full layer, i.e. have a texture and sampler defined for it.
+		 * @endparblock
+		 * @param[in] quad The quad to draw according to layer parameters.
 		 **************************************************************************************************************/
-		void addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-										   tr::AngleF rotation, tr::RGBA8 color);
+		void addTextureQuad(int layer, const TextureQuad& quad);
 
 		/**************************************************************************************************************
-		 * Adds an untextured, rotated rectangle outline to the list of objects to draw in the next draw call.
+		 * Shorthand for an untextured vertex fan primitive.
+		 **************************************************************************************************************/
+		using ColorFan = std::vector<tr::ClrVtx2>;
+
+		/**************************************************************************************************************
+		 * Adds an untextured vertex fan to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] pos The position of the posAnchor.
-		 * @param[in] posAnchor The position of the position/rotation anchor within the rectangle.
-		 * @param[in] size The size of the rectangle.
-		 * @param[in] rotation The rotation of the rectangle.
-		 * @param[in] thickness The thickness of the outline.
-		 * @param[in] color The color of the rectangle.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the vertex fan on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] fan
+		 * @parblock
+		 * The vertex fan to draw according to layer parameters.
+		 *
+		 * @pre @em fan must contain 3 or more vertices.
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addRotatedRectangleOutline(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-										tr::AngleF rotation, float thickness, tr::RGBA8 color);
+		void addColorFan(int layer, const ColorFan& fan);
 
 		/**************************************************************************************************************
-		 * Adds an untextured, rotated rectangle to the list of objects to draw in the next draw call.
+		 * Shorthand for a textured vertex fan primitive.
+		 **************************************************************************************************************/
+		using TextureFan = std::vector<tr::TintVtx2>;
+
+		/**************************************************************************************************************
+		 * Adds a textured vertex fan to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] pos The position of the posAnchor.
-		 * @param[in] posAnchor The position of the position/rotation anchor within the rectangle.
-		 * @param[in] size The size of the rectangle.
-		 * @param[in] rotation The rotation of the rectangle.
-		 * @param[in] texture The texture and sampler used for the rectangle.
-		 * @param[in] uv The UV values used for the rectangle (normalized).
-		 * @param[in] tint The tint of the rectangle.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the vertex fan on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 *
+		 * @pre @em layer must be a full layer, i.e. have a texture and sampler defined for it.
+		 * @endparblock
+		 * @param[in] fan
+		 * @parblock
+		 * The vertex fan to draw according to layer parameters.
+		 *
+		 * @pre @em fan must contain 3 or more vertices.
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-										 tr::AngleF rotation, TextureRef texture, const tr::RectF2& uv, tr::RGBA8 tint);
+		void addTextureFan(int layer, const TextureFan& fan);
 
 		/**************************************************************************************************************
-		 * Adds an untextured quad to the list of objects to draw in the next draw call.
+		 * Adds a textured vertex fan to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] quad The quad vertices.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the vertex fan on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 *
+		 * @pre @em layer must be a full layer, i.e. have a texture and sampler defined for it.
+		 * @endparblock
+		 * @param[in] fan
+		 * @parblock
+		 * The vertex fan to draw according to layer parameters. The contents of @em fan will be moved.
+		 *
+		 * @pre @em fan must contain 3 or more vertices.
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> quad);
+		void addTextureFan(int layer, TextureFan&& fan);
 
 		/**************************************************************************************************************
-		 * Adds a textured quad to the list of objects to draw in the next draw call.
+		 * Adds an untextured mesh to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] quad The quad vertices.
-		 * @param[in] texture The texture and sampler used for the quad.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the mesh on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] vertices
+		 * @parblock
+		 * The vertices of the mesh.
+		 *
+		 * @pre @em vertices must contain 3 or more vertices.
+		 * @endparblock
+		 * @param[in] indices
+		 * @parblock
+		 * The indices of the mesh.
+		 *
+		 * @pre The contents of @em indices must span from [0, vertices.size()).
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addTexturedQuad(int priority, TexturedQuad quad, TextureRef texture);
+		void addColorMesh(int layer, const std::vector<tr::ClrVtx2>& vertices,
+						  const std::vector<std::uint16_t>& indices);
 
 		/**************************************************************************************************************
-		 * Adds an untextured regular polygon to the list of objects to draw in the next draw call.
+		 * Adds an untextured mesh to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] circle The polygon circle.
-		 * @param[in] vertexCount The number of vertices in the polygon.
-		 * @param[in] rotation The rotation of the polygon.
-		 * @param[in] color The color of the polygon.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the mesh on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 * @endparblock
+		 * @param[in] vertices
+		 * @parblock
+		 * The vertices of the mesh.
+		 *
+		 * @pre @em vertices must contain 3 or more vertices.
+		 * @endparblock
+		 * @param[in] indices
+		 * @parblock
+		 * The indices of the mesh. The contents of @em indices will be moved.
+		 *
+		 * @pre The contents of @em indices must span from [0, vertices.size()).
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addUntexturedRegularPolygon(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
-										 tr::RGBA8 color);
+		void addColorMesh(int layer, const std::vector<tr::ClrVtx2>& vertices, std::vector<std::uint16_t>&& indices);
 
 		/**************************************************************************************************************
-		 * Adds an untextured regular polygon to the list of objects to draw in the next draw call.
+		 * Adds a textured mesh to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] circle The polygon circle.
-		 * @param[in] vertexCount The number of vertices in the polygon.
-		 * @param[in] rotation The rotation of the polygon.
-		 * @param[in] thickness The thickness of the outline.
-		 * @param[in] color The color of the polygon.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the mesh on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 *
+		 * @pre @em layer must be a full layer, i.e. have a texture and sampler defined for it.
+		 * @endparblock
+		 * @param[in] vertices
+		 * @parblock
+		 * The vertices of the mesh.
+		 *
+		 * @pre @em vertices must contain 3 or more vertices.
+		 * @endparblock
+		 * @param[in] indices
+		 * @parblock
+		 * The indices of the mesh.
+		 *
+		 * @pre The contents of @em indices must span from [0, vertices.size()).
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addRegularPolygonOutline(int priority, const tr::CircleF& circle, int vertexCount, tr::AngleF rotation,
-									  float thickness, tr::RGBA8 color);
+		void addTextureMesh(int layer, const std::vector<tr::TintVtx2>& vertices,
+							const std::vector<std::uint16_t>& indices);
 
 		/**************************************************************************************************************
-		 * Adds an untextured circle to the list of objects to draw in the next draw call.
+		 * Adds a textured mesh to be rendered.
+		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] circle The circle to draw.
-		 * @param[in] color The color of the circle.
+		 * @param[in] layer
+		 * @parblock
+		 * The layer to draw the mesh on.
+		 *
+		 * @pre The renderer must have a layer with priority @em layer.
+		 *
+		 * @pre @em layer must be a full layer, i.e. have a texture and sampler defined for it.
+		 * @endparblock
+		 * @param[in] vertices
+		 * @parblock
+		 * The vertices of the mesh. The contents of @em vertices will be moved.
+		 *
+		 * @pre @em vertices must contain 3 or more vertices.
+		 * @endparblock
+		 * @param[in] indices
+		 * @parblock
+		 * The indices of the mesh. The contents of @em indices will be moved.
+		 *
+		 * @pre The contents of @em indices must span from [0, vertices.size()).
+		 * @endparblock
 		 **************************************************************************************************************/
-		void addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color);
+		void addTextureMesh(int layer, std::vector<tr::TintVtx2>&& vertices, std::vector<std::uint16_t>&& indices);
 
 		/**************************************************************************************************************
-		 * Adds an untextured circle to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] circle The circle to draw.
-		 * @param[in] thickness The thickness of the outline.
-		 * @param[in] color The color of the circle.
-		 **************************************************************************************************************/
-		void addCircleOutline(int priority, const tr::CircleF& circle, float thickness, tr::RGBA8 color);
-
-		/**************************************************************************************************************
-		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] vertices The vertices of the polygon fan.
-		 * @param[in] color The color of the polygon.
-		 **************************************************************************************************************/
-		void addUntexturedPolygon(int priority, std::span<glm::vec2> vertices, tr::RGBA8 color);
-
-		/**************************************************************************************************************
-		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] vertices The vertices of the polygon fan.
-		 **************************************************************************************************************/
-		void addUntexturedPolygon(int priority, std::span<tr::ClrVtx2> vertices);
-
-		/**************************************************************************************************************
-		 * Adds an untextured polygon fan outline to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] vertices The vertices of the polygon fan.
-		 * @param[in] thickness The thickness of the outline.
-		 * @param[in] color The color of the polygon.
-		 **************************************************************************************************************/
-		// void addPolygonOutline(int priority, std::span<glm::vec2> vertices, float thickness, tr::RGBA8 color);
-
-		/**************************************************************************************************************
-		 * Adds an untextured polygon fan outline to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] vertices The vertices of the polygon fan.
-		 * @param[in] thickness The thickness of the outline.
-		 **************************************************************************************************************/
-		// void addPolygonOutline(int priority, std::span<tr::ClrVtx2> vertices, float thickness);
-
-		/**************************************************************************************************************
-		 * Adds an untextured polygon fan to the list of objects to draw in the next draw call.
-		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
-		 *
-		 * @param[in] priority The drawing priority of the object (higher is drawn on top).
-		 * @param[in] vertices The vertices of the polygon fan.
-		 * @param[in] texture The texture and sampler used for the polygon fan.
-		 **************************************************************************************************************/
-		void addTexturedPolygon(int priority, std::vector<Vertex> vertices, TextureRef texture);
-
-		/**************************************************************************************************************
-		 * Draws added objects of a certain priotrity or lower to a target.
-		 *
-		 * The render graph is cleared of these objects afterwards.
+		 * Draws all layers of priority <= maxLayer to a render view.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 *
-		 * @param[in] maxPriority The maximum drawn priority.
-		 * @param[in] target The drawing target.
+		 * @param[in] maxLayer The maximum drawn layer priority.
+		 * @param[in] view The target render view.
 		 **************************************************************************************************************/
-		void drawUpToPriority(int maxPriority, tr::BasicFramebuffer& target = tr::window().backbuffer());
+		void drawUpToLayer(int maxLayer, const RenderView& view = tr::window().backbuffer());
 
 		/**************************************************************************************************************
-		 * Draws all added objects to a target.
+		 * Draws all added primitives to a render view.
 		 *
-		 * The render graph is cleared afterwards.
-		 *
-		 * Equivalent to drawUpToPriority(target, INT_MIN).
+		 * Equivalent to drawUpToLayer(target, INT_MAX).
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 * @exception tr::GLBufferBadAlloc If an internal allocation fails.
 		 *
-		 * @param[in] target The drawing target.
+		 * @param[in] view The target render view.
 		 **************************************************************************************************************/
-		void draw(tr::BasicFramebuffer& target = tr::window().backbuffer());
+		void draw(const RenderView& target = tr::window().backbuffer());
 
 	  private:
-		struct TextureRefHash {
-			std::size_t operator()(const std::optional<TextureRef>& texture) const noexcept;
+		using TextureMesh = std::pair<std::vector<tr::TintVtx2>, std::vector<std::uint16_t>>;
+		using Primitive   = std::variant<TextureQuad, TextureFan, TextureMesh>;
+		struct Layer {
+			const tr::Texture2D*   texture;
+			const tr::Sampler*     sampler;
+			glm::mat4              transform;
+			tr::BlendMode          blendMode;
+			std::vector<Primitive> primitives;
 		};
-		struct PolygonOutline : TexturedVertexFan {
-			using TexturedVertexFan::vector;
-		};
-
-		using RawData   = std::pair<std::vector<Vertex>, std::vector<std::uint16_t>>;
-		using Primitive = std::variant<TexturedQuad, TexturedVertexFan, PolygonOutline, RawData>;
-		using Priority  = std::unordered_map<std::optional<TextureRef>, std::vector<Primitive>, TextureRefHash>;
 
 		tr::OwningShaderPipeline   _shaderPipeline;
 		tr::TextureUnit            _textureUnit;
 		tr::VertexBuffer           _vertexBuffer;
 		tr::IndexBuffer            _indexBuffer;
-		std::vector<Vertex>        _vertices;
+		std::vector<tr::TintVtx2>  _vertices;
 		std::vector<std::uint16_t> _indices;
-		std::map<int, Priority>    _renderGraph;
+		std::map<int, Layer>       _layers;
 
-		glm::vec2     _fieldSize;
-		tr::BlendMode _blendMode;
-		tr::RectI2    _scissorBox;
-
-		void setupContext() noexcept;
-		void writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index);
+		void                     setupContext() noexcept;
+		void                     writeToBuffers(const Primitive& primitive, std::uint16_t& index);
+		std::vector<std::size_t> uploadToGraphicsBuffers(decltype(_layers)::iterator end);
 	};
 
 	/******************************************************************************************************************
@@ -354,11 +486,10 @@ namespace tre {
 
 	/******************************************************************************************************************
 	 * Gets a reference to the 2D renderer.
-	 * This function cannot be called if the 2D renderer wasn't initialized.
+	 *
+	 * @pre The 2D renderer must be instantiated.
 	 *
 	 * @return A reference to the 2D renderer.
 	 ******************************************************************************************************************/
 	Renderer2D& renderer2D() noexcept;
-
-	/// @}
 } // namespace tre

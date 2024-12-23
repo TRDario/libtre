@@ -1,28 +1,15 @@
 #include "../include/tre/renderer_2d.hpp"
-
-#include "../include/tre/renderer_base.hpp"
 #include "../resources/renderer_2d.frag.spv.hpp"
 #include "../resources/renderer_2d.vert.spv.hpp"
 
-#include <boost/container_hash/hash.hpp>
-#include <cstddef>
-#include <ranges>
-
-using namespace tr::angle_literals;
-using namespace tr::matrix_operators;
-
 namespace tre {
-	inline constexpr glm::vec2  UNTEXTURED_UV{-100, -100};
-	inline constexpr tr::RectI2 NO_SCISSOR_BOX{{-1, -1}, {-1, -1}};
-
-	Renderer2D* _renderer2D{nullptr};
+	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
+	tre::Renderer2D*           _renderer2D{};
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()
-	: _shaderPipeline{{tr::asBytes(RENDERER_2D_VERT_SPV), tr::ShaderType::VERTEX},
-					  {tr::asBytes(RENDERER_2D_FRAG_SPV), tr::ShaderType::FRAGMENT}}
-	, _blendMode{tr::ALPHA_BLENDING}
-	, _scissorBox{NO_SCISSOR_BOX}
+	: _shaderPipeline{tr::loadEmbeddedShader(RENDERER_2D_VERT_SPV, tr::ShaderType::VERTEX),
+					  tr::loadEmbeddedShader(RENDERER_2D_FRAG_SPV, tr::ShaderType::FRAGMENT)}
 {
 	assert(!renderer2DActive());
 	_renderer2D = this;
@@ -34,325 +21,249 @@ tre::Renderer2D::Renderer2D()
 	_vertexBuffer.setLabel("tre::Renderer2D Vertex Buffer");
 	_indexBuffer.setLabel("tre::Renderer2D Index Buffer");
 #endif
-	setFieldSize({1, 1});
+}
+
+tre::Renderer2D::Renderer2D(Renderer2D&& r) noexcept
+	: _shaderPipeline{std::move(r._shaderPipeline)}
+	, _textureUnit{std::move(r._textureUnit)}
+	, _vertexBuffer{std::move(r._vertexBuffer)}
+	, _indexBuffer{std::move(r._indexBuffer)}
+	, _vertices{std::move(r._vertices)}
+	, _indices{std::move(r._indices)}
+	, _layers{std::move(r._layers)}
+{
+	if (_renderer2D == &r) {
+		_renderer2D = this;
+	}
 }
 
 tre::Renderer2D::~Renderer2D() noexcept
 {
-	_renderer2D = nullptr;
-}
-
-glm::vec2 tre::Renderer2D::fieldSize() const noexcept
-{
-	return _fieldSize;
-}
-
-void tre::Renderer2D::setFieldSize(glm::vec2 size) noexcept
-{
-	_fieldSize = size;
-	_shaderPipeline.vertexShader().setUniform(0, glm::ortho(0.0f, _fieldSize.x, _fieldSize.y, 0.0f));
-}
-
-void tre::Renderer2D::setBlendingMode(tr::BlendMode blendMode) noexcept
-{
-	_blendMode = blendMode;
-	if (lastRendererID() == ID) {
-		setLastRendererID(NO_RENDERER);
+	if (_renderer2D == this) {
+		_renderer2D = nullptr;
 	}
 }
 
-void tre::Renderer2D::setScissorBox(std::optional<tr::RectI2> scissorBox) noexcept
+void tre::Renderer2D::addColorOnlyLayer(int priority, const glm::mat4& transform, const tr::BlendMode& blendMode)
 {
-	_scissorBox = scissorBox.value_or(NO_SCISSOR_BOX);
-	if (lastRendererID() == ID) {
-		setLastRendererID(NO_RENDERER);
-	}
+	assert(!_layers.contains(priority));
+	_layers.emplace(std::piecewise_construct, std::forward_as_tuple(priority),
+					std::forward_as_tuple(nullptr, nullptr, transform, blendMode));
 }
 
-void tre::Renderer2D::addUntexturedRect(int priority, const tr::RectF2& rect, tr::RGBA8 color)
+void tre::Renderer2D::addLayer(int priority, const tr::Texture2D& texture, const tr::Sampler& sampler,
+							   const glm::mat4& transform, const tr::BlendMode& blendMode)
 {
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
-	for (auto& vertex : data) {
-		vertex.uv    = UNTEXTURED_UV;
-		vertex.color = color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
+	assert(!_layers.contains(priority));
+	_layers.emplace(std::piecewise_construct, std::forward_as_tuple(priority),
+					std::forward_as_tuple(&texture, &sampler, transform, blendMode));
 }
 
-void tre::Renderer2D::addRectOutline(int priority, const tr::RectF2& rect, float thickness, tr::RGBA8 color)
+void tre::Renderer2D::setLayerTexture(int layer, const tr::Texture2D& texture) noexcept
 {
-	PolygonOutline data(8);
-	tr::fillRectOutlineVertices((data | tr::positions).begin(), rect.tl, rect.size, thickness);
+	assert(_layers.contains(layer));
+	_layers.at(layer).texture = &texture;
+}
+
+void tre::Renderer2D::setLayerSampler(int layer, const tr::Sampler& sampler) noexcept
+{
+	assert(_layers.contains(layer));
+	_layers.at(layer).sampler = &sampler;
+}
+
+void tre::Renderer2D::setLayerTransform(int layer, const glm::mat4& transform) noexcept
+{
+	assert(_layers.contains(layer));
+	_layers.at(layer).transform = transform;
+}
+
+void tre::Renderer2D::setLayerBlendMode(int layer, const tr::BlendMode& blendMode) noexcept
+{
+	assert(_layers.contains(layer));
+	_layers.at(layer).blendMode = blendMode;
+}
+
+void tre::Renderer2D::removeLayer(int layer) noexcept
+{
+	_layers.erase(layer);
+}
+
+void tre::Renderer2D::addColorQuad(int layer, const ColorQuad& quad)
+{
+	assert(_layers.contains(layer));
+	TextureQuad textureQuad;
 	for (int i = 0; i < 4; ++i) {
-		data[i].uv    = UNTEXTURED_UV;
-		data[i].color = color;
+		textureQuad[i].pos   = quad[i].pos;
+		textureQuad[i].uv    = UNTEXTURED_UV;
+		textureQuad[i].color = quad[i].color;
 	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureQuad>, textureQuad);
 }
 
-void tre::Renderer2D::addTexturedRect(int priority, const tr::RectF2& rect, TextureRef texture, const tr::RectF2& uv,
-									  tr::RGBA8 tint)
+void tre::Renderer2D::addTextureQuad(int layer, const TextureQuad& quad)
 {
-	TexturedQuad data;
-	tr::fillRectVertices((data | tr::positions).begin(), rect.tl, rect.size);
-	tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
-	std::ranges::fill(data | tr::colors, tint);
-
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
+	assert(_layers.contains(layer));
+	assert(_layers.at(layer).texture != nullptr && _layers.at(layer).sampler != nullptr);
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureQuad>, quad);
 }
 
-void tre::Renderer2D::addUntexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-													tr::AngleF rotation, tr::RGBA8 color)
+void tre::Renderer2D::addColorFan(int layer, const ColorFan& fan)
 {
-	TexturedQuad data;
-	if (rotation == 0_degf) {
-		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
+	assert(_layers.contains(layer));
+	assert(fan.size() >= 3);
+	TextureFan textureFan;
+	for (std::size_t i = 0; i < fan.size(); ++i) {
+		textureFan[i].pos   = fan[i].pos;
+		textureFan[i].uv    = UNTEXTURED_UV;
+		textureFan[i].color = fan[i].color;
 	}
-	else {
-		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size, transform);
-	}
-	for (auto& vertex : data) {
-		vertex.uv    = UNTEXTURED_UV;
-		vertex.color = color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>, data);
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureFan>, std::move(textureFan));
 }
 
-void tre::Renderer2D::addRotatedRectangleOutline(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-												 tr::AngleF rotation, float thickness, tr::RGBA8 color)
+void tre::Renderer2D::addTextureFan(int layer, const TextureFan& fan)
 {
-	PolygonOutline data(8);
-	if (rotation == 0_degf) {
-		tr::fillRectOutlineVertices((data | tr::positions).begin(), pos - posAnchor, size, thickness);
-	}
-	else {
-		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		tr::fillRectOutlineVertices((data | tr::positions).begin(), pos - posAnchor, size, thickness, transform);
-	}
-	for (auto& vertex : data) {
-		vertex.uv    = UNTEXTURED_UV;
-		vertex.color = color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
+	addTextureFan(layer, TextureFan{fan});
 }
 
-void tre::Renderer2D::addTexturedRotatedRectangle(int priority, glm::vec2 pos, glm::vec2 posAnchor, glm::vec2 size,
-												  tr::AngleF rotation, TextureRef texture, const tr::RectF2& uv,
-												  tr::RGBA8 tint)
+void tre::Renderer2D::addTextureFan(int layer, TextureFan&& fan)
 {
-	TexturedQuad data;
-	if (rotation == 0_degf) {
-		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size);
-	}
-	else {
-		const auto transform{tr::rotateAroundPoint2(glm::mat4{1}, pos, rotation)};
-		tr::fillRectVertices((data | tr::positions).begin(), pos - posAnchor, size, transform);
-	}
-	tr::fillRectVertices((data | tr::uvs).begin(), uv.tl, uv.size);
-	std::ranges::fill(data | tr::colors, tint);
-
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, data);
+	assert(_layers.contains(layer));
+	assert(_layers.at(layer).texture != nullptr && _layers.at(layer).sampler != nullptr);
+	assert(fan.size() >= 3);
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureFan>, std::move(fan));
 }
 
-void tre::Renderer2D::addUntexturedQuad(int priority, std::span<tr::ClrVtx2, 4> quad)
+void tre::Renderer2D::addColorMesh(int layer, const std::vector<tr::ClrVtx2>& vertices,
+								   const std::vector<std::uint16_t>& indices)
 {
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedQuad>,
-													  TexturedQuad{{{quad[0].pos, UNTEXTURED_UV, quad[0].color},
-																	{quad[1].pos, UNTEXTURED_UV, quad[1].color},
-																	{quad[2].pos, UNTEXTURED_UV, quad[2].color},
-																	{quad[3].pos, UNTEXTURED_UV, quad[3].color}}});
+	addColorMesh(layer, vertices, std::vector<std::uint16_t>{indices});
 }
 
-void tre::Renderer2D::addTexturedQuad(int priority, TexturedQuad quad, TextureRef texture)
+void tre::Renderer2D::addColorMesh(int layer, const std::vector<tr::ClrVtx2>& vertices,
+								   std::vector<std::uint16_t>&& indices)
 {
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedQuad>, quad);
-}
-
-void tre::Renderer2D::addUntexturedRegularPolygon(int priority, const tr::CircleF& circle, int vertexCount,
-												  tr::AngleF rotation, tr::RGBA8 color)
-{
-	TexturedVertexFan data(vertexCount);
-	tr::fillPolygonVertices((data | tr::positions).begin(), vertexCount, circle, rotation);
-	for (auto& vertex : data) {
-		vertex.uv    = UNTEXTURED_UV;
-		vertex.color = color;
+	assert(_layers.contains(layer));
+	assert(std::ranges::max(indices) == vertices.size() - 1);
+	std::vector<tr::TintVtx2> textureVertices;
+	for (std::size_t i = 0; i < vertices.size(); ++i) {
+		textureVertices[i].pos   = vertices[i].pos;
+		textureVertices[i].uv    = UNTEXTURED_UV;
+		textureVertices[i].color = vertices[i].color;
 	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureMesh>, std::move(textureVertices),
+										   std::move(indices));
 }
 
-void tre::Renderer2D::addRegularPolygonOutline(int priority, const tr::CircleF& circle, int vertexCount,
-											   tr::AngleF rotation, float thickness, tr::RGBA8 color)
+void tre::Renderer2D::addTextureMesh(int layer, const std::vector<tr::TintVtx2>& vertices,
+									 const std::vector<std::uint16_t>& indices)
 {
-	PolygonOutline data(vertexCount * 2);
-	tr::fillPolygonOutlineVertices((data | tr::positions).begin(), vertexCount, circle, rotation, thickness);
-	for (auto& vertex : data) {
-		vertex.uv    = UNTEXTURED_UV;
-		vertex.color = color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<PolygonOutline>, std::move(data));
+	addTextureMesh(layer, std::vector<tr::TintVtx2>{vertices}, std::vector<std::uint16_t>{indices});
 }
 
-void tre::Renderer2D::addUntexturedCircle(int priority, const tr::CircleF& circle, tr::RGBA8 color)
+void tre::Renderer2D::addTextureMesh(int layer, std::vector<tr::TintVtx2>&& vertices,
+									 std::vector<std::uint16_t>&& indices)
 {
-	addUntexturedRegularPolygon(priority, circle, tr::smoothPolygonVerticesCount(circle.r), tr::rads(0), color);
-}
-
-void tre::Renderer2D::addCircleOutline(int priority, const tr::CircleF& circle, float thickness, tr::RGBA8 color)
-{
-	addRegularPolygonOutline(priority, circle, tr::smoothPolygonVerticesCount(circle.r), tr::rads(0), thickness, color);
-}
-
-void tre::Renderer2D::addUntexturedPolygon(int priority, std::span<glm::vec2> vertices, tr::RGBA8 color)
-{
-	if (vertices.size() < 3) {
-		return;
-	}
-
-	TexturedVertexFan data(vertices.size());
-	for (std::size_t i = 0; i < data.size(); ++i) {
-		data[i].pos   = vertices[i];
-		data[i].uv    = UNTEXTURED_UV;
-		data[i].color = color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
-}
-
-void tre::Renderer2D::addUntexturedPolygon(int priority, std::span<tr::ClrVtx2> vertices)
-{
-	if (vertices.size() < 3) {
-		return;
-	}
-
-	TexturedVertexFan data(vertices.size());
-	for (std::size_t i = 0; i < data.size(); ++i) {
-		data[i].pos   = vertices[i].pos;
-		data[i].uv    = UNTEXTURED_UV;
-		data[i].color = vertices[i].color;
-	}
-
-	_renderGraph[priority][std::nullopt].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(data));
-}
-
-void tre::Renderer2D::addTexturedPolygon(int priority, std::vector<Vertex> vertices, TextureRef texture)
-{
-	if (vertices.size() < 3) {
-		return;
-	}
-	_renderGraph[priority][texture].emplace_back(std::in_place_type<TexturedVertexFan>, std::move(vertices));
+	assert(_layers.contains(layer));
+	assert(_layers.at(layer).texture != nullptr && _layers.at(layer).sampler != nullptr);
+	assert(std::ranges::max(indices) == vertices.size() - 1);
+	_layers[layer].primitives.emplace_back(std::in_place_type<TextureMesh>, std::move(vertices), std::move(indices));
 }
 
 void tre::Renderer2D::setupContext() noexcept
 {
-	auto& graphics{tr::window().graphics()};
-
-	graphics.useDepthTest(false);
-	graphics.useFaceCulling(false);
-
-	graphics.useBlending(true);
-	graphics.setBlendingMode(_blendMode);
-
-	if (_scissorBox != NO_SCISSOR_BOX) {
-		graphics.useScissorTest(true);
-		graphics.setScissorBox(_scissorBox);
-	}
-	else {
-		graphics.useScissorTest(false);
-	}
-
-	graphics.useStencilTest(false);
-
-	graphics.setShaderPipeline(_shaderPipeline);
-	graphics.setVertexFormat(tr::TintVtx2::vertexFormat());
+	tr::window().graphics().useFaceCulling(false);
+	tr::window().graphics().useDepthTest(false);
+	tr::window().graphics().useStencilTest(false);
+	tr::window().graphics().useBlending(true);
+	tr::window().graphics().setShaderPipeline(_shaderPipeline);
+	tr::window().graphics().setVertexFormat(tr::TintVtx2::vertexFormat());
 }
 
-void tre::Renderer2D::writeToVertexIndexVectors(const Primitive& primitive, std::uint16_t& index)
+void tre::Renderer2D::writeToBuffers(const Primitive& primitive, std::uint16_t& index)
 {
-	const auto rectangle{[&](const TexturedQuad& rectangle) {
-		_vertices.insert(_vertices.end(), rectangle.begin(), rectangle.end());
+	const auto textureQuad{[&](const TextureQuad& rect) {
+		_vertices.insert(_vertices.end(), rect.begin(), rect.end());
 		tr::fillPolygonIndices(back_inserter(_indices), 4, index);
 		index += 4;
 	}};
-	const auto fan{[&](const TexturedVertexFan& fan) {
+	const auto textureFan{[&](const TextureFan& fan) {
 		_vertices.insert(_vertices.end(), fan.begin(), fan.end());
 		tr::fillPolygonIndices(back_inserter(_indices), fan.size(), index);
 		index += fan.size();
 	}};
-	const auto outline{[&](const PolygonOutline& outline) {
-		_vertices.insert(_vertices.end(), outline.begin(), outline.end());
-		tr::fillPolygonOutlineIndices(back_inserter(_indices), outline.size() / 2, index);
-		index += outline.size();
-	}};
-	const auto data{[&](const RawData& data) {
-		const auto offset{std::views::transform([&](auto idx) { return idx + index; })};
-
-		_vertices.insert(_vertices.end(), data.first.begin(), data.first.end());
-		std::ranges::copy(data.second | offset, back_inserter(_indices));
-		index += data.first.size();
+	const auto textureMesh{[&](const TextureMesh& mesh) {
+		_vertices.insert(_vertices.end(), mesh.first.begin(), mesh.first.end());
+		_indices.insert(_indices.end(), mesh.second.begin(), mesh.second.end());
+		index += mesh.first.size();
 	}};
 
-	std::visit(tr::Overloaded{rectangle, fan, outline, data}, primitive);
+	std::visit(tr::Overloaded{textureQuad, textureFan, textureMesh}, primitive);
 }
 
-void tre::Renderer2D::drawUpToPriority(int maxPriority, tr::BasicFramebuffer& target)
+std::vector<std::size_t> tre::Renderer2D::uploadToGraphicsBuffers(decltype(_layers)::iterator end)
 {
-	auto& graphics{tr::window().graphics()};
+	_vertices.clear();
+	_indices.clear();
+	std::uint16_t            index{0};
+	std::vector<std::size_t> offsets;
 
-	if (lastRendererID() != ID) {
-		setupContext();
-		setLastRendererID(ID);
-	}
-	graphics.setFramebuffer(target);
-
-	const std::ranges::subrange range{_renderGraph.begin(), _renderGraph.lower_bound(maxPriority)};
-	for (auto& priority : range | std::views::values) {
-		for (auto& [texture, primitives] : priority) {
-			_vertices.clear();
-			_indices.clear();
-			std::uint16_t index{0};
-
-			for (auto& primitive : primitives) {
-				writeToVertexIndexVectors(primitive, index);
-			}
-
-			if (texture.has_value()) {
-				_textureUnit.setTexture(texture->first);
-				_textureUnit.setSampler(texture->second);
-			}
-			_vertexBuffer.set(tr::rangeBytes(_vertices));
-			_indexBuffer.set(_indices);
-			graphics.setVertexBuffer(_vertexBuffer, 0, sizeof(tr::TintVtx2));
-			graphics.setIndexBuffer(_indexBuffer);
-			graphics.drawIndexed(tr::Primitive::TRIS, 0, _indexBuffer.size());
+	for (auto& layer : std::ranges::subrange{_layers.begin(), end} | std::views::values) {
+		offsets.emplace_back(_indices.size());
+		for (auto& primitive : layer.primitives) {
+			writeToBuffers(primitive, index);
 		}
+		layer.primitives.clear();
 	}
-	_renderGraph.erase(range.begin(), range.end());
+	offsets.emplace_back(_indices.size()); // Offset to end, simplifies a loop in the main function.
+
+	_vertexBuffer.set(_vertices);
+	_indexBuffer.set(_indices);
+	tr::window().graphics().setVertexBuffer(_vertexBuffer, 0, sizeof(tr::TintVtx2));
+	tr::window().graphics().setIndexBuffer(_indexBuffer);
+	return offsets;
 }
 
-void tre::Renderer2D::draw(tr::BasicFramebuffer& target)
+void tre::Renderer2D::drawUpToLayer(int maxPriority, const RenderView& target)
 {
-	drawUpToPriority(std::numeric_limits<int>::max(), target);
+	if (std::ranges::all_of(_layers, [](auto& layer) { return layer.second.primitives.empty(); })) {
+		return;
+	}
+
+	setupContext();
+	target.use();
+
+	const std::ranges::subrange    range{_layers.begin(), _layers.lower_bound(maxPriority)};
+	const std::vector<std::size_t> indexOffsets{uploadToGraphicsBuffers(range.end())};
+	auto                           it{indexOffsets.begin()};
+	for (auto& layer : range | std::views::values) {
+		static const tr::Texture2D* texture{};
+		if (texture != layer.texture && layer.texture != nullptr) {
+			texture = layer.texture;
+			_textureUnit.setTexture(*texture);
+		}
+		static const tr::Sampler* sampler{};
+		if (sampler != layer.sampler && layer.sampler != nullptr) {
+			sampler = layer.sampler;
+			_textureUnit.setSampler(*sampler);
+		}
+		static glm::mat4 transform{};
+		if (transform != layer.transform) {
+			transform = layer.transform;
+			_shaderPipeline.vertexShader().setUniform(0, transform);
+		}
+		static tr::BlendMode blendMode{};
+		if (blendMode != layer.blendMode) {
+			tr::window().graphics().setBlendingMode(blendMode);
+		}
+
+		tr::window().graphics().drawIndexed(tr::Primitive::TRIS, *it, *std::next(it) - *it);
+		++it;
+	}
 }
 
-std::size_t tre::Renderer2D::TextureRefHash::operator()(const std::optional<TextureRef>& texture) const noexcept
+void tre::Renderer2D::draw(const RenderView& target)
 {
-	if (!texture.has_value()) {
-		return std::hash<std::nullptr_t>{}(nullptr);
-	}
-	else {
-		std::size_t result{0};
-		result ^= std::hash<tr::Texture2D>{}(texture->first) + 0x9e'37'79'b9 + (result << 6) + (result >> 2);
-		result ^= std::hash<tr::Sampler>{}(texture->second) + 0x9e'37'79'b9 + (result << 6) + (result >> 2);
-		return result;
-	}
+	drawUpToLayer(std::numeric_limits<int>::max(), target);
 }
 
 bool tre::renderer2DActive() noexcept
