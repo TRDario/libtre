@@ -70,7 +70,7 @@ namespace tre {
 		DynamicTextManager(DynamicTextManager&& r) noexcept;
 
 		/**************************************************************************************************************
-		 * Destroys the debug text renderer and disables the ability to use the dynamicText() getter.
+		 * Destroys the dynamic text renderer and disables the ability to use the dynamicText() getter.
 		 **************************************************************************************************************/
 		~DynamicTextManager() noexcept;
 

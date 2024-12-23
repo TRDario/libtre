@@ -76,7 +76,7 @@ namespace tre {
 		StaticTextManager(StaticTextManager&& r) noexcept;
 
 		/**************************************************************************************************************
-		 * Destroys the debug text renderer and disables the ability to use the staticText() getter.
+		 * Destroys the static text renderer and disables the ability to use the staticText() getter.
 		 **************************************************************************************************************/
 		~StaticTextManager() noexcept;
 
