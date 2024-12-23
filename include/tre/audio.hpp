@@ -35,6 +35,10 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Creates an audio stream with data from a file.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
 		 * @exception tr::FileNotFound If the file isn't found.
 		 * @exception tr::FileOpenError If opening the file fails.
 		 * @exception tr::UnsupportedAudioFile If the file is an unsupported or invalid format.
@@ -47,8 +51,18 @@ namespace tre {
 		 * Creates an audio stream with data from a span.
 		 *
 		 * @param[in] view The view over audio data to be streamed.
-		 * @param[in] channels The number of channels in the audio data. Must be 1 or 2.
-		 * @param[in] sampleRate The sample rate of the audio data. Must be higher than 0.
+		 * @param[in] channels
+		 * @parblock
+		 * The number of channels in the audio data.
+		 *
+		 * @pre @em channels must be 1 or 2.
+		 * @endparblock
+		 * @param[in] sampleRate
+		 * @parblock
+		 * The sample rate of the audio data.
+		 *
+		 * @pre @em sampleRate must be greater than 0.
+		 * @endparblock
 		 **************************************************************************************************************/
 		AudioStream(std::span<const std::int16_t> view, int channels, int sampleRate) noexcept;
 
@@ -196,9 +210,10 @@ namespace tre {
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] stream The buffer the source will pull data from while playing.
+		 * @param[in] stream The buffer the source will pull data from while playing. The source will be moved into
+		 *                   the source.
 		 **************************************************************************************************************/
-		void use(AudioStream stream);
+		void use(AudioStream&& stream);
 
 		/**************************************************************************************************************
 		 * Gets the audio classes the source belongs to.
@@ -233,6 +248,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the pitch (and speed) of the source over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] pitch The pitch multiplier of the source, clamped to [0.5, 2.0].
@@ -259,6 +279,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the gain of the source over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] gain The gain multiplier of the source, clamped to a non-negative value.
@@ -283,6 +308,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the distance where the source will no longer be attenuated any further over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] maxDistance The maximum distance of the source, clamped to a non-negative value.
@@ -307,6 +337,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the distance rolloff factor of the source over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] rolloff The distance rolloff factor of the source, clamped to a non-negative value.
@@ -331,6 +366,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the reference distance of the source, where there is no attenuation over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] referenceDistance The new reference distance of the source, clamped to a non-negative value.
@@ -355,6 +395,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the gain multiplier applied when the listener is outside the source's outer cone angle over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] outGain The new gain multiplier, clamped to [0.0, 1.0].
@@ -379,6 +424,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the width of the inner cone of the source (where no direction attenuation is done) over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] inConeW The new width, clamped to [0.0, outerConeWidth()].
@@ -403,6 +453,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the width of the outer cone of the source (where direction attenuation is done) over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] outConeW The new width, clamped to [innerConeWidth(), 360 degrees].
@@ -427,6 +482,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the position of the source over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] position The position of the source.
@@ -451,6 +511,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the velocity of the source over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] velocity The velocity of the source.
@@ -475,6 +540,11 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the direction of the source cone over time.
 		 *
+		 * @par Exception Safety
+		 *
+		 * Strong exception guarantee.
+		 *
+		 * @exception std::system_error If locking a mutex fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
 		 * @param[in] direction The direction of the source cone. Can also be OMNIDRECTIONAL.
@@ -556,7 +626,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Gets a streamed source's starting loop point.
 		 *
-		 * This function cannot be called on a non-streamed source.
+		 * @pre The source must be using an audio stream.
 		 *
 		 * @return The stream's starting loop point within the file in seconds.
 		 **************************************************************************************************************/
@@ -565,7 +635,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets a streamed source's starting loop point.
 		 *
-		 * This function cannot be called on a non-streamed source.
+		 * @pre The source must be using an audio stream.
 		 *
 		 * @return The stream's ending loop point within the file in seconds.
 		 **************************************************************************************************************/
@@ -574,7 +644,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets a streamed source's loop points.
 		 *
-		 * This function cannot be called on a non-streamed source.
+		 * @pre The source must be using an audio stream.
 		 *
 		 * @param[in] start The starting loop point (special value: START). This value will be clamped to a valid range.
 		 * @param[in] end The ending loop point (special value: END). This value will be clamped to a valid range.
@@ -607,9 +677,15 @@ namespace tre {
 	/******************************************************************************************************************
 	 * Audio system manager with support for streaming and gradual transitions.
 	 *
-	 * Only one instance of the audio system is allowed to exist at a time.
+	 * The AudioManager class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
+	 * will be globally available through audio(). Instancing the renderer again after it has been closed is a
+	 * valid action.
 	 *
-	 * tr::AudioSystem should be initialized before working with this class, though it can safely be initialized.
+	 * AudioManager is move-constructible, but neither copyable nor assignable. A moved audio manager is left in a state
+	 * where another audio manager can be moved into it, but is otherwise unusable.
+	 *
+	 * @note tr::AudioSystem should be initialized before working with this class, though it can safely be initialized.
 	 ******************************************************************************************************************/
 	class AudioManager {
 	  public:
@@ -618,6 +694,16 @@ namespace tre {
 		 **************************************************************************************************************/
 		AudioManager() noexcept;
 
+		/**************************************************************************************************************
+		 * Move-constructs an audio manager.
+		 *
+		 * @param[in] r The audio manager to move from. @em r will be left in a moved-from state that shouldn't be used.
+		 **************************************************************************************************************/
+		AudioManager(AudioManager&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the audio amanger and disables the ability to use the tre::audio() getter.
+		 **************************************************************************************************************/
 		~AudioManager() noexcept;
 
 		/**************************************************************************************************************
@@ -677,11 +763,10 @@ namespace tre {
 		std::list<std::shared_ptr<AudioSource>> _sources;
 		std::list<Command>                      _commands;
 		std::array<float, 32>                   _classGains;
-		std::thread                             _thread;
-		bool                                    _threadActive;
+		std::jthread                            _thread;
 		std::mutex                              _mutex;
 
-		void                    thread() noexcept;
+		void                    thread(std::stop_token stoken) noexcept;
 		static void             executeCommand(AudioSource& source, CommandName command,
 											   const CommandParameter& parameter) noexcept;
 		static CommandParameter interpolate(CommandName command, const CommandParameter& start,
@@ -695,14 +780,16 @@ namespace tre {
 	 *
 	 * @return True if the audio manager is active, and false otherwise.
 	 ******************************************************************************************************************/
-	bool audioManagerActive() noexcept;
+	bool audioActive() noexcept;
 
 	/******************************************************************************************************************
-	 * Gets a reference to the active audio manager. This function cannot be called if the audio manager isn't active.
+	 * Gets a reference to the active audio manager.
+	 *
+	 * @pre The audio manager must be instantiated.
 	 *
 	 * @return A reference to the audio manager.
 	 ******************************************************************************************************************/
-	AudioManager& audioManager() noexcept;
+	AudioManager& audio() noexcept;
 
 	/// @}
 } // namespace tre

@@ -21,7 +21,7 @@ namespace tre {
 	 * will be globally available through renderer2D(). Instancing the renderer again after it has been closed is a
 	 * valid action.
 	 *
-	 * Renderer2D is move-constructive, but neither copyable nor assignable. A moved renderer is left in a state where
+	 * Renderer2D is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state where
 	 * another renderer can be moved into it, but is otherwise unusable.
 	 *
 	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.

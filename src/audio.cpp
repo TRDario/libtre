@@ -6,7 +6,7 @@
 using namespace std::chrono_literals;
 
 namespace tre {
-	AudioManager* _audioManager{nullptr};
+	AudioManager* _audio{nullptr};
 } // namespace tre
 
 tre::AudioStream::AudioStream(const std::filesystem::path& path)
@@ -166,14 +166,14 @@ tre::AudioSource::AudioSource() noexcept
 
 void tre::AudioSource::use(tr::AudioBufferView buffer) noexcept
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	_stream.reset();
 	_source.setBuffer(buffer);
 }
 
-void tre::AudioSource::use(AudioStream stream)
+void tre::AudioSource::use(AudioStream&& stream)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	_source.setBuffer(std::nullopt);
 	_stream = std::make_unique<Stream>(std::move(stream));
 }
@@ -201,9 +201,9 @@ void tre::AudioSource::setPitch(float pitch) noexcept
 
 void tre::AudioSource::setPitch(float pitch, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(
+	audio()._commands.emplace_back(
 		*this, AudioManager::CommandName::PITCH,
 		std::pair{AudioManager::CommandParameter{.num = this->pitch()}, AudioManager::CommandParameter{.num = pitch}},
 		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
@@ -219,7 +219,7 @@ void tre::AudioSource::setGain(float gain) noexcept
 	float multiplier{1};
 	for (int i = 0; i < 32; ++i) {
 		if (_classes[i]) {
-			multiplier *= audioManager()._classGains[i];
+			multiplier *= audio()._classGains[i];
 		}
 	}
 
@@ -229,9 +229,9 @@ void tre::AudioSource::setGain(float gain) noexcept
 
 void tre::AudioSource::setGain(float gain, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(
+	audio()._commands.emplace_back(
 		*this, AudioManager::CommandName::GAIN,
 		std::pair{AudioManager::CommandParameter{.num = this->gain()}, AudioManager::CommandParameter{.num = gain}},
 		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
@@ -249,12 +249,12 @@ void tre::AudioSource::setMaxDistance(float maxDistance) noexcept
 
 void tre::AudioSource::setMaxDistance(float maxDistance, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::MAX_DISTANCE,
-										  std::pair{AudioManager::CommandParameter{.num = this->maxDistance()},
-													AudioManager::CommandParameter{.num = maxDistance}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::MAX_DISTANCE,
+								   std::pair{AudioManager::CommandParameter{.num = this->maxDistance()},
+											 AudioManager::CommandParameter{.num = maxDistance}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 float tre::AudioSource::rolloff() const noexcept
@@ -269,12 +269,12 @@ void tre::AudioSource::setRolloff(float rolloff) noexcept
 
 void tre::AudioSource::setRolloff(float rolloff, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::ROLLOFF,
-										  std::pair{AudioManager::CommandParameter{.num = this->rolloff()},
-													AudioManager::CommandParameter{.num = rolloff}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::ROLLOFF,
+								   std::pair{AudioManager::CommandParameter{.num = this->rolloff()},
+											 AudioManager::CommandParameter{.num = rolloff}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 float tre::AudioSource::referenceDistance() const noexcept
@@ -289,12 +289,12 @@ void tre::AudioSource::setReferenceDistance(float referenceDistance) noexcept
 
 void tre::AudioSource::setReferenceDistance(float referenceDistance, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::REFERENCE_DISTANCE,
-										  std::pair{AudioManager::CommandParameter{.num = this->referenceDistance()},
-													AudioManager::CommandParameter{.num = referenceDistance}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::REFERENCE_DISTANCE,
+								   std::pair{AudioManager::CommandParameter{.num = this->referenceDistance()},
+											 AudioManager::CommandParameter{.num = referenceDistance}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 float tre::AudioSource::outerConeGain() const noexcept
@@ -309,12 +309,12 @@ void tre::AudioSource::setOuterConeGain(float outGain) noexcept
 
 void tre::AudioSource::setOuterConeGain(float outGain, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::OUTER_CONE_GAIN,
-										  std::pair{AudioManager::CommandParameter{.num = this->outerConeGain()},
-													AudioManager::CommandParameter{.num = outGain}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::OUTER_CONE_GAIN,
+								   std::pair{AudioManager::CommandParameter{.num = this->outerConeGain()},
+											 AudioManager::CommandParameter{.num = outGain}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 tr::AngleF tre::AudioSource::innerConeWidth() const noexcept
@@ -329,13 +329,12 @@ void tre::AudioSource::setInnerConeWidth(tr::AngleF inConeW) noexcept
 
 void tre::AudioSource::setInnerConeWidth(tr::AngleF inConeW, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(
-		*this, AudioManager::CommandName::INNER_CONE_WIDTH,
-		std::pair{AudioManager::CommandParameter{.num = this->innerConeWidth().degs()},
-				  AudioManager::CommandParameter{.num = inConeW.degs()}},
-		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::INNER_CONE_WIDTH,
+								   std::pair{AudioManager::CommandParameter{.num = this->innerConeWidth().degs()},
+											 AudioManager::CommandParameter{.num = inConeW.degs()}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 tr::AngleF tre::AudioSource::outerConeWidth() const noexcept
@@ -350,13 +349,12 @@ void tre::AudioSource::setOuterConeWidth(tr::AngleF outConeW) noexcept
 
 void tre::AudioSource::setOuterConeWidth(tr::AngleF outConeW, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(
-		*this, AudioManager::CommandName::OUTER_CONE_WIDTH,
-		std::pair{AudioManager::CommandParameter{.num = this->outerConeWidth().degs()},
-				  AudioManager::CommandParameter{.num = outConeW.degs()}},
-		now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::OUTER_CONE_WIDTH,
+								   std::pair{AudioManager::CommandParameter{.num = this->outerConeWidth().degs()},
+											 AudioManager::CommandParameter{.num = outConeW.degs()}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 glm::vec3 tre::AudioSource::position() const noexcept
@@ -371,12 +369,12 @@ void tre::AudioSource::setPosition(const glm::vec3& position) noexcept
 
 void tre::AudioSource::setPosition(const glm::vec3& position, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::POSITION,
-										  std::pair{AudioManager::CommandParameter{.vec = this->position()},
-													AudioManager::CommandParameter{.vec = position}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::POSITION,
+								   std::pair{AudioManager::CommandParameter{.vec = this->position()},
+											 AudioManager::CommandParameter{.vec = position}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 glm::vec3 tre::AudioSource::velocity() const noexcept
@@ -391,12 +389,12 @@ void tre::AudioSource::setVelocity(const glm::vec3& velocity) noexcept
 
 void tre::AudioSource::setVelocity(const glm::vec3& velocity, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::VELOCITY,
-										  std::pair{AudioManager::CommandParameter{.vec = this->velocity()},
-													AudioManager::CommandParameter{.vec = velocity}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::VELOCITY,
+								   std::pair{AudioManager::CommandParameter{.vec = this->velocity()},
+											 AudioManager::CommandParameter{.vec = velocity}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 glm::vec3 tre::AudioSource::direction() const noexcept
@@ -411,12 +409,12 @@ void tre::AudioSource::setDirection(const glm::vec3& direction) noexcept
 
 void tre::AudioSource::setDirection(const glm::vec3& direction, tr::SecondsF time)
 {
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	const auto      now{tr::Clock::now()};
-	audioManager()._commands.emplace_back(*this, AudioManager::CommandName::DIRECTION,
-										  std::pair{AudioManager::CommandParameter{.vec = this->direction()},
-													AudioManager::CommandParameter{.vec = direction}},
-										  now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
+	audio()._commands.emplace_back(*this, AudioManager::CommandName::DIRECTION,
+								   std::pair{AudioManager::CommandParameter{.vec = this->direction()},
+											 AudioManager::CommandParameter{.vec = direction}},
+								   now, std::chrono::time_point_cast<tr::TimePoint::duration>(now + time));
 }
 
 tr::AudioOrigin tre::AudioSource::origin() const noexcept
@@ -437,7 +435,7 @@ bool tre::AudioSource::looping() const noexcept
 void tre::AudioSource::setLooping(bool looping) noexcept
 {
 	if (_stream != nullptr) {
-		std::lock_guard lock{audioManager()._mutex};
+		std::lock_guard lock{audio()._mutex};
 		_stream->setLooping(looping);
 	}
 	else {
@@ -453,7 +451,7 @@ tr::AudioState tre::AudioSource::state() const noexcept
 void tre::AudioSource::play() noexcept
 {
 	if (_stream != nullptr) {
-		std::lock_guard lock{audioManager()._mutex};
+		std::lock_guard lock{audio()._mutex};
 		if (state() == tr::AudioState::INITIAL || state() == tr::AudioState::STOPPED) {
 			_source.setBuffer(std::nullopt);
 			for (auto& buffer : _stream->buffers) {
@@ -476,7 +474,7 @@ void tre::AudioSource::pause() noexcept
 void tre::AudioSource::stop() noexcept
 {
 	if (_stream != nullptr) {
-		std::lock_guard lock{audioManager()._mutex};
+		std::lock_guard lock{audio()._mutex};
 		_source.stop();
 		_stream->seek(_stream->loopStart());
 	}
@@ -499,7 +497,7 @@ tr::SecondsF tre::AudioSource::length() const noexcept
 tr::SecondsF tre::AudioSource::offset() const noexcept
 {
 	if (_stream != nullptr) {
-		std::lock_guard lock{audioManager()._mutex};
+		std::lock_guard lock{audio()._mutex};
 		const auto      state{this->state()};
 		if (state == tr::AudioState::INITIAL || state == tr::AudioState::STOPPED) {
 			return tr::SecondsF{_stream->position() / float(_stream->sampleRate())};
@@ -518,7 +516,7 @@ void tre::AudioSource::setOffset(tr::SecondsF offset) noexcept
 	if (_stream != nullptr) {
 		auto state{this->state()};
 		/* LOCK SCOPE */ {
-			std::lock_guard lock{audioManager()._mutex};
+			std::lock_guard lock{audio()._mutex};
 			_stream->seek(offset.count() * _stream->sampleRate());
 		}
 		_source.stop();
@@ -558,7 +556,7 @@ void tre::AudioSource::setLoopPoints(tr::SecondsF start, tr::SecondsF end) noexc
 	assert(start < end);
 	start = std::clamp(start, START, length());
 	end   = std::clamp(end, START, length());
-	std::lock_guard lock{audioManager()._mutex};
+	std::lock_guard lock{audio()._mutex};
 	if (start >= loopEnd()) {
 		_stream->setLoopEnd(end.count() * _stream->sampleRate());
 		_stream->setLoopStart(start.count() * _stream->sampleRate());
@@ -570,18 +568,31 @@ void tre::AudioSource::setLoopPoints(tr::SecondsF start, tr::SecondsF end) noexc
 }
 
 tre::AudioManager::AudioManager() noexcept
-	: _threadActive{false}
 {
-	assert(!audioManagerActive());
+	assert(!audioActive());
 	_classGains.fill(1.0f);
-	_audioManager = this;
+	_audio = this;
+}
+
+tre::AudioManager::AudioManager(AudioManager&& r) noexcept
+{
+	std::ignore = std::move(r._thread);
+	_sources    = std::move(r._sources);
+	_commands   = std::move(r._commands);
+	std::ranges::copy(r._classGains, _classGains.begin());
+	if (!_sources.empty()) {
+		_thread = std::jthread{&AudioManager::thread, this};
+	}
+
+	if (_audio == &r) {
+		_audio = this;
+	}
 }
 
 tre::AudioManager::~AudioManager() noexcept
 {
-	_threadActive = false;
-	if (_thread.joinable()) {
-		_thread.join();
+	if (_audio == this) {
+		_audio = nullptr;
 	}
 }
 
@@ -604,19 +615,15 @@ std::shared_ptr<tre::AudioSource> tre::AudioManager::newSource()
 {
 	std::lock_guard lock{_mutex};
 	_sources.emplace_back(new AudioSource{});
-	if (!_threadActive) {
-		if (_thread.joinable()) {
-			_thread.join();
-		}
-		_threadActive = true;
-		_thread       = std::thread{&AudioManager::thread, this};
+	if (!_thread.joinable()) {
+		_thread = std::jthread{&AudioManager::thread, this};
 	}
 	return _sources.back();
 }
 
-void tre::AudioManager::thread() noexcept
+void tre::AudioManager::thread(std::stop_token stoken) noexcept
 {
-	while (_threadActive) {
+	while (!stoken.stop_requested()) {
 		try {
 			std::lock_guard lock{_mutex};
 
@@ -624,7 +631,6 @@ void tre::AudioManager::thread() noexcept
 				return ptr.use_count() == 1 && ptr->state() != tr::AudioState::PLAYING;
 			});
 			if (_sources.empty()) {
-				_threadActive = false;
 				return;
 			}
 
@@ -726,13 +732,13 @@ tre::AudioManager::CommandParameter tre::AudioManager::interpolate(CommandName c
 	return value;
 }
 
-bool tre::audioManagerActive() noexcept
+bool tre::audioActive() noexcept
 {
-	return _audioManager != nullptr;
+	return _audio != nullptr;
 }
 
-tre::AudioManager& tre::audioManager() noexcept
+tre::AudioManager& tre::audio() noexcept
 {
-	assert(audioManagerActive());
-	return *_audioManager;
+	assert(audioActive());
+	return *_audio;
 }
