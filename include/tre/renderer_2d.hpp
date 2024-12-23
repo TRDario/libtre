@@ -3,8 +3,14 @@
 #include <map>
 
 namespace tre {
+	/** @defgroup renderer_2d 2D Renderer
+	 *  Layer-based batched 2D renderer.
+	 *
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
-	 * Layer-based basic 2D renderer.
+	 * Layer-based batched 2D renderer.
 	 *
 	 * Renderer2D uses @em layers as a way of grouping primitives of the same drawing priority, as well as the same
 	 * rendering configuration (texture, sampler, transfomration matrix, blending mode). Smart usage of layers will
@@ -17,6 +23,8 @@ namespace tre {
 	 *
 	 * Renderer2D is move-constructive, but neither copyable nor assignable. A moved renderer is left in a state where
 	 * another renderer can be moved into it, but is otherwise unusable.
+	 *
+	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.
 	 ******************************************************************************************************************/
 	class Renderer2D {
 	  public:
@@ -451,7 +459,7 @@ namespace tre {
 		 *
 		 * @param[in] view The target render view.
 		 **************************************************************************************************************/
-		void draw(const RenderView& target = tr::window().backbuffer());
+		void draw(const RenderView& view = tr::window().backbuffer());
 
 	  private:
 		using TextureMesh = std::pair<std::vector<tr::TintVtx2>, std::vector<std::uint16_t>>;
@@ -492,4 +500,6 @@ namespace tre {
 	 * @return A reference to the 2D renderer.
 	 ******************************************************************************************************************/
 	Renderer2D& renderer2D() noexcept;
+
+	/// @}
 } // namespace tre

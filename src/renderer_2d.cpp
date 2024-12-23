@@ -261,9 +261,9 @@ void tre::Renderer2D::drawUpToLayer(int maxPriority, const RenderView& target)
 	}
 }
 
-void tre::Renderer2D::draw(const RenderView& target)
+void tre::Renderer2D::draw(const RenderView& view)
 {
-	drawUpToLayer(std::numeric_limits<int>::max(), target);
+	drawUpToLayer(std::numeric_limits<int>::max(), view);
 }
 
 bool tre::renderer2DActive() noexcept

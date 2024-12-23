@@ -2,6 +2,11 @@
 #include <tr/tr.hpp>
 
 namespace tre {
+	/** @defgroup render_view Render View
+	 *  Render view class.
+	 *  @{
+	 */
+
 	/******************************************************************************************************************
 	 * A view that can be rendered to.
 	 *
@@ -22,7 +27,7 @@ namespace tre {
 		 * Creates a render view over a region of a framebuffer.
 		 *
 		 * @param framebuffer The framebuffer to create the view over.
-		 * @param viewPort The viewport of the view inside the framebuffer.
+		 * @param viewport The viewport of the view inside the framebuffer.
 		 **************************************************************************************************************/
 		RenderView(tr::BasicFramebuffer& framebuffer, const tr::RectI2& viewport) noexcept;
 
@@ -30,8 +35,8 @@ namespace tre {
 		 * Creates a render view over a region of a framebuffer.
 		 *
 		 * @param framebuffer The framebuffer to create the view over.
-		 * @param viewPort The viewport of the view inside the framebuffer.
-		 * @param doubleMin, doubleMax The minimum and maximum Z buffer depth values, respectively.
+		 * @param viewport The viewport of the view inside the framebuffer.
+		 * @param depthMin, depthMax The minimum and maximum Z buffer depth values, respectively.
 		 **************************************************************************************************************/
 		RenderView(tr::BasicFramebuffer& framebuffer, const tr::RectI2& viewport, double depthMin,
 				   double depthMax) noexcept;
@@ -60,4 +65,6 @@ namespace tre {
 		double                                       _depthMin;
 		double                                       _depthMax;
 	};
+
+	/// @]
 } // namespace tre
