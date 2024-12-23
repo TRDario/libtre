@@ -61,6 +61,11 @@ tre::StaticTextManager::~StaticTextManager() noexcept
 	}
 }
 
+const tr::Texture2D& tre::StaticTextManager::texture() const noexcept
+{
+	return _atlas.texture();
+}
+
 void tre::StaticTextManager::setDPI(unsigned int dpi) noexcept
 {
 	setDPI({dpi, dpi});
