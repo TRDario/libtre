@@ -12,20 +12,20 @@
  *   If @em i is an invalid index, nothing happens.
  *
  * <code>\\!</code>
- * - Resets the text color to the default. For the bitmap text mesher, this means a completely white tint, while on the
+ * - Resets the text color to the default. For the bitmap text manager, this means a completely white tint, while on the
  *   other renderers it's equivalent to <code>\\c0</code>.
  *
  * <code>\\b</code>
- * - Toggles whether the text is drawn bold (not available for the bitmap text mesher).
+ * - Toggles whether the text is drawn bold (not available for the bitmap text manager).
  *
  * <code>\\i</code>
  * - Toggles whether the text is drawn italic.
  *
  * <code>\\u</code>
- * - Toggles whether the text is drawn underlined (not available for the bitmap text mesher).
+ * - Toggles whether the text is drawn underlined (not available for the bitmap text manager).
  *
  * <code>\\s</code>
- * - Toggles whether the text is drawn striked out (not available for the bitmap text mesher).
+ * - Toggles whether the text is drawn striked out (not available for the bitmap text manager).
  *
  * Unknown escape sequences are ignored.
  **********************************************************************************************************************/

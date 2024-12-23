@@ -1,5 +1,6 @@
 #pragma once
 #include "atlas.hpp"
+#include "renderer_2d.hpp"
 #include "text.hpp"
 #include <tref/tref.hpp>
 
@@ -12,13 +13,37 @@ namespace tre {
 	 */
 
 	/******************************************************************************************************************
-	 * Mesher for text using glyphs from a bitmap.
+	 * Texture and mesh manager for bitmapped text.
 	 *
-	 * Only one instance of the bitmap text mesher is allowed to exist at a time.
+	 * The BitmapTextManager class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
+	 * will be globally available through bitmapText(). Instancing the renderer again after it has been closed is a
+	 * valid action.
+	 *
+	 * BitmapTextManager is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
+	 * where another renderer can be moved into it, but is otherwise unusable.
+	 *
+	 * @note An instance of tr::Window must be created before BitmapTextManager can be instantiated.
 	 ******************************************************************************************************************/
-	class BitmapTextMesher {
+	class BitmapTextManager {
 	  public:
-		using Glyph = tref::Glyph;
+		using Glyph    = tref::Glyph;
+		using GlyphMap = tref::GlyphMap;
+
+		/**************************************************************************************************************
+		 * Bitmap font information.
+		 **************************************************************************************************************/
+		struct Font {
+			/**********************************************************************************************************
+			 * The distance between two lines.
+			 **********************************************************************************************************/
+			std::int32_t lineSkip;
+
+			/**********************************************************************************************************
+			 * The glyphs of the font.
+			 **********************************************************************************************************/
+			GlyphMap glyphs;
+		};
 
 		/**************************************************************************************************************
 		 * Bitmap text textbox rectangle.
@@ -66,16 +91,56 @@ namespace tre {
 		};
 
 		/**************************************************************************************************************
-		 * Shorthand for the glyph map used by bitmap text fonts.
+		 * Shorthand for the glyph mesh output type.
 		 **************************************************************************************************************/
-		using GlyphMap = std::unordered_map<std::uint32_t, Glyph>;
+		using GlyphMesh = Renderer2D::TextureQuad;
 
 		/**************************************************************************************************************
-		 * Constructs the bitmap text mesher.
+		 * The text mesh.
 		 **************************************************************************************************************/
-		BitmapTextMesher() noexcept;
+		struct Mesh {
+			/**********************************************************************************************************
+			 * The vertices of the mesh.
+			 **********************************************************************************************************/
+			std::vector<tr::TintVtx2> vertices;
 
-		~BitmapTextMesher() noexcept;
+			/**********************************************************************************************************
+			 * The indices of the mesh.
+			 **********************************************************************************************************/
+			std::vector<std::uint16_t> indices;
+		};
+
+		/**************************************************************************************************************
+		 * Constructs the bitmap text manager.
+		 **************************************************************************************************************/
+		BitmapTextManager() noexcept;
+
+		/**************************************************************************************************************
+		 * Move-constructs a bitmap text manager.
+		 *
+		 * @param[in] r The bitmap text manager to move from. @em r will be left in a moved-from state that shouldn't
+		 *              be used.
+		 **************************************************************************************************************/
+		BitmapTextManager(BitmapTextManager&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the bitmap text renderer and disables the ability to use the bitmapText() getter.
+		 **************************************************************************************************************/
+		~BitmapTextManager() noexcept;
+
+		/**************************************************************************************************************
+		 * Gets font information.
+		 *
+		 * @param name
+		 * @parblock
+		 * The name of the font.
+		 *
+		 * @pre @em name must be a valid font name.
+		 * @endparblock
+		 *
+		 * @return A constant reference to the font information.
+		 **************************************************************************************************************/
+		const Font& font(std::string_view name) const noexcept;
 
 		/**************************************************************************************************************
 		 * Adds a font to the renderer.
@@ -123,11 +188,10 @@ namespace tre {
 		void clearFonts();
 
 		/**************************************************************************************************************
-		 * Adds a glyph to the 2D renderer.
+		 * Creates a glyph mesh.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
 		 * @param[in] codepoint The unicode codepoint to draw (newlines are allowed).
 		 * @param[in] font The name of the font to use. If the font isn't found, no text is drawn.
 		 * @param[in] style The style of the text to use.
@@ -136,47 +200,58 @@ namespace tre {
 		 * @param[in] pos The position of the glyph.
 		 * @param[in] posAnchor Where the position of the glyph is relative to the top-left of the glyph.
 		 * @param[in] rotation The rotation of the glyph around the position.
+		 *
+		 * @return The glyph's quad or an empty optional if it's not associated with a texture (like a space).
 		 **************************************************************************************************************/
-		void addGlyph(int priority, std::uint32_t codepoint, std::string_view font, Style style, glm::vec2 scale,
-					  tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation);
+		std::optional<GlyphMesh> createGlyphMesh(std::uint32_t codepoint, std::string_view font, Style style,
+												 glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
+												 tr::AngleF rotation);
 
 		/**************************************************************************************************************
-		 * Adds unformatted, single-style text to the 2D renderer.
+		 * Creates a mesh for unformatted, single-style text.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
 		 * @param[in] text The text to draw (newlines are allowed).
-		 * @param[in] font The name of the font to use. If the font isn't found, no text is drawn.
+		 * @param[in] font
+		 * @parblock
+		 * The name of the font to use.
+		 *
+		 * @pre @em font must be a valid font name.
+		 * @endparblock
 		 * @param[in] style The style of the text to use.
 		 * @param[in] scale The scale of the text.
 		 * @param[in] tint The tint of the text.
 		 * @param[in] textbox The textbox to frame the text around.
+		 *
+		 * @return A text mesh.
 		 **************************************************************************************************************/
-		void addUnformatted(int priority, std::string_view text, std::string_view font, Style style, glm::vec2 scale,
-							tr::RGBA8 tint, const Textbox& textbox);
+		Mesh createUnformattedTextMesh(std::string_view text, std::string_view font, Style style, glm::vec2 scale,
+									   tr::RGBA8 tint, const Textbox& textbox);
 
 		/**************************************************************************************************************
-		 * Adds formatted, multistyle text to the 2D renderer.
+		 * Creates a mesh for formatted, multistyle text.
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
 		 * @param[in] text The text to draw (newlines are allowed). See @ref renderformat for the specifics of the text
 		 *                 format.
-		 * @param[in] font The name of the font to use. If the font isn't found, no text is drawn.
+		 * @param[in] font
+		 * @parblock
+		 * The name of the font to use.
+		 *
+		 * @pre @em font must be a valid font name.
+		 * @endparblock
 		 * @param[in] scale The scale of the text.
 		 * @param[in] colors The available text colors. By default, a white tint not in the span is used.
 		 * @param[in] textbox The textbox to frame the text around.
+		 *
+		 * @return A text mesh.
 		 **************************************************************************************************************/
-		void addFormatted(int priority, std::string_view text, std::string_view font, glm::vec2 scale,
-						  std::span<tr::RGBA8> colors, const Textbox& textbox);
+		Mesh createFormattedTextMesh(std::string_view text, std::string_view font, glm::vec2 scale,
+									 std::span<tr::RGBA8> colors, const Textbox& textbox);
 
 	  private:
-		struct Font {
-			std::int32_t lineSkip;
-			GlyphMap     glyphs;
-		};
 		struct CachedRotationTransform {
 			glm::vec2  pos{};
 			tr::AngleF rotation{};
@@ -187,24 +262,25 @@ namespace tre {
 		tr::StringHashMap<Font> _fonts;
 		CachedRotationTransform _cachedRotationTransform;
 
-		void addGlyph(int priority, std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV, Style style,
-					  glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation);
+		std::optional<GlyphMesh> createGlyphMesh(std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV,
+												 Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos,
+												 glm::vec2 posAnchor, tr::AngleF rotation);
 	};
 
 	/******************************************************************************************************************
-	 * Gets whether the bitmap text mesher was initialized.
+	 * Gets whether the bitmap text manager was initialized.
 	 *
-	 * @return True if the bitmap text mesher was initialized, and false otherwise.
+	 * @return True if the bitmap text manager was initialized, and false otherwise.
 	 ******************************************************************************************************************/
 	bool bitmapTextActive() noexcept;
 
 	/******************************************************************************************************************
-	 * Gets a reference to the bitmap text mesher.
-	 * This function cannot be called if the bitmap text mesher wasn't initialized.
+	 * Gets a reference to the bitmap text manager.
+	 * This function cannot be called if the bitmap text manager wasn't initialized.
 	 *
-	 * @return A reference to the bitmap text mesher.
+	 * @return A reference to the bitmap text manager.
 	 ******************************************************************************************************************/
-	BitmapTextMesher& bitmapText() noexcept;
+	BitmapTextManager& bitmapText() noexcept;
 
 	/// @}
 } // namespace tre

@@ -1,40 +1,39 @@
-#include "../include/tre/bitmap_text_renderer.hpp"
+#include "../include/tre/bitmap_text_manager.hpp"
 #include "../include/tre/renderer_2d.hpp"
-#include "../include/tre/sampler.hpp"
 #include <numeric>
 
 using namespace tr::angle_literals;
 using namespace tr::matrix_operators;
 
 namespace tre {
-	BitmapTextMesher* _bitmapTextRenderer{nullptr};
+	BitmapTextManager* _bitmapText{nullptr};
 
 	// Measures the longest string that fits within a certain width.
-	std::string_view measureUnformatted(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
+	std::string_view measureUnformatted(std::string_view text, const BitmapTextManager::GlyphMap& font, float scale,
 										float maxWidth) noexcept;
 
 	// Measures the longest string that fits within a certain width.
-	std::string_view measureFormatted(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
+	std::string_view measureFormatted(std::string_view text, const BitmapTextManager::GlyphMap& font, float scale,
 									  float maxWidth) noexcept;
 
 	// Splits a text string into lines.
-	std::vector<std::string_view> splitText(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
+	std::vector<std::string_view> splitText(std::string_view text, const BitmapTextManager::GlyphMap& font, float scale,
 											float maxWidth, bool formatted);
 
 	// Gets the initial offset for text in a textbox.
 	float initialOffsetY(const std::vector<std::string_view>& lines, float lineSkip,
-						 const BitmapTextMesher::Textbox& textbox) noexcept;
+						 const BitmapTextManager::Textbox& textbox) noexcept;
 
 	// Gets the initial offset for a line of text.
-	float initialUnformattedOffsetX(std::string_view line, const BitmapTextMesher::GlyphMap& font, float scale,
-									const BitmapTextMesher::Textbox& textbox) noexcept;
+	float initialUnformattedOffsetX(std::string_view line, const BitmapTextManager::GlyphMap& font, float scale,
+									const BitmapTextManager::Textbox& textbox) noexcept;
 
 	// Gets the initial offset for a line of text.
-	float initialFormattedOffsetX(std::string_view line, const BitmapTextMesher::GlyphMap& font, float scale,
-								  const BitmapTextMesher::Textbox& textbox) noexcept;
+	float initialFormattedOffsetX(std::string_view line, const BitmapTextManager::GlyphMap& font, float scale,
+								  const BitmapTextManager::Textbox& textbox) noexcept;
 } // namespace tre
 
-std::string_view tre::measureUnformatted(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
+std::string_view tre::measureUnformatted(std::string_view text, const BitmapTextManager::GlyphMap& font, float scale,
 										 float maxWidth) noexcept
 {
 	float lineWidth{};
@@ -51,7 +50,7 @@ std::string_view tre::measureUnformatted(std::string_view text, const BitmapText
 	return text;
 }
 
-std::string_view tre::measureFormatted(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
+std::string_view tre::measureFormatted(std::string_view text, const BitmapTextManager::GlyphMap& font, float scale,
 									   float maxWidth) noexcept
 {
 	float lineWidth{};
@@ -74,8 +73,8 @@ std::string_view tre::measureFormatted(std::string_view text, const BitmapTextMe
 	return text;
 }
 
-std::vector<std::string_view> tre::splitText(std::string_view text, const BitmapTextMesher::GlyphMap& font, float scale,
-											 float maxWidth, bool formatted)
+std::vector<std::string_view> tre::splitText(std::string_view text, const BitmapTextManager::GlyphMap& font,
+											 float scale, float maxWidth, bool formatted)
 {
 	std::vector<std::string_view> lines;
 
@@ -108,7 +107,7 @@ std::vector<std::string_view> tre::splitText(std::string_view text, const Bitmap
 }
 
 float tre::initialOffsetY(const std::vector<std::string_view>& lines, float lineSkip,
-						  const BitmapTextMesher::Textbox& textbox) noexcept
+						  const BitmapTextManager::Textbox& textbox) noexcept
 {
 	float textboxTop{textbox.pos.y - textbox.posAnchor.y};
 	switch (VerticalAlign(textbox.textAlignment)) {
@@ -121,8 +120,8 @@ float tre::initialOffsetY(const std::vector<std::string_view>& lines, float line
 	}
 }
 
-float tre::initialUnformattedOffsetX(std::string_view line, const BitmapTextMesher::GlyphMap& font, float scale,
-									 const BitmapTextMesher::Textbox& textbox) noexcept
+float tre::initialUnformattedOffsetX(std::string_view line, const BitmapTextManager::GlyphMap& font, float scale,
+									 const BitmapTextManager::Textbox& textbox) noexcept
 {
 	const float textboxLeft{textbox.pos.x - textbox.posAnchor.x};
 	const auto  pred{[&](float sum, std::uint32_t codepoint) {
@@ -139,11 +138,11 @@ float tre::initialUnformattedOffsetX(std::string_view line, const BitmapTextMesh
 	}
 }
 
-float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextMesher::GlyphMap& font, float scale,
-								   const BitmapTextMesher::Textbox& textbox) noexcept
+float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextManager::GlyphMap& font, float scale,
+								   const BitmapTextManager::Textbox& textbox) noexcept
 {
 	const float textboxLeft{textbox.pos.x - textbox.posAnchor.x};
-	const auto  lineWidth{[](std::string_view line, const BitmapTextMesher::GlyphMap& font, float scale) {
+	const auto  lineWidth{[](std::string_view line, const BitmapTextManager::GlyphMap& font, float scale) {
         float width{};
         for (auto it = line.begin(); it != line.end(); ++it) {
             if (*it == '\\') {
@@ -168,22 +167,41 @@ float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextMesher
 	}
 }
 
-tre::BitmapTextMesher::BitmapTextMesher() noexcept
+tre::BitmapTextManager::BitmapTextManager() noexcept
 {
 	assert(!bitmapTextActive());
-	_bitmapTextRenderer = this;
 
 #ifndef NDEBUG
 	_atlas.setLabel("(tre) Bitmap Text Renderer Atlas");
 #endif
+
+	_bitmapText = this;
 }
 
-tre::BitmapTextMesher::~BitmapTextMesher() noexcept
+tre::BitmapTextManager::BitmapTextManager(BitmapTextManager&& r) noexcept
+	: _atlas{std::move(r._atlas)}
+	, _fonts{std::move(r._fonts)}
+	, _cachedRotationTransform{std::move(r._cachedRotationTransform)}
 {
-	_bitmapTextRenderer = nullptr;
+	if (_bitmapText == &r) {
+		_bitmapText = this;
+	}
 }
 
-void tre::BitmapTextMesher::addFont(std::string name, tr::SubBitmap texture, std::int32_t lineSkip, GlyphMap glyphs)
+tre::BitmapTextManager::~BitmapTextManager() noexcept
+{
+	if (_bitmapText == this) {
+		_bitmapText = nullptr;
+	}
+}
+
+const tre::BitmapTextManager::Font& tre::BitmapTextManager::font(std::string_view name) const noexcept
+{
+	assert(_fonts.contains(name));
+	return _fonts.find(name)->second;
+}
+
+void tre::BitmapTextManager::addFont(std::string name, tr::SubBitmap texture, std::int32_t lineSkip, GlyphMap glyphs)
 {
 	if (!_fonts.contains(name)) {
 		_atlas.add(name, texture);
@@ -191,7 +209,7 @@ void tre::BitmapTextMesher::addFont(std::string name, tr::SubBitmap texture, std
 	}
 }
 
-void tre::BitmapTextMesher::loadFont(std::string name, const std::filesystem::path& path)
+void tre::BitmapTextManager::loadFont(std::string name, const std::filesystem::path& path)
 {
 	auto           file{tr::openFileR(path, std::ios::binary)};
 	auto           decodingResult{tref::decode(file)};
@@ -201,7 +219,7 @@ void tre::BitmapTextMesher::loadFont(std::string name, const std::filesystem::pa
 	addFont(name, image, decodingResult.lineSkip, std::move(decodingResult.glyphs));
 }
 
-void tre::BitmapTextMesher::removeFont(std::string_view name)
+void tre::BitmapTextManager::removeFont(std::string_view name)
 {
 	auto it{_fonts.find(name)};
 	if (it != _fonts.end()) {
@@ -210,19 +228,19 @@ void tre::BitmapTextMesher::removeFont(std::string_view name)
 	}
 }
 
-void tre::BitmapTextMesher::clearFonts()
+void tre::BitmapTextManager::clearFonts()
 {
 	_atlas.clear();
 	_fonts.clear();
 }
 
-void tre::BitmapTextMesher::addGlyph(int priority, std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV,
-									 Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
-									 tr::AngleF rotation)
+std::optional<tre::BitmapTextManager::GlyphMesh> tre::BitmapTextManager::createGlyphMesh(
+	std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV, Style style, glm::vec2 scale, tr::RGBA8 tint,
+	glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation)
 {
 	const auto& glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
 	if (glyph.width == 0 || glyph.height == 0) {
-		return;
+		return {};
 	}
 
 	const auto       size{glm::vec2(glyph.width, glyph.height) * scale};
@@ -230,7 +248,7 @@ void tre::BitmapTextMesher::addGlyph(int priority, std::uint32_t codepoint, cons
 						glm::vec2(glyph.width, glyph.height) / glm::vec2(_atlas.texture().size())};
 	const auto       offset{glm::vec2(glyph.xOffset, glyph.yOffset) * scale};
 
-	Renderer2D::TexturedQuad quad;
+	Renderer2D::TextureQuad quad;
 	if (rotation == 0_degf) {
 		tr::fillRectVertices((quad | tr::positions).begin(), pos - posAnchor + offset, size);
 	}
@@ -254,61 +272,65 @@ void tre::BitmapTextMesher::addGlyph(int priority, std::uint32_t codepoint, cons
 		vertex.pos   = _cachedRotationTransform.transform * vertex.pos;
 		vertex.color = tint;
 	}
-
-	renderer2D().addTexturedQuad(priority, quad, {_atlas.texture(), bilinearSampler()});
+	return quad;
 }
 
-void tre::BitmapTextMesher::addGlyph(int priority, std::uint32_t codepoint, std::string_view font, Style style,
-									 glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
-									 tr::AngleF rotation)
+std::optional<tre::BitmapTextManager::GlyphMesh> tre::BitmapTextManager::createGlyphMesh(
+	std::uint32_t codepoint, std::string_view font, Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos,
+	glm::vec2 posAnchor, tr::AngleF rotation)
 {
-	auto it{_fonts.find(font)};
-	if (it != _fonts.end()) {
-		addGlyph(priority, codepoint, it->second, _atlas[font], style, scale, tint, pos, posAnchor, rotation);
-	}
+	assert(_fonts.contains(font));
+	return createGlyphMesh(codepoint, _fonts.find(font)->second, _atlas[font], style, scale, tint, pos, posAnchor,
+						   rotation);
 }
 
-void tre::BitmapTextMesher::addUnformatted(int priority, std::string_view text, std::string_view font, Style style,
-										   glm::vec2 scale, tr::RGBA8 tint, const Textbox& textbox)
+tre::BitmapTextManager::Mesh tre::BitmapTextManager::createUnformattedTextMesh(std::string_view text,
+																			   std::string_view font, Style style,
+																			   glm::vec2 scale, tr::RGBA8 tint,
+																			   const Textbox& textbox)
 {
-	auto fontIt{_fonts.find(font)};
-	if (fontIt == _fonts.end()) {
-		return;
-	}
-	auto fontUV{_atlas[font]};
+	assert(_fonts.contains(font));
+	const auto fontIt{_fonts.find(font)};
+	const auto fontUV{_atlas[font]};
 
-	auto lines{splitText(text, fontIt->second.glyphs, scale.x, textbox.size.x, false)};
-	auto yOffset{initialOffsetY(lines, fontIt->second.lineSkip, textbox)};
+	Mesh       mesh;
+	const auto lines{splitText(text, fontIt->second.glyphs, scale.x, textbox.size.x, false)};
+	auto       yOffset{initialOffsetY(lines, fontIt->second.lineSkip, textbox)};
 	for (auto& line : lines) {
 		auto xOffset{initialUnformattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
 		for (auto chr : tr::utf8Range(line)) {
 			if (!fontIt->second.glyphs.contains(chr)) {
 				chr = '\0';
 			}
-			addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-					 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+			const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+												 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
+			if (glyphMesh.has_value()) {
+				tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
+				mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+			}
 			xOffset += fontIt->second.glyphs.at(chr).advance;
 		}
-
 		yOffset += fontIt->second.lineSkip;
 	}
+	return mesh;
 }
 
-void tre::BitmapTextMesher::addFormatted(int priority, std::string_view text, std::string_view font, glm::vec2 scale,
-										 std::span<tr::RGBA8> colors, const Textbox& textbox)
+tre::BitmapTextManager::Mesh tre::BitmapTextManager::createFormattedTextMesh(std::string_view text,
+																			 std::string_view font, glm::vec2 scale,
+																			 std::span<tr::RGBA8> colors,
+																			 const Textbox&       textbox)
 {
-	auto fontIt{_fonts.find(font)};
-	if (fontIt == _fonts.end()) {
-		return;
-	}
-	auto fontUV{_atlas[font]};
+	assert(_fonts.contains(font));
+	const auto fontIt{_fonts.find(font)};
+	const auto fontUV{_atlas[font]};
 
-	auto      lines{splitText(text, fontIt->second.glyphs, scale.x, textbox.size.x, true)};
-	auto      yOffset{initialOffsetY(lines, fontIt->second.lineSkip, textbox)};
-	Style     style{Style::NORMAL};
-	tr::RGBA8 tint{255, 255, 255, 255};
+	Mesh       mesh;
+	const auto lines{splitText(text, fontIt->second.glyphs, scale.x, textbox.size.x, true)};
+	auto       yOffset{initialOffsetY(lines, fontIt->second.lineSkip, textbox)};
+	Style      style{Style::NORMAL};
+	tr::RGBA8  tint{255, 255, 255, 255};
 	for (auto& line : lines) {
-		auto xOffset{initialUnformattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
+		auto xOffset{initialFormattedOffsetX(line, fontIt->second.glyphs, scale.x, textbox)};
 		for (auto it = line.begin(); it != line.end(); ++it) {
 			if (*it == '\\') {
 				if (++it == line.end()) {
@@ -316,9 +338,13 @@ void tre::BitmapTextMesher::addFormatted(int priority, std::string_view text, st
 				}
 				switch (*it) {
 				case '\\': {
-					auto chr{fontIt->second.glyphs.contains('\\') ? '\\' : '\0'};
-					addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-							 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+					const auto chr{fontIt->second.glyphs.contains('\\') ? '\\' : '\0'};
+					const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+														 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
+					if (glyphMesh.has_value()) {
+						tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
+						mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+					}
 					xOffset += fontIt->second.glyphs.at(chr).advance;
 				} break;
 				case '!':
@@ -340,24 +366,29 @@ void tre::BitmapTextMesher::addFormatted(int priority, std::string_view text, st
 				}
 			}
 			else {
-				auto chr{fontIt->second.glyphs.contains(*it) ? *it : '\0'};
-				addGlyph(priority, chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-						 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation);
+				const auto chr{fontIt->second.glyphs.contains(*it) ? *it : '\0'};
+				const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+													 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
+				if (glyphMesh.has_value()) {
+					tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
+					mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+				}
 				xOffset += fontIt->second.glyphs.at(chr).advance;
 			}
 		}
 	line_end:
 		yOffset += fontIt->second.lineSkip;
 	}
+	return mesh;
 }
 
 bool tre::bitmapTextActive() noexcept
 {
-	return _bitmapTextRenderer != nullptr;
+	return _bitmapText != nullptr;
 }
 
-tre::BitmapTextMesher& tre::bitmapText() noexcept
+tre::BitmapTextManager& tre::bitmapText() noexcept
 {
 	assert(bitmapTextActive());
-	return *_bitmapTextRenderer;
+	return *_bitmapText;
 }
