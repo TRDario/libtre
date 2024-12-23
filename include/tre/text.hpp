@@ -2,11 +2,8 @@
 #include <tr/tr.hpp>
 
 namespace tre {
-	/** @defgroup text Text Rendering
-	 *  Text rendering functionality.
-	 *
-	 *  An instance of Renderer2D must be created before any renderers from this section except DebugTextRenderer can
-	 *  be used.
+	/** @defgroup text Text
+	 *  Text-related functionality.
 	 *  @{
 	 */
 
@@ -122,6 +119,10 @@ namespace tre {
 
 	/******************************************************************************************************************
 	 * Renders text to a bitmap according to the format described in @ref renderformat.
+	 *
+	 * @par Exception Safety
+	 *
+	 * Strong exception guarantee.
 	 *
 	 * @exception std::bad_alloc If an internal allocation occurs.
 	 * @exception tr::BitmapBadAlloc If allocating a bitmap fails.

@@ -1,16 +1,14 @@
-#include "../include/tre/static_text_renderer.hpp"
-#include "../include/tre/renderer_2d.hpp"
-#include "../include/tre/sampler.hpp"
+#include "../include/tre/static_text_manager.hpp"
 
 namespace tre {
-	StaticTextRenderer* _staticTextRenderer{nullptr};
+	StaticTextManager* _staticText{nullptr};
 
 	glm::vec2 calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
-								 const StaticTextRenderer::Textbox& textbox) noexcept;
+								 const StaticTextManager::Textbox& textbox) noexcept;
 } // namespace tre
 
 glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAlign horizontalAlignment,
-								  const StaticTextRenderer::Textbox& textbox) noexcept
+								  const StaticTextManager::Textbox& textbox) noexcept
 {
 	const glm::vec2 textBoxSize{maxWidth, textbox.height};
 	switch (Align(int(horizontalAlignment) + int(textbox.textAlignment))) {
@@ -37,28 +35,38 @@ glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAl
 	}
 }
 
-tre::StaticTextRenderer::StaticTextRenderer() noexcept
+tre::StaticTextManager::StaticTextManager() noexcept
 	: _dpi{72, 72}
 {
-	assert(!staticTextRendererActive());
-	_staticTextRenderer = this;
+	assert(!staticTextActive());
+	_staticText = this;
 
 #ifndef NDEBUG
 	_atlas.setLabel("(tre) Static Text Renderer Atlas");
 #endif
 }
 
-tre::StaticTextRenderer::~StaticTextRenderer() noexcept
+tre::StaticTextManager::StaticTextManager(StaticTextManager&& r) noexcept
+	: _atlas{std::move(r._atlas)}, _fixedEntryTextboxInfo{std::move(r._fixedEntryTextboxInfo)}, _dpi{r._dpi}
 {
-	_staticTextRenderer = nullptr;
+	if (_staticText == &r) {
+		_staticText = this;
+	}
 }
 
-void tre::StaticTextRenderer::setDPI(unsigned int dpi) noexcept
+tre::StaticTextManager::~StaticTextManager() noexcept
+{
+	if (_staticText == this) {
+		_staticText = nullptr;
+	}
+}
+
+void tre::StaticTextManager::setDPI(unsigned int dpi) noexcept
 {
 	setDPI({dpi, dpi});
 }
 
-void tre::StaticTextRenderer::setDPI(glm::uvec2 dpi) noexcept
+void tre::StaticTextManager::setDPI(glm::uvec2 dpi) noexcept
 {
 	if (dpi != _dpi) {
 		assert(dpi.x > 0 && dpi.y > 0);
@@ -67,9 +75,9 @@ void tre::StaticTextRenderer::setDPI(glm::uvec2 dpi) noexcept
 	}
 }
 
-void tre::StaticTextRenderer::newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
-												  tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
-												  int maxWidth, HorizontalAlign alignment)
+void tre::StaticTextManager::newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
+												 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
+												 int maxWidth, HorizontalAlign alignment)
 {
 	assert(!_atlas.contains(name));
 
@@ -95,23 +103,23 @@ void tre::StaticTextRenderer::newUnformattedEntry(std::string name, const char* 
 	}
 }
 
-void tre::StaticTextRenderer::newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font,
-												  int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor,
-												  TextOutline outline, int maxWidth, HorizontalAlign alignment)
+void tre::StaticTextManager::newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font,
+												 int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor,
+												 TextOutline outline, int maxWidth, HorizontalAlign alignment)
 {
 	newUnformattedEntry(std::move(name), text.c_str(), font, fontSize, style, textColor, outline, maxWidth, alignment);
 }
 
-void tre::StaticTextRenderer::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
-												tr::RGBA8 textColor, TextOutline outline, int maxWidth,
-												HorizontalAlign alignment)
+void tre::StaticTextManager::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+											   tr::RGBA8 textColor, TextOutline outline, int maxWidth,
+											   HorizontalAlign alignment)
 {
 	newFormattedEntry(std::move(name), text, font, fontSize, {&textColor, 1}, outline, maxWidth, alignment);
 }
 
-void tre::StaticTextRenderer::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
-												std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
-												HorizontalAlign alignment)
+void tre::StaticTextManager::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+											   std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
+											   HorizontalAlign alignment)
 {
 	assert(!_atlas.contains(name));
 
@@ -123,35 +131,34 @@ void tre::StaticTextRenderer::newFormattedEntry(std::string name, std::string_vi
 	_atlas.add(std::move(name), bitmap);
 }
 
-void tre::StaticTextRenderer::removeEntry(std::string_view name) noexcept
+void tre::StaticTextManager::removeEntry(std::string_view name) noexcept
 {
 	_atlas.remove(name);
 }
 
-void tre::StaticTextRenderer::addInstance(int priority, std::string_view entry, const Textbox& textbox)
+tre::Renderer2D::TextureQuad tre::StaticTextManager::createMesh(std::string_view entry, const Textbox& textbox) noexcept
 {
-	if (!_atlas.contains(entry)) {
-		return;
-	}
+	assert(_atlas.contains(entry));
 
-	const auto& uv{_atlas[entry]};
-	const auto& fixedInfo{_fixedEntryTextboxInfo.find(entry)->second};
+	const auto&     uv{_atlas[entry]};
+	const auto&     fixedInfo{_fixedEntryTextboxInfo.find(entry)->second};
+	const glm::vec2 size{uv.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
+	const glm::vec2 posAnchor{calculatePosAnchor(size, fixedInfo.width, fixedInfo.textAlignment, textbox)};
 
-	const glm::vec2              size{uv.size * glm::vec2(_atlas.texture().size()) / glm::vec2(_dpi) * 72.0f};
-	const glm::vec2              posAnchor{calculatePosAnchor(size, fixedInfo.width, fixedInfo.textAlignment, textbox)};
-	const Renderer2D::TextureRef texture{_atlas.texture(), bilinearSampler()};
-
-	renderer2D().addTexturedRotatedRectangle(priority, textbox.pos, posAnchor, size, textbox.rotation, texture, uv,
-											 textbox.tint);
+	Renderer2D::TextureQuad quad;
+	tr::fillRotatedRectangleVertices((quad | tr::positions).begin(), textbox.pos, posAnchor, size, textbox.rotation);
+	tr::fillRectVertices((quad | tr::uvs).begin(), uv.tl, uv.size);
+	std::ranges::fill(quad | tr::colors, textbox.tint);
+	return quad;
 }
 
-bool tre::staticTextRendererActive() noexcept
+bool tre::staticTextActive() noexcept
 {
-	return _staticTextRenderer != nullptr;
+	return _staticText != nullptr;
 }
 
-tre::StaticTextRenderer& tre::staticTextRenderer() noexcept
+tre::StaticTextManager& tre::staticText() noexcept
 {
-	assert(staticTextRendererActive());
-	return *_staticTextRenderer;
+	assert(staticTextActive());
+	return *_staticText;
 }

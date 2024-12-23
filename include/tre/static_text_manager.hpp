@@ -1,20 +1,30 @@
 #pragma once
 #include "atlas.hpp"
+#include "renderer_2d.hpp"
 #include "text.hpp"
 
 namespace tre {
-	/** @addtogroup text
+	/** @ingroup text
+	 *  @defgroup static_text Static Text
+	 *  Static text management functionality.
+	 *
 	 *  @{
 	 */
 
 	/******************************************************************************************************************
-	 * Renderer for persistent text.
+	 * Texture and mesh manager for rarely-changing text.
 	 *
-	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
+	 * The DebugTextRenderer class uses something akin to the singleton pattern. It is still your job to instantiate the
+	 * renderer once (and only once!), after which it will stay active until its destructor is called, but this instance
+	 * will be globally available through staticText(). Instancing the renderer again after it has been closed is a
+	 * valid action.
 	 *
-	 * Only one instance of the static text renderer is allowed to exist at a time.
+	 * DebugTextRenderer is move-constructible, but neither copyable nor assignable. A moved renderer is left in a state
+	 * where another renderer can be moved into it, but is otherwise unusable.
+	 *
+	 * @note An instance of tr::Window must be created before Renderer2D can be instantiated.
 	 ******************************************************************************************************************/
-	class StaticTextRenderer {
+	class StaticTextManager {
 	  public:
 		/**************************************************************************************************************
 		 * Static text textbox rectangle.
@@ -53,14 +63,34 @@ namespace tre {
 		};
 
 		/**************************************************************************************************************
-		 * Constructs the static text renderer.
+		 * Constructs the static text manager.
 		 **************************************************************************************************************/
-		StaticTextRenderer() noexcept;
+		StaticTextManager() noexcept;
 
-		~StaticTextRenderer() noexcept;
+		/**************************************************************************************************************
+		 * Move-constructs a static text manager.
+		 *
+		 * @param[in] r The static text manager to move from. @em r will be left in a moved-from state that shouldn't
+		 *              be used.
+		 **************************************************************************************************************/
+		StaticTextManager(StaticTextManager&& r) noexcept;
+
+		/**************************************************************************************************************
+		 * Destroys the debug text renderer and disables the ability to use the staticText() getter.
+		 **************************************************************************************************************/
+		~StaticTextManager() noexcept;
+
+		/**************************************************************************************************************
+		 * Gets a reference to the manager's texture atlas.
+		 *
+		 * @return An immutable reference to the manager's texture atlas.
+		 **************************************************************************************************************/
+		const tr::Texture2D& texture() const noexcept;
 
 		/**************************************************************************************************************
 		 * Sets the DPI of the renderer.
+		 *
+		 * @note This function clears all existing entries unless the DPI matches the previous DPI.
 		 *
 		 * @param[in] dpi The new text DPI, by default it is 72.
 		 **************************************************************************************************************/
@@ -69,7 +99,7 @@ namespace tre {
 		/**************************************************************************************************************
 		 * Sets the DPI of the renderer.
 		 *
-		 * This function clears all existing entries unless the DPI matches the previous DPI.
+		 * @note This function clears all existing entries unless the DPI matches the previous DPI.
 		 *
 		 * @param[in] dpi The new text DPI, by default it is {72, 72}.
 		 **************************************************************************************************************/
@@ -81,7 +111,12 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] name The name of the text entry. An entry of the same name must not exist already.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the text entry.
+		 *
+		 * @pre An entry named @em name cannot already exist in the manager.
+		 * @endparblock
 		 * @param[in] text The text string.
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
@@ -101,7 +136,12 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] name The name of the text entry. An entry of the same name must not exist already.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the text entry.
+		 *
+		 * @pre An entry named @em name cannot already exist in the manager.
+		 * @endparblock
 		 * @param[in] text The text string.
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
@@ -121,7 +161,12 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] name The name of the text entry. An entry of the same name must not exist already.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the text entry.
+		 *
+		 * @pre An entry named @em name cannot already exist in the manager.
+		 * @endparblock
 		 * @param[in] text The text string. See @ref renderformat for the specifics of the text format.
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
@@ -139,11 +184,21 @@ namespace tre {
 		 * @exception tr::BitmapBadAlloc If an internal allocation fails.
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] name The name of the text entry. An entry of the same name must not exist already.
+		 * @param[in] name
+		 * @parblock
+		 * The name of the text entry.
+		 *
+		 * @pre An entry named @em name cannot already exist in the manager.
+		 * @endparblock
 		 * @param[in] text The text string. See @ref renderformat for the specifics of the text format.
 		 * @param[in] font The font to use for the text.
 		 * @param[in] fontSize The font size to use for the text.
-		 * @param[in] textColors The available text colors. By default, the color at index 0 is used. Must not be empty.
+		 * @param[in] textColors
+		 * @parblock
+		 * The available text colors.
+		 *
+		 * @pre @em textColors cannot be empty.
+		 * @endparblock
 		 * @param[in] outline The outline parameters to use for the text, or NO_OUTLINE.
 		 * @param[in] maxWidth The maximum width of the entry.
 		 * @param[in] alignment The horizontal alignment of the entry.
@@ -160,15 +215,19 @@ namespace tre {
 		void removeEntry(std::string_view name) noexcept;
 
 		/**************************************************************************************************************
-		 * Adds an instance of a text entry to the 2D renderer.
+		 * Creates a text entry mesh.
 		 *
-		 * @exception std::bad_alloc If an internal allocation fails.
+		 * @param[in] entry
+		 * @parblock
+		 * The name of the text entry to use.
 		 *
-		 * @param[in] priority The drawing priority of the text (higher is drawn on top).
-		 * @param[in] entry The name of the text entry to use. If no such entry exists, no instances will be added.
+		 * @pre @em entry must be a valid text entry name.
+		 * @endparblock
 		 * @param[in] textbox The textbox to frame the text around.
+		 *
+		 * @return A textured quad. When drawing, use the texture gotten from texture().
 		 **************************************************************************************************************/
-		void addInstance(int priority, std::string_view entry, const Textbox& textbox);
+		Renderer2D::TextureQuad createMesh(std::string_view entry, const Textbox& textbox) noexcept;
 
 	  private:
 		struct FixedEntryTextboxInfo {
@@ -182,19 +241,20 @@ namespace tre {
 	};
 
 	/******************************************************************************************************************
-	 * Gets whether the static text renderer was initialized.
+	 * Gets whether the static text manager was initialized.
 	 *
-	 * @return True if the static text renderer was initialized, and false otherwise.
+	 * @return True if the static text manager was initialized, and false otherwise.
 	 ******************************************************************************************************************/
-	bool staticTextRendererActive() noexcept;
+	bool staticTextActive() noexcept;
 
 	/******************************************************************************************************************
-	 * Gets a reference to the static text renderer.
-	 * This function cannot be called if the static text renderer wasn't initialized.
+	 * Gets a reference to the static text manager.
 	 *
-	 * @return A reference to the static text renderer.
+	 * @pre The static text manager must be instantiated.
+	 *
+	 * @return A reference to the static text manager.
 	 ******************************************************************************************************************/
-	StaticTextRenderer& staticTextRenderer() noexcept;
+	StaticTextManager& staticText() noexcept;
 
 	/// @}
 } // namespace tre

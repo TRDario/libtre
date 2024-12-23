@@ -9,7 +9,7 @@
 #include "renderer_2d.hpp"
 #include "sampler.hpp"
 #include "state_manager.hpp"
-#include "static_text_renderer.hpp"
+#include "static_text_manager.hpp"
 #include "text.hpp"
 
 /// Namespace containing all libtre functionality.

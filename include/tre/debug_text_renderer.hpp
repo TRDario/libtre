@@ -2,7 +2,8 @@
 #include <tr/tr.hpp>
 
 namespace tre {
-	/** @defgroup debug_text Debug Text
+	/** @ingroup text
+	 *  @defgroup debug_text Debug Text
 	 *  Debug text rendering functionality.
 	 *
 	 *  @{

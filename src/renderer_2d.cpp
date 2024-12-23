@@ -4,7 +4,7 @@
 
 namespace tre {
 	inline constexpr glm::vec2 UNTEXTURED_UV{-100, -100};
-	tre::Renderer2D*           _renderer2D{};
+	tre::Renderer2D*           _renderer2D{nullptr};
 } // namespace tre
 
 tre::Renderer2D::Renderer2D()

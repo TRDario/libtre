@@ -4,18 +4,19 @@
 #include <tref/tref.hpp>
 
 namespace tre {
-	/** @addtogroup text
+	/** @ingroup text
+	 *  @defgroup bitmap_text Bitmap Text
+	 *  Bitmap text rendering functionality.
+	 *
 	 *  @{
 	 */
 
 	/******************************************************************************************************************
-	 * Renderer for text using glyphs from a bitmap.
+	 * Mesher for text using glyphs from a bitmap.
 	 *
-	 * Implemented as an abstraction layer that forwards its output to the 2D renderer.
-	 *
-	 * Only one instance of the bitmap text renderer is allowed to exist at a time.
+	 * Only one instance of the bitmap text mesher is allowed to exist at a time.
 	 ******************************************************************************************************************/
-	class BitmapTextRenderer {
+	class BitmapTextMesher {
 	  public:
 		using Glyph = tref::Glyph;
 
@@ -70,11 +71,11 @@ namespace tre {
 		using GlyphMap = std::unordered_map<std::uint32_t, Glyph>;
 
 		/**************************************************************************************************************
-		 * Constructs the bitmap text renderer.
+		 * Constructs the bitmap text mesher.
 		 **************************************************************************************************************/
-		BitmapTextRenderer() noexcept;
+		BitmapTextMesher() noexcept;
 
-		~BitmapTextRenderer() noexcept;
+		~BitmapTextMesher() noexcept;
 
 		/**************************************************************************************************************
 		 * Adds a font to the renderer.
@@ -191,19 +192,19 @@ namespace tre {
 	};
 
 	/******************************************************************************************************************
-	 * Gets whether the bitmap text renderer was initialized.
+	 * Gets whether the bitmap text mesher was initialized.
 	 *
-	 * @return True if the bitmap text renderer was initialized, and false otherwise.
+	 * @return True if the bitmap text mesher was initialized, and false otherwise.
 	 ******************************************************************************************************************/
-	bool bitmapTextRendererActive() noexcept;
+	bool bitmapTextActive() noexcept;
 
 	/******************************************************************************************************************
-	 * Gets a reference to the bitmap text renderer.
-	 * This function cannot be called if the bitmap text renderer wasn't initialized.
+	 * Gets a reference to the bitmap text mesher.
+	 * This function cannot be called if the bitmap text mesher wasn't initialized.
 	 *
-	 * @return A reference to the bitmap text renderer.
+	 * @return A reference to the bitmap text mesher.
 	 ******************************************************************************************************************/
-	BitmapTextRenderer& bitmapTextRenderer() noexcept;
+	BitmapTextMesher& bitmapText() noexcept;
 
 	/// @}
 } // namespace tre
