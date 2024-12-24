@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['localizationmanager_0',['LocalizationManager',['../classtre_1_1LocalizationManager.html',1,'tre']]],
-  ['locfileparsewitherrors_1',['LocFileParseWithErrors',['../classtre_1_1LocFileParseWithErrors.html',1,'tre']]]
+  ['font_0',['Font',['../structtre_1_1BitmapTextManager_1_1Font.html',1,'tre::BitmapTextManager']]]
 ];

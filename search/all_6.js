@@ -1,9 +1,13 @@
 var searchData=
 [
-  ['gain_0',['gain',['../classtre_1_1AudioSource.html#ae734ceebe53f9573f5f820b06766586b',1,'tre::AudioSource']]],
-  ['generaterendererid_1',['generateRendererID',['../group__renderer.html#ga8e226faf5cf8b75cc944ba1545d56e6b',1,'tre']]],
-  ['generatestatetype_2',['generateStateType',['../group__state__management.html#gafb2b556cf93aa8a8a4b9f4f29c1479c8',1,'tre']]],
-  ['getclassgain_3',['getClassGain',['../classtre_1_1AudioManager.html#ad97ae05da7ee9140bfa64db006aba400',1,'tre::AudioManager']]],
-  ['glyph_4',['Glyph',['../classtre_1_1BitmapTextRenderer.html#aa61c86991c99f922a3dd4f3e6d8d8c53',1,'tre::BitmapTextRenderer']]],
-  ['glyphmap_5',['GlyphMap',['../classtre_1_1BitmapTextRenderer.html#a12c19c1d442ce85688cacef21dd00e40',1,'tre::BitmapTextRenderer']]]
+  ['file_0',['IMAGE FILE',['../tref.html#image_file',1,'']]],
+  ['file_20format_1',['Localization File Format',['../locformat.html',1,'']]],
+  ['font_2',['Font',['../structtre_1_1BitmapTextManager_1_1Font.html',1,'tre::BitmapTextManager']]],
+  ['font_3',['font',['../classtre_1_1BitmapTextManager.html#ab0cadf90a1d7c1c5caa1ac80bfdeb40c',1,'tre::BitmapTextManager']]],
+  ['font_20format_20tref_4',['tre Bitmap Font Format (tref)',['../tref.html',1,'']]],
+  ['font_20information_5',['FONT INFORMATION',['../tref.html#font_information',1,'']]],
+  ['format_6',['Format',['../debformat.html',1,'Formatted Debug Text Format'],['../renderformat.html',1,'Formatted Rendered Text Format'],['../locformat.html',1,'Localization File Format']]],
+  ['format_20tref_7',['tre Bitmap Font Format (tref)',['../tref.html',1,'']]],
+  ['formatted_20debug_20text_20format_8',['Formatted Debug Text Format',['../debformat.html',1,'']]],
+  ['formatted_20rendered_20text_20format_9',['Formatted Rendered Text Format',['../renderformat.html',1,'']]]
 ];

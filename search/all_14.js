@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['_7eaudiomanager_0',['~AudioManager',['../classtre_1_1AudioManager.html#a7864d1982cd3f2055fa2b96462d5737b',1,'tre::AudioManager']]],
-  ['_7ebitmaptextrenderer_1',['~BitmapTextRenderer',['../classtre_1_1BitmapTextRenderer.html#a500e933ebe853e374c24d729fc789218',1,'tre::BitmapTextRenderer']]],
-  ['_7edebugtextrenderer_2',['~DebugTextRenderer',['../classtre_1_1DebugTextRenderer.html#a8728817ff57b522cbd4a2d1858f03c91',1,'tre::DebugTextRenderer']]],
-  ['_7edynamictextrenderer_3',['~DynamicTextRenderer',['../classtre_1_1DynamicTextRenderer.html#aed3392b4c1e8e3cfa3e4a3cdc1f01478',1,'tre::DynamicTextRenderer']]],
-  ['_7erenderer2d_4',['~Renderer2D',['../classtre_1_1Renderer2D.html#a181d00893dbb12e6a9ec592beb3238d5',1,'tre::Renderer2D']]],
-  ['_7estate_5',['~State',['../structtre_1_1State.html#aba3ab44215c2aca3cca5e57256abb37d',1,'tre::State']]],
-  ['_7estatictextrenderer_6',['~StaticTextRenderer',['../classtre_1_1StaticTextRenderer.html#a93b8610b9a4e156edc8bee421e67e03a',1,'tre::StaticTextRenderer']]]
+  ['what_0',['what',['../classtre_1_1LocFileParseWithErrors.html#a92df6568f701d10123080f53a501704d',1,'tre::LocFileParseWithErrors']]],
+  ['white_1',['WHITE',['../classtre_1_1DebugTextRenderer.html#a32b1f2dea3b7311260fdd3f0d6578a22',1,'tre::DebugTextRenderer']]],
+  ['write_2',['write',['../classtre_1_1DebugTextRenderer.html#aeb50c2e18b8ce8d4740ca4cc2d6ebe23',1,'tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor=WHITE, tr::RGBA8 backgroundColor=BLACK, std::span&lt; tr::RGBA8 &gt; extraColors={}, Align alignment=Align::LEFT)'],['../classtre_1_1DebugTextRenderer.html#ab84410a37616352edac1703a53d98793',1,'tre::DebugTextRenderer::write(const tr::Benchmark &amp;benchmark, std::string_view name, tr::Duration altColorLimit, tr::RGBA8 textColor=WHITE, tr::RGBA8 altTextColor=RED, tr::RGBA8 backgroundColor=BLACK, Align alignment=Align::RIGHT)']]]
 ];

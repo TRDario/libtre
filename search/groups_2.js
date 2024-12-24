@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['management_0',['State Management',['../group__state__management.html',1,'']]]
+  ['bitmap_20text_0',['Bitmap Text',['../group__bitmap__text.html',1,'']]]
 ];

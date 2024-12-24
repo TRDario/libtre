@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['atlases_0',['Atlases',['../group__atlas.html',1,'']]],
-  ['audio_1',['Audio',['../group__audio.html',1,'']]]
+  ['2d_20renderer_0',['2D Renderer',['../group__renderer__2d.html',1,'']]]
 ];

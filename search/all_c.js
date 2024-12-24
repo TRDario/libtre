@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['offset_0',['offset',['../classtre_1_1AudioSource.html#a5325efcb2c4ffa9aa7f12789cfb080cb',1,'tre::AudioSource']]],
-  ['operator_5b_5d_1',['operator[]',['../classtre_1_1Atlas2D.html#acaa1a0de27eb9d0c4bc7ddca02ca09e8',1,'tre::Atlas2D::operator[]()'],['../classtre_1_1DynAtlas2D.html#a973b1559b5a2e2e52c016f98f0f5bf9f',1,'tre::DynAtlas2D::operator[]()'],['../classtre_1_1LocalizationManager.html#a33925a65cb04ad960ecc8313871c98f4',1,'tre::LocalizationManager::operator[]()']]],
-  ['origin_2',['origin',['../classtre_1_1AudioSource.html#a9e90ea2aca95f865729b41a803e37bc5',1,'tre::AudioSource']]],
-  ['outerconegain_3',['outerConeGain',['../classtre_1_1AudioSource.html#a8ac675763dec8eb3326fd646e5cb63f1',1,'tre::AudioSource']]],
-  ['outerconewidth_4',['outerConeWidth',['../classtre_1_1AudioSource.html#a8dfb4a3ffb74985d5fe085090595f45e',1,'tre::AudioSource']]]
+  ['nearestneighborsampler_0',['nearestNeighborSampler',['../group__sampler__presets.html#ga545d0d13d53c7f08e249fe0fed1b6cc4',1,'tre']]],
+  ['newformattedentry_1',['newFormattedEntry',['../classtre_1_1StaticTextManager.html#a1030a6be3f6b678091ef8d2b4df94bbd',1,'tre::StaticTextManager::newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont &amp;font, int fontSize, tr::RGBA8 textColor, TextOutline outline, int maxWidth, HorizontalAlign alignment)'],['../classtre_1_1StaticTextManager.html#a7d951b519b0c535d6fcc829fe0715756',1,'tre::StaticTextManager::newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont &amp;font, int fontSize, std::span&lt; tr::RGBA8 &gt; textColors, TextOutline outline, int maxWidth, HorizontalAlign alignment)']]],
+  ['newframe_2',['newFrame',['../classtre_1_1DynamicTextManager.html#a103294f3a12943720cc95a89c93af89f',1,'tre::DynamicTextManager']]],
+  ['newsource_3',['newSource',['../classtre_1_1AudioManager.html#a5262c45a5e605312b1170d183c25750c',1,'tre::AudioManager']]],
+  ['newunformattedentry_4',['newUnformattedEntry',['../classtre_1_1StaticTextManager.html#aa4bde4b1266ce8a88c6ef4c0a77077a8',1,'tre::StaticTextManager::newUnformattedEntry(std::string_view name, const char *text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth, HorizontalAlign alignment)'],['../classtre_1_1StaticTextManager.html#a406b9c141d042e5fc5b28b7000841e17',1,'tre::StaticTextManager::newUnformattedEntry(std::string_view name, const std::string &amp;text, tr::TTFont &amp;font, int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth, HorizontalAlign alignment)']]],
+  ['no_5foutline_5',['NO_OUTLINE',['../group__text.html#gaa79002b278ae0c30edbc10a455b26e94',1,'tre']]],
+  ['none_6',['NONE',['../classtre_1_1DebugTextRenderer.html#aab76442188f79677a8bc08e3c91d5d00',1,'tre::DebugTextRenderer']]],
+  ['normal_7',['NORMAL',['../classtre_1_1BitmapTextManager.html#a7d93a8290ea238b38eeedeece7f9a03ea1e23852820b9154316c7c06e2b7ba051',1,'tre::BitmapTextManager']]]
 ];

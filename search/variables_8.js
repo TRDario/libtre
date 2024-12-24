@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['size_0',['size',['../structtre_1_1BitmapTextRenderer_1_1Textbox.html#a36a5dc6fdb4a0f61dc58739e36b30b1b',1,'tre::BitmapTextRenderer::Textbox::size'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html#ae3d8c6b9e087ccb3e0618fe50e5735ba',1,'tre::DynamicTextRenderer::Textbox::size']]],
-  ['start_1',['START',['../classtre_1_1AudioStream.html#ad9291fa9b4682ab6423b993ee1a94866',1,'tre::AudioStream::START'],['../classtre_1_1AudioSource.html#a8daebab341b0a021db3ccbeda2cd6bc4',1,'tre::AudioSource::START']]],
-  ['startfileoffset_2',['startFileOffset',['../structtre_1_1AudioSource_1_1Stream_1_1Buffer.html#a9226d02b09417c95020fdeff61d5ff90',1,'tre::AudioSource::Stream::Buffer']]]
+  ['pos_0',['pos',['../structtre_1_1BitmapTextManager_1_1Textbox.html#ac4d9d35f6e75f5a245e99bd689b3633a',1,'tre::BitmapTextManager::Textbox::pos'],['../structtre_1_1DynamicTextManager_1_1Textbox.html#afa87422b454c61482e53f040a969689d',1,'tre::DynamicTextManager::Textbox::pos'],['../structtre_1_1StaticTextManager_1_1Textbox.html#a840e99ef28a9e21004835fa9a88bff3b',1,'tre::StaticTextManager::Textbox::pos']]],
+  ['posanchor_1',['posAnchor',['../structtre_1_1BitmapTextManager_1_1Textbox.html#a7a634705ee4f5de89c7cb8718dbbad76',1,'tre::BitmapTextManager::Textbox::posAnchor'],['../structtre_1_1DynamicTextManager_1_1Textbox.html#a9b533b9da28e348208f31561bfe69503',1,'tre::DynamicTextManager::Textbox::posAnchor'],['../structtre_1_1StaticTextManager_1_1Textbox.html#ac7151d0281380d2914d16ba323f5e047',1,'tre::StaticTextManager::Textbox::posAnchor']]]
 ];

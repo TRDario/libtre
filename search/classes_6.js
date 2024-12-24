@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['textbox_0',['Textbox',['../structtre_1_1BitmapTextRenderer_1_1Textbox.html',1,'tre::BitmapTextRenderer::Textbox'],['../structtre_1_1DynamicTextRenderer_1_1Textbox.html',1,'tre::DynamicTextRenderer::Textbox'],['../structtre_1_1StaticTextRenderer_1_1Textbox.html',1,'tre::StaticTextRenderer::Textbox']]],
-  ['textoutline_1',['TextOutline',['../structtre_1_1TextOutline.html',1,'tre']]]
+  ['renderer2d_0',['Renderer2D',['../classtre_1_1Renderer2D.html',1,'tre']]],
+  ['renderview_1',['RenderView',['../classtre_1_1RenderView.html',1,'tre']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['what_0',['what',['../classtre_1_1LocFileParseWithErrors.html#a92df6568f701d10123080f53a501704d',1,'tre::LocFileParseWithErrors']]],
-  ['white_1',['WHITE',['../classtre_1_1DebugTextRenderer.html#a32b1f2dea3b7311260fdd3f0d6578a22',1,'tre::DebugTextRenderer']]],
-  ['write_2',['write',['../classtre_1_1DebugTextRenderer.html#aeb50c2e18b8ce8d4740ca4cc2d6ebe23',1,'tre::DebugTextRenderer::write(std::string_view text, tr::RGBA8 textColor=WHITE, tr::RGBA8 backgroundColor=BLACK, std::span&lt; tr::RGBA8 &gt; extraColors={}, Align alignment=Align::LEFT)'],['../classtre_1_1DebugTextRenderer.html#ab84410a37616352edac1703a53d98793',1,'tre::DebugTextRenderer::write(const tr::Benchmark &amp;benchmark, std::string_view name, tr::Duration altColorLimit, tr::RGBA8 textColor=WHITE, tr::RGBA8 altTextColor=RED, tr::RGBA8 backgroundColor=BLACK, Align alignment=Align::RIGHT)']]]
+  ['velocity_0',['velocity',['../classtre_1_1AudioSource.html#a393b9c9eae6c34ace16fcfb6d6504aa4',1,'tre::AudioSource']]],
+  ['verticalalign_1',['VerticalAlign',['../group__text.html#ga0c4756284e05fab37c17a28b0126c8d2',1,'tre']]],
+  ['vertices_2',['vertices',['../structtre_1_1BitmapTextManager_1_1Mesh.html#a0754abcde1268d011ba323e323a9d039',1,'tre::BitmapTextManager::Mesh']]],
+  ['view_3',['Render View',['../group__render__view.html',1,'']]]
 ];
