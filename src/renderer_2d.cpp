@@ -111,7 +111,7 @@ void tre::Renderer2D::addColorFan(int layer, const ColorFan& fan)
 {
 	assert(_layers.contains(layer));
 	assert(fan.size() >= 3);
-	TextureFan textureFan;
+	TextureFan textureFan(fan.size());
 	for (std::size_t i = 0; i < fan.size(); ++i) {
 		textureFan[i].pos   = fan[i].pos;
 		textureFan[i].uv    = UNTEXTURED_UV;
@@ -144,7 +144,7 @@ void tre::Renderer2D::addColorMesh(int layer, const std::vector<tr::ClrVtx2>& ve
 {
 	assert(_layers.contains(layer));
 	assert(std::ranges::max(indices) == vertices.size() - 1);
-	std::vector<tr::TintVtx2> textureVertices;
+	std::vector<tr::TintVtx2> textureVertices(vertices.size());
 	for (std::size_t i = 0; i < vertices.size(); ++i) {
 		textureVertices[i].pos   = vertices[i].pos;
 		textureVertices[i].uv    = UNTEXTURED_UV;
