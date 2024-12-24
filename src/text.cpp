@@ -205,11 +205,11 @@ tr::Bitmap tre::renderMultistyleText(std::string_view text, tr::TTFont& font, in
 {
 	assert(!text.empty());
 	assert(!textColors.empty());
-
 	font.setStyle(tr::TTFont::Style::NORMAL);
 	font.setOutline(outline.thickness);
 	font.resize(size, dpi);
 
+	maxWidth = maxWidth * dpi.x / 72;
 	MultistyleTextContext ctx{font, {}, 0, maxWidth, maxWidth, outline, textColors.front(), textColors, alignment};
 	for (auto it = text.begin(); it != text.end();) {
 		if (*it == '\\') {

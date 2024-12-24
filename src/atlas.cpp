@@ -148,7 +148,7 @@ tre::AtlasBitmap tre::buildAtlasBitmap(const NamedBitmaps& bitmaps, tr::BitmapFo
 }
 
 tre::Atlas2D::Atlas2D(AtlasBitmap atlasBitmap)
-	: _tex{atlasBitmap.bitmap, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8}
+	: _tex{atlasBitmap.bitmap, tr::ALL_MIPMAPS, tr::TextureFormat::RGBA8}
 {
 	const auto size{glm::vec2(atlasBitmap.bitmap.size())};
 	for (auto& [name, rect] : atlasBitmap.entries) {
@@ -185,7 +185,7 @@ void tre::Atlas2D::setLabel(std::string_view label) noexcept
 tre::DynAtlas2D::DynAtlas2D() noexcept {}
 
 tre::DynAtlas2D::DynAtlas2D(glm::ivec2 capacity)
-	: _tex{{capacity, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8}}, _freeRects{{{}, capacity}}
+	: _tex{{capacity, tr::ALL_MIPMAPS, tr::TextureFormat::RGBA8}}, _freeRects{{{}, capacity}}
 {
 }
 
@@ -217,14 +217,14 @@ tr::RectF2 tre::DynAtlas2D::operator[](std::string_view name) const noexcept
 void tre::DynAtlas2D::rawReserve(glm::ivec2 capacity)
 {
 	if (!_tex.has_value()) {
-		_tex.emplace(capacity, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8);
+		_tex.emplace(capacity, tr::ALL_MIPMAPS, tr::TextureFormat::RGBA8);
 	}
 	else {
 		glm::ivec2 oldCapacity{_tex->size()};
 		if (capacity.x <= oldCapacity.x && capacity.y <= oldCapacity.y) {
 			return;
 		}
-		tr::Texture2D          newTex{capacity, tr::NO_MIPMAPS, tr::TextureFormat::RGBA8};
+		tr::Texture2D          newTex{capacity, tr::ALL_MIPMAPS, tr::TextureFormat::RGBA8};
 		static tr::Framebuffer dynArrayCopyFBO;
 #ifndef NDEBUG
 		static bool addedLabel{false};

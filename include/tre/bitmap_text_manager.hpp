@@ -43,6 +43,16 @@ namespace tre {
 			 * The glyphs of the font.
 			 **********************************************************************************************************/
 			GlyphMap glyphs;
+
+			/**********************************************************************************************************
+			 * Determines if a glyph has an associated texture to it when drawing (i.e: it is not whitespace).
+			 *
+			 * @param codepoint The codepoint to check, doesn't have to be in the font.
+			 *
+			 * @return False if the glyph is whitespace,and true otherwise. The fallback glyph is checked if @em
+			 *         codepoint isn't in the glyph.
+			 **********************************************************************************************************/
+			bool glyphDrawable(std::uint32_t codepoint) const noexcept;
 		};
 
 		/**************************************************************************************************************
@@ -199,7 +209,12 @@ namespace tre {
 		 *
 		 * @exception std::bad_alloc If an internal allocation fails.
 		 *
-		 * @param[in] codepoint The unicode codepoint to draw (newlines are allowed).
+		 * @param[in] codepoint
+		 * @parblock
+		 * The unicode codepoint to draw (newlines are allowed).
+		 *
+		 * @pre @em codepoint (or '\0' if @em codepoint is not in the font) must not be whitespace.
+		 * @endparblock
 		 * @param[in] font The name of the font to use. If the font isn't found, no text is drawn.
 		 * @param[in] style The style of the text to use.
 		 * @param[in] scale The scale of the text.
@@ -208,11 +223,10 @@ namespace tre {
 		 * @param[in] posAnchor Where the position of the glyph is relative to the top-left of the glyph.
 		 * @param[in] rotation The rotation of the glyph around the position.
 		 *
-		 * @return The glyph's quad or an empty optional if it's not associated with a texture (like a space).
+		 * @return The glyph's quad.
 		 **************************************************************************************************************/
-		std::optional<GlyphMesh> createGlyphMesh(std::uint32_t codepoint, std::string_view font, Style style,
-												 glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
-												 tr::AngleF rotation);
+		GlyphMesh createGlyphMesh(std::uint32_t codepoint, std::string_view font, Style style, glm::vec2 scale,
+								  tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation);
 
 		/**************************************************************************************************************
 		 * Creates a mesh for unformatted, single-style text.
@@ -269,9 +283,9 @@ namespace tre {
 		tr::StringHashMap<Font> _fonts;
 		CachedRotationTransform _cachedRotationTransform;
 
-		std::optional<GlyphMesh> createGlyphMesh(std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV,
-												 Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos,
-												 glm::vec2 posAnchor, tr::AngleF rotation);
+		GlyphMesh createGlyphMesh(std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV, Style style,
+								  glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos, glm::vec2 posAnchor,
+								  tr::AngleF rotation);
 	};
 
 	/******************************************************************************************************************

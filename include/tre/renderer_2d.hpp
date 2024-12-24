@@ -481,7 +481,7 @@ namespace tre {
 		std::map<int, Layer>       _layers;
 
 		void                     setupContext() noexcept;
-		void                     writeToBuffers(const Primitive& primitive, std::uint16_t& index);
+		std::uint16_t            writeToBuffers(const Primitive& primitive, std::uint16_t index);
 		std::vector<std::size_t> uploadToGraphicsBuffers(decltype(_layers)::iterator end);
 	};
 

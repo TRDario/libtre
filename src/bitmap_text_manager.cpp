@@ -90,8 +90,8 @@ std::vector<std::string_view> tre::splitText(std::string_view text, const Bitmap
 											 std::views::reverse};
 			const auto lastWhitespace{std::ranges::find_first_of(whitespaceSearchRange, " \t\n")};
 			if (lastWhitespace != whitespaceSearchRange.end()) {
-				lines.push_back({it, lastWhitespace.base()});
-				it = std::next(lastWhitespace.base());
+				lines.push_back({it, std::prev(lastWhitespace.base())});
+				it = lastWhitespace.base();
 			}
 			else {
 				lines.push_back(fit);
@@ -167,7 +167,14 @@ float tre::initialFormattedOffsetX(std::string_view line, const BitmapTextManage
 	}
 }
 
+bool tre::BitmapTextManager::Font::glyphDrawable(std::uint32_t codepoint) const noexcept
+{
+	const auto& glyph{glyphs.at(glyphs.contains(codepoint) ? codepoint : '\0')};
+	return glyph.width != 0 && glyph.height != 0;
+}
+
 tre::BitmapTextManager::BitmapTextManager() noexcept
+	: _atlas{{256, 256}} // Pre-allocate to make texture() always usable.
 {
 	assert(!bitmapTextActive());
 
@@ -239,15 +246,15 @@ void tre::BitmapTextManager::clearFonts()
 	_fonts.clear();
 }
 
-std::optional<tre::BitmapTextManager::GlyphMesh> tre::BitmapTextManager::createGlyphMesh(
-	std::uint32_t codepoint, const Font& font, tr::RectF2 fontUV, Style style, glm::vec2 scale, tr::RGBA8 tint,
-	glm::vec2 pos, glm::vec2 posAnchor, tr::AngleF rotation)
+tre::BitmapTextManager::GlyphMesh tre::BitmapTextManager::createGlyphMesh(std::uint32_t codepoint, const Font& font,
+																		  tr::RectF2 fontUV, Style style,
+																		  glm::vec2 scale, tr::RGBA8 tint,
+																		  glm::vec2 pos, glm::vec2 posAnchor,
+																		  tr::AngleF rotation)
 {
-	const auto& glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
-	if (glyph.width == 0 || glyph.height == 0) {
-		return {};
-	}
+	assert(font.glyphDrawable(codepoint));
 
+	const auto&      glyph{font.glyphs.at(font.glyphs.contains(codepoint) ? codepoint : '\0')};
 	const auto       size{glm::vec2(glyph.width, glyph.height) * scale};
 	const tr::RectF2 uv{fontUV.tl + glm::vec2(glyph.x, glyph.y) / glm::vec2(_atlas.texture().size()),
 						glm::vec2(glyph.width, glyph.height) / glm::vec2(_atlas.texture().size())};
@@ -273,16 +280,15 @@ std::optional<tre::BitmapTextManager::GlyphMesh> tre::BitmapTextManager::createG
 		quad[3].pos.x += skewOffset;
 	}
 	tr::fillRectVertices((quad | tr::uvs).begin(), uv.tl, uv.size);
-	for (auto& vertex : quad) {
-		vertex.pos   = _cachedRotationTransform.transform * vertex.pos;
-		vertex.color = tint;
-	}
+	std::ranges::fill(quad | tr::colors, tint);
 	return quad;
 }
 
-std::optional<tre::BitmapTextManager::GlyphMesh> tre::BitmapTextManager::createGlyphMesh(
-	std::uint32_t codepoint, std::string_view font, Style style, glm::vec2 scale, tr::RGBA8 tint, glm::vec2 pos,
-	glm::vec2 posAnchor, tr::AngleF rotation)
+tre::BitmapTextManager::GlyphMesh tre::BitmapTextManager::createGlyphMesh(std::uint32_t    codepoint,
+																		  std::string_view font, Style style,
+																		  glm::vec2 scale, tr::RGBA8 tint,
+																		  glm::vec2 pos, glm::vec2 posAnchor,
+																		  tr::AngleF rotation)
 {
 	assert(_fonts.contains(font));
 	return createGlyphMesh(codepoint, _fonts.find(font)->second, _atlas[font], style, scale, tint, pos, posAnchor,
@@ -307,15 +313,15 @@ tre::BitmapTextManager::Mesh tre::BitmapTextManager::createUnformattedTextMesh(s
 			if (!fontIt->second.glyphs.contains(chr)) {
 				chr = '\0';
 			}
-			const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-												 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
-			if (glyphMesh.has_value()) {
+			if (fontIt->second.glyphDrawable(chr)) {
+				const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+													 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
 				tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
-				mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+				mesh.vertices.insert(mesh.vertices.end(), glyphMesh.begin(), glyphMesh.end());
 			}
-			xOffset += fontIt->second.glyphs.at(chr).advance;
+			xOffset += fontIt->second.glyphs.at(chr).advance * scale.x;
 		}
-		yOffset += fontIt->second.lineSkip;
+		yOffset += fontIt->second.lineSkip * scale.y;
 	}
 	return mesh;
 }
@@ -344,13 +350,14 @@ tre::BitmapTextManager::Mesh tre::BitmapTextManager::createFormattedTextMesh(std
 				switch (*it) {
 				case '\\': {
 					const auto chr{fontIt->second.glyphs.contains('\\') ? '\\' : '\0'};
-					const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-														 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
-					if (glyphMesh.has_value()) {
+					if (fontIt->second.glyphDrawable(chr)) {
+						const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint,
+															 textbox.pos, textbox.pos - glm::vec2(xOffset, yOffset),
+															 textbox.rotation)};
 						tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
-						mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+						mesh.vertices.insert(mesh.vertices.end(), glyphMesh.begin(), glyphMesh.end());
 					}
-					xOffset += fontIt->second.glyphs.at(chr).advance;
+					xOffset += fontIt->second.glyphs.at(chr).advance * scale.x;
 				} break;
 				case '!':
 					tint = {255, 255, 255, 255};
@@ -372,17 +379,17 @@ tre::BitmapTextManager::Mesh tre::BitmapTextManager::createFormattedTextMesh(std
 			}
 			else {
 				const auto chr{fontIt->second.glyphs.contains(*it) ? *it : '\0'};
-				const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
-													 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
-				if (glyphMesh.has_value()) {
+				if (fontIt->second.glyphDrawable(chr)) {
+					const auto glyphMesh{createGlyphMesh(chr, fontIt->second, fontUV, style, scale, tint, textbox.pos,
+														 textbox.pos - glm::vec2(xOffset, yOffset), textbox.rotation)};
 					tr::fillPolygonIndices(std::back_inserter(mesh.indices), 4, mesh.vertices.size());
-					mesh.vertices.insert(mesh.vertices.end(), glyphMesh->begin(), glyphMesh->end());
+					mesh.vertices.insert(mesh.vertices.end(), glyphMesh.begin(), glyphMesh.end());
 				}
-				xOffset += fontIt->second.glyphs.at(chr).advance;
+				xOffset += fontIt->second.glyphs.at(chr).advance * scale.x;
 			}
 		}
 	line_end:
-		yOffset += fontIt->second.lineSkip;
+		yOffset += fontIt->second.lineSkip * scale.y;
 	}
 	return mesh;
 }

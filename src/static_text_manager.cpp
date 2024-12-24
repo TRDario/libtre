@@ -36,7 +36,7 @@ glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, int maxWidth, HorizontalAl
 }
 
 tre::StaticTextManager::StaticTextManager() noexcept
-	: _dpi{72, 72}
+	: _atlas{{256, 256}}, _dpi{72, 72} // Pre-allocate atlas to make texture() always usable.
 {
 	assert(!staticTextActive());
 	_staticText = this;
@@ -80,9 +80,9 @@ void tre::StaticTextManager::setDPI(glm::uvec2 dpi) noexcept
 	}
 }
 
-void tre::StaticTextManager::newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
-												 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline,
-												 int maxWidth, HorizontalAlign alignment)
+void tre::StaticTextManager::newUnformattedEntry(std::string_view name, const char* text, tr::TTFont& font,
+												 int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor,
+												 TextOutline outline, int maxWidth, HorizontalAlign alignment)
 {
 	assert(!_atlas.contains(name));
 
@@ -101,30 +101,31 @@ void tre::StaticTextManager::newUnformattedEntry(std::string name, const char* t
 		auto outlineBitmap{font.renderWrapped(text, outline.color, maxWidth)};
 		outlineBitmap.blit({outline.thickness, outline.thickness},
 						   textBitmap.sub({{}, outlineBitmap.size() - glm::ivec2{outline.thickness * 2}}));
-		_atlas.add(std::move(name), outlineBitmap);
+		_atlas.add(std::string{name}, outlineBitmap);
 	}
 	else {
-		_atlas.add(std::move(name), font.renderWrapped(text, textColor, maxWidth));
+		_atlas.add(std::string{name}, font.renderWrapped(text, textColor, maxWidth));
 	}
+	_fixedEntryTextboxInfo.emplace(std::string{name}, FixedEntryTextboxInfo{maxWidth, alignment});
 }
 
-void tre::StaticTextManager::newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font,
+void tre::StaticTextManager::newUnformattedEntry(std::string_view name, const std::string& text, tr::TTFont& font,
 												 int fontSize, tr::TTFont::Style style, tr::RGBA8 textColor,
 												 TextOutline outline, int maxWidth, HorizontalAlign alignment)
 {
-	newUnformattedEntry(std::move(name), text.c_str(), font, fontSize, style, textColor, outline, maxWidth, alignment);
+	newUnformattedEntry(name, text.c_str(), font, fontSize, style, textColor, outline, maxWidth, alignment);
 }
 
-void tre::StaticTextManager::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
-											   tr::RGBA8 textColor, TextOutline outline, int maxWidth,
+void tre::StaticTextManager::newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont& font,
+											   int fontSize, tr::RGBA8 textColor, TextOutline outline, int maxWidth,
 											   HorizontalAlign alignment)
 {
-	newFormattedEntry(std::move(name), text, font, fontSize, {&textColor, 1}, outline, maxWidth, alignment);
+	newFormattedEntry(name, text, font, fontSize, {&textColor, 1}, outline, maxWidth, alignment);
 }
 
-void tre::StaticTextManager::newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
-											   std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
-											   HorizontalAlign alignment)
+void tre::StaticTextManager::newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont& font,
+											   int fontSize, std::span<tr::RGBA8> textColors, TextOutline outline,
+											   int maxWidth, HorizontalAlign alignment)
 {
 	assert(!_atlas.contains(name));
 
@@ -133,7 +134,8 @@ void tre::StaticTextManager::newFormattedEntry(std::string name, std::string_vie
 	}
 
 	const auto bitmap{renderMultistyleText(text, font, fontSize, _dpi, maxWidth, alignment, textColors, outline)};
-	_atlas.add(std::move(name), bitmap);
+	_atlas.add(std::string{name}, bitmap);
+	_fixedEntryTextboxInfo.emplace(std::string{name}, FixedEntryTextboxInfo{maxWidth, alignment});
 }
 
 void tre::StaticTextManager::removeEntry(std::string_view name) noexcept

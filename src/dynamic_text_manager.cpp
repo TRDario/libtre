@@ -36,7 +36,7 @@ glm::vec2 tre::calculatePosAnchor(glm::vec2 textSize, const DynamicTextManager::
 }
 
 tre::DynamicTextManager::DynamicTextManager() noexcept
-	: _dpi{72, 72}
+	: _atlas{{256, 256}}, _dpi{72, 72} // Pre-allocate atlas to make texture() always usable.
 {
 	assert(!dynamicTextActive());
 	_dynamicText = this;
@@ -49,6 +49,11 @@ tre::DynamicTextManager::DynamicTextManager() noexcept
 tre::DynamicTextManager::~DynamicTextManager() noexcept
 {
 	_dynamicText = nullptr;
+}
+
+const tr::Texture2D& tre::DynamicTextManager::texture() const noexcept
+{
+	return _atlas.texture();
 }
 
 void tre::DynamicTextManager::setDPI(unsigned int dpi) noexcept

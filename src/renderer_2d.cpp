@@ -179,25 +179,26 @@ void tre::Renderer2D::setupContext() noexcept
 	tr::window().graphics().setVertexFormat(tr::TintVtx2::vertexFormat());
 }
 
-void tre::Renderer2D::writeToBuffers(const Primitive& primitive, std::uint16_t& index)
+std::uint16_t tre::Renderer2D::writeToBuffers(const Primitive& primitive, std::uint16_t index)
 {
-	const auto textureQuad{[&](const TextureQuad& rect) {
+	const auto textureQuad{[&](const TextureQuad& rect) -> std::uint16_t {
 		_vertices.insert(_vertices.end(), rect.begin(), rect.end());
 		tr::fillPolygonIndices(back_inserter(_indices), 4, index);
-		index += 4;
+		return index + 4;
 	}};
-	const auto textureFan{[&](const TextureFan& fan) {
+	const auto textureFan{[&](const TextureFan& fan) -> std::uint16_t {
 		_vertices.insert(_vertices.end(), fan.begin(), fan.end());
 		tr::fillPolygonIndices(back_inserter(_indices), fan.size(), index);
-		index += fan.size();
+		return index + fan.size();
 	}};
-	const auto textureMesh{[&](const TextureMesh& mesh) {
+	const auto textureMesh{[&](const TextureMesh& mesh) -> std::uint16_t {
+		auto indices{mesh.second | std::views::transform([base = _vertices.size()](auto idx) { return idx + base; })};
 		_vertices.insert(_vertices.end(), mesh.first.begin(), mesh.first.end());
-		_indices.insert(_indices.end(), mesh.second.begin(), mesh.second.end());
-		index += mesh.first.size();
+		_indices.insert(_indices.end(), indices.begin(), indices.end());
+		return index + mesh.first.size();
 	}};
 
-	std::visit(tr::Overloaded{textureQuad, textureFan, textureMesh}, primitive);
+	return std::visit(tr::Overloaded{textureQuad, textureFan, textureMesh}, primitive);
 }
 
 std::vector<std::size_t> tre::Renderer2D::uploadToGraphicsBuffers(decltype(_layers)::iterator end)
@@ -210,7 +211,7 @@ std::vector<std::size_t> tre::Renderer2D::uploadToGraphicsBuffers(decltype(_laye
 	for (auto& layer : std::ranges::subrange{_layers.begin(), end} | std::views::values) {
 		offsets.emplace_back(_indices.size());
 		for (auto& primitive : layer.primitives) {
-			writeToBuffers(primitive, index);
+			index = writeToBuffers(primitive, index);
 		}
 		layer.primitives.clear();
 	}
@@ -236,6 +237,12 @@ void tre::Renderer2D::drawUpToLayer(int maxPriority, const RenderView& target)
 	const std::vector<std::size_t> indexOffsets{uploadToGraphicsBuffers(range.end())};
 	auto                           it{indexOffsets.begin()};
 	for (auto& layer : range | std::views::values) {
+		auto indices{*std::next(it) - *it};
+		if (indices == 0) {
+			++it;
+			continue;
+		}
+
 		static const tr::Texture2D* texture{};
 		if (texture != layer.texture && layer.texture != nullptr) {
 			texture = layer.texture;
@@ -253,10 +260,11 @@ void tre::Renderer2D::drawUpToLayer(int maxPriority, const RenderView& target)
 		}
 		static tr::BlendMode blendMode{};
 		if (blendMode != layer.blendMode) {
+			blendMode = layer.blendMode;
 			tr::window().graphics().setBlendingMode(blendMode);
 		}
 
-		tr::window().graphics().drawIndexed(tr::Primitive::TRIS, *it, *std::next(it) - *it);
+		tr::window().graphics().drawIndexed(tr::Primitive::TRIS, *it, indices);
 		++it;
 	}
 }

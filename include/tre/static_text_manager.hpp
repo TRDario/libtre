@@ -126,7 +126,7 @@ namespace tre {
 		 * @param[in] maxWidth The maximum width of the entry.
 		 * @param[in] alignment The horizontal alignment of the entry.
 		 **************************************************************************************************************/
-		void newUnformattedEntry(std::string name, const char* text, tr::TTFont& font, int fontSize,
+		void newUnformattedEntry(std::string_view name, const char* text, tr::TTFont& font, int fontSize,
 								 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth,
 								 HorizontalAlign alignment);
 
@@ -151,7 +151,7 @@ namespace tre {
 		 * @param[in] maxWidth The maximum width of the entry.
 		 * @param[in] alignment The horizontal alignment of the entry.
 		 **************************************************************************************************************/
-		void newUnformattedEntry(std::string name, const std::string& text, tr::TTFont& font, int fontSize,
+		void newUnformattedEntry(std::string_view name, const std::string& text, tr::TTFont& font, int fontSize,
 								 tr::TTFont::Style style, tr::RGBA8 textColor, TextOutline outline, int maxWidth,
 								 HorizontalAlign alignment);
 
@@ -175,7 +175,7 @@ namespace tre {
 		 * @param[in] maxWidth The maximum width of the entry.
 		 * @param[in] alignment The horizontal alignment of the entry.
 		 **************************************************************************************************************/
-		void newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+		void newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont& font, int fontSize,
 							   tr::RGBA8 textColor, TextOutline outline, int maxWidth, HorizontalAlign alignment);
 
 		/**************************************************************************************************************
@@ -203,7 +203,7 @@ namespace tre {
 		 * @param[in] maxWidth The maximum width of the entry.
 		 * @param[in] alignment The horizontal alignment of the entry.
 		 **************************************************************************************************************/
-		void newFormattedEntry(std::string name, std::string_view text, tr::TTFont& font, int fontSize,
+		void newFormattedEntry(std::string_view name, std::string_view text, tr::TTFont& font, int fontSize,
 							   std::span<tr::RGBA8> textColors, TextOutline outline, int maxWidth,
 							   HorizontalAlign alignment);
 

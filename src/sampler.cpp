@@ -8,7 +8,7 @@ const tr::Sampler& tre::nearestNeighborSampler() noexcept
 		sampler.setMinFilter(tr::MinFilter::NEAREST);
 		sampler.setMagFilter(tr::MagFilter::NEAREST);
 		sampler.setWrap(tr::Wrap::BORDER_CLAMP);
-		sampler.setBorderColor({255, 0, 255, 255});
+		sampler.setBorderColor({0, 0, 0, 0});
 #ifndef NDEBUG
 		sampler.setLabel("tre Nearest Neighbor Sampler");
 #endif
@@ -25,7 +25,7 @@ const tr::Sampler& tre::bilinearSampler() noexcept
 		sampler.setMinFilter(tr::MinFilter::LINEAR);
 		sampler.setMagFilter(tr::MagFilter::LINEAR);
 		sampler.setWrap(tr::Wrap::BORDER_CLAMP);
-		sampler.setBorderColor({255, 0, 255, 255});
+		sampler.setBorderColor({0, 0, 0, 0});
 #ifndef NDEBUG
 		sampler.setLabel("tre Bilinear Sampler");
 #endif
@@ -42,7 +42,7 @@ const tr::Sampler& tre::trilinearSampler() noexcept
 		sampler.setMinFilter(tr::MinFilter::LMIPS_LINEAR);
 		sampler.setMagFilter(tr::MagFilter::LINEAR);
 		sampler.setWrap(tr::Wrap::BORDER_CLAMP);
-		sampler.setBorderColor({255, 0, 255, 255});
+		sampler.setBorderColor({0, 0, 0, 0});
 #ifndef NDEBUG
 		sampler.setLabel("tre Trilinear Sampler");
 #endif
