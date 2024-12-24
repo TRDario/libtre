@@ -129,6 +129,13 @@ namespace tre {
 		~BitmapTextManager() noexcept;
 
 		/**************************************************************************************************************
+		 * Gets a reference to the manager's texture atlas.
+		 *
+		 * @return An immutable reference to the manager's texture atlas.
+		 **************************************************************************************************************/
+		const tr::Texture2D& texture() const noexcept;
+
+		/**************************************************************************************************************
 		 * Gets font information.
 		 *
 		 * @param name

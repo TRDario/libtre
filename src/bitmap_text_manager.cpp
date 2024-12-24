@@ -195,6 +195,11 @@ tre::BitmapTextManager::~BitmapTextManager() noexcept
 	}
 }
 
+const tr::Texture2D& tre::BitmapTextManager::texture() const noexcept
+{
+	return _atlas.texture();
+}
+
 const tre::BitmapTextManager::Font& tre::BitmapTextManager::font(std::string_view name) const noexcept
 {
 	assert(_fonts.contains(name));
